@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GGP Scholars · Operating Manual</title>
+<style>
+  :root{
+    --bg:#eef1f4; --paper:#ffffff; --ink:#12181f; --soft:#586170; --faint:#8b93a1;
+    --line:#dde3ea; --grid:#e7ecf1;
+    --steel:#1f5f8b; --steel2:#2b78ad; --amber:#b5751a; --green:#1f7a54; --plum:#6b3f86; --red:#a83232;
+    --shadow:0 1px 2px rgba(20,30,45,.05),0 10px 28px rgba(20,30,45,.07);
+    --mono:"SF Mono",ui-monospace,"Cascadia Mono","JetBrains Mono",Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --bg:#0e1218; --paper:#161b23; --ink:#e9edf2; --soft:#9aa4b2; --faint:#6b7482;
+    --line:#242c37; --grid:#1e252f;
+    --steel:#5aa8db; --steel2:#74bce9; --amber:#e0a34c; --green:#4fb488; --plum:#a988c9; --red:#e07070;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 14px 34px rgba(0,0,0,.5);}}
+  :root[data-theme="dark"]{
+    --bg:#0e1218; --paper:#161b23; --ink:#e9edf2; --soft:#9aa4b2; --faint:#6b7482;
+    --line:#242c37; --grid:#1e252f;
+    --steel:#5aa8db; --steel2:#74bce9; --amber:#e0a34c; --green:#4fb488; --plum:#a988c9; --red:#e07070;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 14px 34px rgba(0,0,0,.5);}
+  :root[data-theme="light"]{
+    --bg:#eef1f4; --paper:#ffffff; --ink:#12181f; --soft:#586170; --faint:#8b93a1;
+    --line:#dde3ea; --grid:#e7ecf1;
+    --steel:#1f5f8b; --steel2:#2b78ad; --amber:#b5751a; --green:#1f7a54; --plum:#6b3f86; --red:#a83232;
+    --shadow:0 1px 2px rgba(20,30,45,.05),0 10px 28px rgba(20,30,45,.07);}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.58;
+    -webkit-font-smoothing:antialiased;padding:clamp(16px,3.5vw,52px)}
+  .wrap{max-width:1040px;margin:0 auto}
+  .mono{font-family:var(--mono)}
+  .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--steel);font-weight:600}
+  h1{font-size:clamp(28px,5vw,44px);line-height:1.04;letter-spacing:-.02em;margin:.2em 0 .1em;font-weight:800}
+  h2{font-size:clamp(20px,3vw,27px);letter-spacing:-.01em;margin:.1em 0 .4em;font-weight:750}
+  h3{font-size:17px;margin:.2em 0 .3em;font-weight:700}
+  p{margin:.5em 0}
+  section{margin:46px 0;scroll-margin-top:16px}
+  hr.r{border:0;border-top:1px solid var(--line);margin:0}
+  a{color:var(--steel2)}
+  .head{border-left:4px solid var(--steel);padding-left:14px;margin-bottom:18px}
+  /* hero */
+  .hero{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:26px 28px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+  .hero::after{content:"THE GUILD";position:absolute;right:-6px;bottom:-14px;font-family:var(--mono);font-weight:800;
+    font-size:88px;letter-spacing:-.04em;color:var(--grid);z-index:0;pointer-events:none}
+  .hero>*{position:relative;z-index:1}
+  .hero .tag{color:var(--soft);max-width:66ch;font-size:16.5px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+  .chip{font-family:var(--mono);font-size:11.5px;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:5px 9px;color:var(--soft)}
+  .chip b{color:var(--ink)}
+  .toc{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:16px;font-size:12.5px}
+  .toc a{color:var(--soft);text-decoration:none;font-family:var(--mono)}
+  .toc a:hover{color:var(--steel2)}
+  /* timeline */
+  .cycle{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+  @media(max-width:860px){.cycle{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:520px){.cycle{grid-template-columns:repeat(2,1fr)}}
+  .mo{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:12px;box-shadow:var(--shadow);border-top:3px solid var(--mc,var(--steel))}
+  .mo .mh{font-family:var(--mono);font-size:11px;color:var(--mc);font-weight:700;letter-spacing:.06em}
+  .mo .mt{font-weight:700;font-size:14px;margin:3px 0 5px}
+  .mo ul{margin:0;padding-left:15px}
+  .mo li{font-size:12px;color:var(--soft);margin:2px 0}
+  .c-jun{--mc:var(--steel)} .c-jul{--mc:var(--amber)} .c-aug{--mc:var(--green)}
+  .c-fall{--mc:var(--plum)} .c-mar{--mc:var(--red)} .c-apr{--mc:var(--steel2)}
+  /* journey rail */
+  .journey{position:relative;padding-left:26px}
+  .journey::before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:var(--line)}
+  .stage{position:relative;margin:0 0 16px;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px 16px;box-shadow:var(--shadow)}
+  .stage::before{content:"";position:absolute;left:-22px;top:18px;width:12px;height:12px;border-radius:50%;background:var(--steel);border:3px solid var(--bg)}
+  .stage .sh{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .stage .sn{font-family:var(--mono);font-size:11px;color:var(--steel);font-weight:700}
+  .stage h3{margin:0}
+  .stage .dur{font-family:var(--mono);font-size:11px;color:var(--faint)}
+  .stage p{margin:6px 0 0;font-size:14px;color:var(--soft)}
+  .stage p b{color:var(--ink)}
+  /* RACI */
+  table.raci{width:100%;border-collapse:collapse;font-size:13px;background:var(--paper);border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}
+  table.raci th,table.raci td{padding:10px 11px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  table.raci th{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);background:var(--bg)}
+  table.raci tr:last-child td{border-bottom:0}
+  table.raci td:first-child{font-weight:600}
+  .own{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--steel)}
+  .badge{display:inline-block;font-family:var(--mono);font-size:10px;padding:2px 6px;border-radius:5px;background:var(--bg);border:1px solid var(--line);color:var(--soft);margin:1px 2px 1px 0}
+  .b-g{color:var(--red);border-color:var(--red)}
+  /* generic panel */
+  .panel{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px 20px;box-shadow:var(--shadow)}
+  .cols2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:720px){.cols2{grid-template-columns:1fr}}
+  ul.tight{margin:.3em 0;padding-left:18px} ul.tight li{margin:4px 0;font-size:14px}
+  .k{color:var(--soft)}
+  /* Gordon's lane - the centerpiece */
+  .lane{background:linear-gradient(180deg,var(--paper),var(--bg));border:1px solid var(--steel);border-radius:14px;padding:6px 0;box-shadow:var(--shadow)}
+  .job{padding:15px 22px;border-bottom:1px solid var(--line)}
+  .job:last-child{border-bottom:0}
+  .job .jh{display:flex;align-items:baseline;gap:10px}
+  .job .jn{font-family:var(--mono);font-weight:800;color:var(--steel);font-size:15px}
+  .job h3{margin:0}
+  .job .core{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--red);border:1px solid var(--red);border-radius:5px;padding:1px 6px;margin-left:auto}
+  .job p{margin:6px 0 0;font-size:14px;color:var(--soft)}
+  .job p b{color:var(--ink)}
+  .job .does{font-size:13px;margin-top:6px}
+  .not{background:var(--paper);border:1px dashed var(--red);border-radius:12px;padding:16px 20px;box-shadow:var(--shadow)}
+  .not h3{color:var(--red);margin-top:0}
+  .not ul{margin:.3em 0;padding-left:18px} .not li{margin:4px 0;font-size:14px}
+  .not li b{color:var(--ink)}
+  /* month asks for gordon */
+  .gmonths{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media(max-width:720px){.gmonths{grid-template-columns:1fr}}
+  .gm{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:11px 14px;box-shadow:var(--shadow);display:flex;gap:12px}
+  .gm .gmm{font-family:var(--mono);font-size:11px;color:var(--steel);font-weight:700;flex:0 0 62px}
+  .gm .gmt{font-size:13.5px}
+  .callout{background:var(--paper);border-left:4px solid var(--amber);border-radius:0 10px 10px 0;padding:14px 18px;box-shadow:var(--shadow)}
+  .toggle{position:fixed;top:12px;right:12px;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:6px 11px;font-size:12px;cursor:pointer;color:var(--ink);box-shadow:var(--shadow);z-index:9;font-family:var(--mono)}
+  footer{margin-top:46px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--faint)}
+</style>
+</head>
+<body>
+<button class="toggle" onclick="var r=document.documentElement;var d=(r.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'));r.setAttribute('data-theme',d==='dark'?'light':'dark')">◐ theme</button>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="lbl">GGP Scholars · Operating Manual</div>
+    <h1>How the program runs,<br>and where you stand in it.</h1>
+    <p class="tag">The full operating model for the consolidated Scholars program: the annual machine, the scholar's journey, who owns what, and your responsibilities as founder, carved out precisely, including the parts you should hand off.</p>
+    <div class="chips">
+      <span class="chip"><b>4</b> tracks, one program</span>
+      <span class="chip"><b>~50</b> scholars/yr <span class="k">(target)</span></span>
+      <span class="chip">arc: <b>Scholar → Fellow → Mentor</b></span>
+      <span class="chip">capstone: <b>GDC, every March</b></span>
+      <span class="chip">platform: <b>Kaleidoscope</b></span>
+    </div>
+    <div class="toc">
+      <a href="#cycle">01 Annual cycle</a><a href="#journey">02 Scholar journey</a><a href="#raci">03 Who owns what</a>
+      <a href="#mentor">04 Mentorship</a><a href="#ai">05 AI curriculum</a><a href="#money">06 Funding</a>
+      <a href="#gordon">07 Your responsibilities</a><a href="#not">08 What to hand off</a>
+    </div>
+  </div>
+
+  <section id="cycle">
+    <div class="head"><div class="lbl">01 · The machine</div><h2>The annual cycle</h2></div>
+    <p style="color:var(--soft);max-width:70ch">One rhythm that all four tracks share. Dates follow the current CYSTEM and GDC calendar, so the merge does not reinvent the timeline, it unifies it.</p>
+    <div class="cycle" style="margin-top:16px">
+      <div class="mo c-jun"><div class="mh">JUN</div><div class="mt">Open</div><ul><li>Applications live on Kaleidoscope</li><li>Recruiting push across networks</li><li>Mentor + studio outreach begins</li></ul></div>
+      <div class="mo c-jul"><div class="mh">JUL</div><div class="mt">Select</div><ul><li>Deep-track cohort by ~Jul 15</li><li>Broad-track by ~Jul 31</li><li>Named-fund scholars matched</li></ul></div>
+      <div class="mo c-aug"><div class="mh">AUG</div><div class="mt">Onboard</div><ul><li>Year begins</li><li>Triangle buddy groups formed</li><li>1:1 mentor pairings set</li></ul></div>
+      <div class="mo c-fall"><div class="mh">SEP-FEB</div><div class="mt">The year</div><ul><li>Curriculum + workshops</li><li>AI-in-the-Studio module</li><li>Community service + capstone build</li></ul></div>
+      <div class="mo c-mar"><div class="mh">MAR</div><div class="mt">Capstone</div><ul><li>GDC week: All-Access</li><li>Scholars Breakfast + 2K tour</li><li>AI-capstone showcase</li></ul></div>
+      <div class="mo c-apr"><div class="mh">APR-MAY</div><div class="mt">Close + renew</div><ul><li>Fellow selection</li><li>Impact report + funder renewals</li><li>Retrospective, plan next cycle</li></ul></div>
+    </div>
+  </section>
+
+  <hr class="r">
+
+  <section id="journey">
+    <div class="head"><div class="lbl">02 · The person</div><h2>A scholar's journey, end to end</h2></div>
+    <div class="journey">
+      <div class="stage"><div class="sh"><span class="sn">STAGE 1</span><h3>Apply</h3><span class="dur">Jun-Jul</span></div>
+        <p>One Kaleidoscope application, routed by fit to a track. <b>Chosen name and pronouns honored from field one.</b> Craft, values, community service, and an AI-empowerment prompt. No cost to apply; potential counts as much as polish.</p></div>
+      <div class="stage"><div class="sh"><span class="sn">STAGE 2</span><h3>Select</h3><span class="dur">Jul</span></div>
+        <p>AI helps organize and surface, a <b>human decides every scholar</b>. Reviewers score against a rubric; you give final sign-off. Elite by depth, never by scarcity, we do not publish how many we decline.</p></div>
+      <div class="stage"><div class="sh"><span class="sn">STAGE 3</span><h3>Onboard</h3><span class="dur">Aug</span></div>
+        <p>Placed in a <b>triangle buddy group</b> (three scholars across schools) and paired with a <b>1:1 industry mentor</b>. Given their year map, their capstone brief, and a named-fund welcome if a donor carries their scholarship.</p></div>
+      <div class="stage"><div class="sh"><span class="sn">STAGE 4</span><h3>The Scholar year</h3><span class="dur">Sep-Feb</span></div>
+        <p>Monthly workshops, the AI-in-the-Studio module, mentor check-ins, a community-service commitment, and a capstone they build across the year. Alex's mentorship engine carries this. Wellbeing and belonging are tracked, not just deliverables.</p></div>
+      <div class="stage"><div class="sh"><span class="sn">STAGE 5</span><h3>Capstone at GDC</h3><span class="dur">Mar</span></div>
+        <p>The finale every track converges on: GDC All-Access, the Scholars Breakfast, the 2K studio tour (Take-Two in-kind), and a showcase of AI-empowered capstones the industry sees. This is the visible apex of the Directory.</p></div>
+      <div class="stage"><div class="sh"><span class="sn">STAGE 6</span><h3>Fellow</h3><span class="dur">Year 2, selective</span></div>
+        <p>A second-year deeper build plus a <b>paid opportunity or placement</b>. This tier is what signals a career, not a certificate, and it is the outcome funders renew for.</p></div>
+      <div class="stage"><div class="sh"><span class="sn">STAGE 7</span><h3>Mentor</h3><span class="dur">Lifelong</span></div>
+        <p>Alumni return to mentor the next cohort. The give-back is membership in a guild, not a transaction, and it is how the network compounds year over year.</p></div>
+    </div>
+  </section>
+
+  <hr class="r">
+
+  <section id="raci">
+    <div class="head"><div class="lbl">03 · The team</div><h2>Who owns what</h2></div>
+    <p style="color:var(--soft);max-width:70ch">The <span class="badge b-g">YOU</span> markers are where the program genuinely needs Gordon and no one else. Everything else has an owner, on purpose, so the founder is not the bottleneck.</p>
+    <table class="raci" style="margin-top:14px">
+      <tr><th>Function</th><th>Owner</th><th>Notes</th></tr>
+      <tr><td>Vision, values, the language</td><td class="own">Gordon <span class="badge b-g">YOU</span></td><td>Sets "elite by outcome," holds belonging + the word rules. Non-delegable.</td></tr>
+      <tr><td>Funder relationships + fundraising</td><td class="own">Gordon <span class="badge b-g">YOU</span></td><td>Take-Two renewal, EA + ESA coalition, personal foundations, named funds. Your graph.</td></tr>
+      <tr><td>Mentorship engine + scholar experience</td><td class="own">Alex Rogers</td><td>The CYSTEM spine, preserved: buddy groups, pairings, the year's cadence, wellbeing.</td></tr>
+      <tr><td>Program production + calendar</td><td class="own">Eric Francksen</td><td>Executive Producer: cross-track coordination, Weekly Connect, the operating calendar.</td></tr>
+      <tr><td>GDC + partnerships (Informa)</td><td class="own">Mabel Chung</td><td>Scholars Breakfast, GDC logistics, the NYC touchpoints.</td></tr>
+      <tr><td>Collegiate Games Challenge</td><td class="own">Christopher Kim / Sinjin</td><td>The competition tie-in; Sinjin's potential landing spot as it revives.</td></tr>
+      <tr><td>Finance, legal, funder paperwork</td><td class="own">Joe Heally</td><td>Fund transfers with Take-Two (Isabella), Fidelity Charitable, named-fund agreements.</td></tr>
+      <tr><td>Selection sign-off</td><td class="own">Gordon <span class="badge b-g">YOU</span></td><td>Final human decision on the cohort. Not the triage, the judgment call.</td></tr>
+      <tr><td>Application ops, tracking, dashboards, reports</td><td class="own">Darby</td><td>The back office: triage support, cohort tracking, outcomes dashboard, funder-report drafts.</td></tr>
+    </table>
+  </section>
+
+  <hr class="r">
+
+  <section id="mentor">
+    <div class="head"><div class="lbl">04 · The engine</div><h2>How mentorship actually works</h2></div>
+    <div class="cols2">
+      <div class="panel"><h3>The triangle buddy group</h3>
+        <p style="color:var(--soft);font-size:14px">Three scholars from three schools, paired as peers for the year. It is CYSTEM's proven core, and it is what makes a large program feel intimate. Peers catch what mentors miss, and cross-school ties become the alumni network later.</p>
+        <ul class="tight"><li>Formed at onboarding, holds all year</li><li>Meets on its own cadence, plus program checkpoints</li><li>The unit of belonging, and the reason scale does not turn cold</li></ul>
+      </div>
+      <div class="panel"><h3>The 1:1 industry mentor</h3>
+        <p style="color:var(--soft);font-size:14px">Each scholar matched to a working professional. Mentors come from your network and the sponsor coalition (a corporate sponsorship can include mentoring seats for its employees, which is a feature Alan explicitly asked for).</p>
+        <ul class="tight"><li>Matched at onboarding by Alex, approved by a human</li><li>Regular check-ins across the year</li><li>Guides the capstone and opens real doors</li></ul>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:14px"><b>Why this survives the merge intact:</b> the mentorship model is the one thing every voice in the roundtable agreed we cannot lose. It stays exactly as CYSTEM ran it, now extended to all four tracks and fed by a wider mentor pool.</div>
+  </section>
+
+  <hr class="r">
+
+  <section id="ai">
+    <div class="head"><div class="lbl">05 · The differentiator</div><h2>AI empowerment, as curriculum</h2></div>
+    <p style="color:var(--soft);max-width:72ch">This is what makes GGP <b>leaders in AI empowerment</b> rather than a program that mentions AI. It is taught as amplification with a human always in the loop, the way you work with Darby.</p>
+    <div class="cols2" style="margin-top:14px">
+      <div class="panel"><h3>The "AI in the Studio" module</h3>
+        <ul class="tight"><li>Co-built with Take-Two, core curriculum, not an elective</li><li>Hands-on: each scholar directs AI on a real piece of their craft</li><li>Ethics + human-in-the-loop taught as first principles, not footnotes</li></ul></div>
+      <div class="panel"><h3>The AI-empowered capstone</h3>
+        <ul class="tight"><li>Every scholar ships one project that uses AI to amplify their work</li><li>Shown at the GDC showcase, the visible proof of the promise</li><li>GGP publishes what it learns, so the field, not just the cohort, benefits</li></ul></div>
+    </div>
+    <div class="callout" style="margin-top:14px"><b>Positioning:</b> in the Directory, "AI readiness" is a first-class category. GGP's program is the one that does not just rank AI readiness, it produces it. That is the apex claim.</div>
+  </section>
+
+  <hr class="r">
+
+  <section id="money">
+    <div class="head"><div class="lbl">06 · The fuel</div><h2>How it gets funded</h2></div>
+    <div class="cols2">
+      <div class="panel" style="border-top:3px solid var(--amber)"><h3>Named funds · personal foundations</h3>
+        <p style="color:var(--soft);font-size:14px">A donor names a scholarship (Carter Lipscomb is the first). High touch: meet-your-scholar, an annual letter in the scholar's words, a multi-year bond. Intimacy is the product.</p>
+        <ul class="tight"><li>Values guardrail: a named fund honors GGP's values; no condition narrows who is welcome</li><li>Joe papers the fund agreement; Darby runs the stewardship cadence</li><li>Your job: cultivate the donor and make the human introduction</li></ul></div>
+      <div class="panel" style="border-top:3px solid var(--steel)"><h3>Sponsorships · corporations</h3>
+        <p style="color:var(--soft);font-size:14px">Take-Two anchors at $80K (CYSTEM $25K + GGP $25K + Directory $30K, plus the 2K tour in-kind). Tiers scale from there: named cohort, track sponsor, AI-module underwriter, mentoring seats.</p>
+        <ul class="tight"><li>Recognition at the apex of the Directory; coalition, not exclusivity</li><li>Renews on an outcomes dashboard: placements, projects, Fellows made</li><li>The Houser gap (~$90K) closes through the EA + ESA coalition Alan invited</li></ul></div>
+    </div>
+  </section>
+
+  <hr class="r">
+
+  <section id="gordon">
+    <div class="head" style="border-color:var(--steel)"><div class="lbl">07 · Your lane</div><h2>Your responsibilities, precisely</h2></div>
+    <p style="color:var(--soft);max-width:72ch">Seven jobs. The ones marked <span class="mono" style="color:var(--red)">CORE</span> are your non-substitutable value, the seams only you can broker. The rest you set in motion and then hold, you do not run them.</p>
+    <div class="lane" style="margin-top:16px">
+      <div class="job"><div class="jh"><span class="jn">1</span><h3>Guard the vision and the values</h3><span class="core">Core</span></div>
+        <p>You own what "elite by outcome, not exclusion" means and you hold the language: <b>underestimated, belonging, coalition, never scarcity</b>. When a funder or a well-meaning teammate drifts toward gatekeeping or corporate coldness, you are the one who pulls it back.</p>
+        <p class="does k">Does: approve the program identity and name; keep the North Star intact; settle values questions.</p></div>
+      <div class="job"><div class="jh"><span class="jn">2</span><h3>Own the funder relationships and the raise</h3><span class="core">Core</span></div>
+        <p>This is your highest-leverage work, the part no one else can do. <b>Renew Take-Two with Alan. Build the EA and ESA coalition</b> (Stanley) to close the Houser gap. <b>Cultivate personal foundations</b> and land named funds (Sussanah and her peers). Give Sinjin a real home as he rolls into GGP.</p>
+        <p class="does k">Does: the relationship calls, the asks, the coalition brokering. Joe papers it; Darby preps the decks and tracks the pipeline.</p></div>
+      <div class="job"><div class="jh"><span class="jn">3</span><h3>Recruit the top of the funnel</h3><span class="core">Core</span></div>
+        <p>Your platform and voice bring in scholars, and your network brings in the <b>1:1 industry mentors</b> and studio partners that make the year real. You open doors; Alex matches and runs them.</p>
+        <p class="does k">Does: the megaphone, the introductions, the "yes" from a mentor or a studio only you can get.</p></div>
+      <div class="job"><div class="jh"><span class="jn">4</span><h3>Steward the naming and legacy layer</h3><span class="core">Core</span></div>
+        <p>The Carter Lipscomb memorial strand is yours to shepherd, with Phil Rosenberg and Carter's circle. Named funds carry emotional weight; you are the one who holds that with the families and honors the people behind the names.</p>
+        <p class="does k">Does: the Carter fund; the human side of every named gift. Not the paperwork.</p></div>
+      <div class="job"><div class="jh"><span class="jn">5</span><h3>Hold the apex positioning</h3><span class="core">Core</span></div>
+        <p>The Directory and your industry standing are what make GGP perceptibly elite. Your USC faculty seat, your public voice, and your presence at GDC keep GGP at the top of the field's own map.</p>
+        <p class="does k">Does: the public face, the keynote, the Directory as field infrastructure. Darby builds and maintains it.</p></div>
+      <div class="job"><div class="jh"><span class="jn">6</span><h3>Give final selection sign-off</h3></div>
+        <p>A human decides every scholar, and the last human is you. Reviewers and the rubric do the triage; you make the judgment call on the cohort, especially the values and trajectory reads a rubric cannot capture.</p>
+        <p class="does k">Does: approve the final list. You do not read every application cold, that is the review team.</p></div>
+      <div class="job"><div class="jh"><span class="jn">7</span><h3>Lead the team, lightly</h3></div>
+        <p>Empower Alex (mentorship), Eric (production), and hold the coalition of people together. A monthly rhythm with your leads, not daily operations. Your presence sets the culture; their hands run the machine.</p>
+        <p class="does k">Does: monthly leads check-in, unblock, set tone. Weekly Connect runs with or without you.</p></div>
+    </div>
+
+    <h3 style="margin-top:22px">Your year, month by month</h3>
+    <div class="gmonths" style="margin-top:10px">
+      <div class="gm"><div class="gmm">JUN</div><div class="gmt">Amplify the application; personally invite mentors and studio partners into the mentor pool.</div></div>
+      <div class="gm"><div class="gmm">JUL</div><div class="gmt">Final selection sign-off. Match named-fund donors to their scholars.</div></div>
+      <div class="gm"><div class="gmm">AUG</div><div class="gmt">Welcome the cohort (your voice sets the tone). Kick the Carter fund build with Phil.</div></div>
+      <div class="gm"><div class="gmm">SEP-OCT</div><div class="gmt">Coalition season: the EA and ESA asks with Alan and Stanley. Cultivate 1 to 2 new personal foundations.</div></div>
+      <div class="gm"><div class="gmm">NOV-DEC</div><div class="gmt">Named-fund stewardship (the annual scholar letters land). Year-end donor cultivation.</div></div>
+      <div class="gm"><div class="gmm">JAN-FEB</div><div class="gmt">GDC prep as the public face; confirm Take-Two touchpoints; line up the showcase.</div></div>
+      <div class="gm"><div class="gmm">MAR</div><div class="gmt">GDC: the apex moment. Scholars Breakfast, the showcase, the relationships in the room.</div></div>
+      <div class="gm"><div class="gmm">APR-MAY</div><div class="gmt">Approve Fellows; the impact story to funders; renew Take-Two and the coalition for next year.</div></div>
+    </div>
+  </section>
+
+  <hr class="r">
+
+  <section id="not">
+    <div class="head" style="border-color:var(--red)"><div class="lbl" style="color:var(--red)">08 · The discipline</div><h2>What you should hand off</h2></div>
+    <p style="color:var(--soft);max-width:70ch">Your metacognitive profile is clear on this: you are the graph, not the nodes. These are real, necessary jobs, and every one of them belongs to someone other than you. Protect your time for the seams only you can broker.</p>
+    <div class="not" style="margin-top:14px">
+      <h3>Delegate, do not do</h3>
+      <ul>
+        <li><b>Application operations and cohort tracking</b> → Darby + the review team. You sign off; you do not administer.</li>
+        <li><b>Mentor scheduling and the weekly cadence</b> → Alex. You recruit the mentor; Alex runs the relationship.</li>
+        <li><b>The calendar, Weekly Connect, cross-track logistics</b> → Eric as Executive Producer.</li>
+        <li><b>Funder paperwork, fund agreements, transfers</b> → Joe and Isabella. You make the ask; they close the mechanics.</li>
+        <li><b>Dashboards, outcome reports, the Directory build</b> → Darby. You get a one-page brief, not a spreadsheet.</li>
+        <li><b>Chasing status</b> → the back office surfaces what needs you; you do not go looking for it.</li>
+      </ul>
+    </div>
+    <div class="callout" style="margin-top:14px"><b>The test for any task:</b> if someone else in the coalition could do it with a warm introduction from you, hand it off with that introduction. If it dies without <i>you specifically</i> in the room, that is your job. Almost everything that only you can do is a relationship, a value, or a name.</div>
+  </section>
+
+  <footer>
+    <p><b>Status:</b> proposed operating model for the recommended program (The Guild), built on the July 13 deep-research dossier and the program-design roundtable. CONFIRMED from primary sources: the four merged strands, Take-Two's $80K plus Directory lead sponsorship (Alan Lewis, 6/18), the Houser exit (Gordon, 7/13), Alex Rogers as CYSTEM lead, the Carter Lipscomb memorial (with Phil Rosenberg). PROPOSED and open to your decision: the ~50-scholar target, the Scholar/Fellow/Mentor tiers, cohort sizes, and named-fund dollar amounts. Dossier: reports/2026-07-13-ggp-scholars-directory-deep-research.md.</p>
+  </footer>
+
+</div>
+</body>
+</html>

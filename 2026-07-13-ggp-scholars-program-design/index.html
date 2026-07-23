@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GGP Scholars · Program Design</title>
+<style>
+  :root{
+    --bg:#f3efe6; --paper:#fbf8f1; --ink:#191712; --soft:#615b4e; --faint:#8c8574;
+    --line:#e2dccd; --rule:#d8d0be;
+    --deep:#123c34; --deep2:#1c5a4e; --oxblood:#7a2d29; --gold:#a9832f; --violet:#5c4780;
+    --shadow:0 1px 2px rgba(0,0,0,.04),0 10px 30px rgba(30,25,15,.07);
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+    --sans:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --bg:#12110d; --paper:#1a1813; --ink:#f1ece1; --soft:#b0a893; --faint:#8a8371;
+    --line:#2c281f; --rule:#332e23;
+    --deep:#3fae95; --deep2:#54c3a9; --oxblood:#df6d5f; --gold:#dcac54; --violet:#a98fd6;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 14px 36px rgba(0,0,0,.5);}}
+  :root[data-theme="dark"]{
+    --bg:#12110d; --paper:#1a1813; --ink:#f1ece1; --soft:#b0a893; --faint:#8a8371;
+    --line:#2c281f; --rule:#332e23;
+    --deep:#3fae95; --deep2:#54c3a9; --oxblood:#df6d5f; --gold:#dcac54; --violet:#a98fd6;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 14px 36px rgba(0,0,0,.5);}
+  :root[data-theme="light"]{
+    --bg:#f3efe6; --paper:#fbf8f1; --ink:#191712; --soft:#615b4e; --faint:#8c8574;
+    --line:#e2dccd; --rule:#d8d0be;
+    --deep:#123c34; --deep2:#1c5a4e; --oxblood:#7a2d29; --gold:#a9832f; --violet:#5c4780;
+    --shadow:0 1px 2px rgba(0,0,0,.04),0 10px 30px rgba(30,25,15,.07);}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16.5px;line-height:1.6;
+    -webkit-font-smoothing:antialiased;padding:clamp(18px,4vw,60px)}
+  .wrap{max-width:1000px;margin:0 auto}
+  .disp{font-family:var(--serif)}
+  /* section labels */
+  .lbl{font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:700}
+  h2{font-family:var(--serif);font-size:clamp(23px,3.6vw,32px);line-height:1.12;margin:.15em 0 .5em;letter-spacing:-.005em}
+  h3{font-family:var(--serif);font-size:21px;margin:.2em 0 .3em}
+  p{margin:.5em 0}
+  .num{font-family:var(--serif);font-size:13px;color:var(--faint);letter-spacing:.1em}
+  section{margin:56px 0;scroll-margin-top:20px}
+  hr.thin{border:0;border-top:1px solid var(--rule);margin:0}
+  a{color:var(--deep2)}
+  /* hero */
+  .hero{text-align:center;padding:26px 0 8px;border-top:2px solid var(--ink);border-bottom:2px solid var(--ink)}
+  .hero .kick{font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--oxblood);font-weight:700}
+  .hero h1{font-family:var(--serif);font-size:clamp(34px,7vw,66px);line-height:1;margin:.18em 0 .12em;letter-spacing:-.01em;font-weight:700}
+  .hero .lede{font-size:clamp(15px,2.2vw,19px);color:var(--soft);max-width:60ch;margin:.6em auto 0}
+  .hero .stamp{margin-top:16px;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+  /* principle strip */
+  .principles{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--rule);border-radius:12px;overflow:hidden;background:var(--paper);box-shadow:var(--shadow)}
+  @media(max-width:760px){.principles{grid-template-columns:1fr 1fr}}
+  .principles .p{padding:16px 15px;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+  .principles .p:nth-child(4n){border-right:0}
+  .principles .p .t{font-family:var(--serif);font-size:16px;margin-bottom:2px}
+  .principles .p .d{font-size:12.5px;color:var(--soft)}
+  /* core idea */
+  .idea{background:var(--paper);border:1px solid var(--rule);border-left:4px solid var(--deep);border-radius:0 12px 12px 0;
+    padding:22px 26px;box-shadow:var(--shadow)}
+  .idea .big{font-family:var(--serif);font-size:clamp(20px,3vw,27px);line-height:1.28;margin:0}
+  .idea .big em{color:var(--deep2);font-style:italic}
+  .idea .sub{color:var(--soft);margin-top:10px;font-size:15px}
+  .drop::first-letter{font-family:var(--serif);float:left;font-size:58px;line-height:.82;padding:6px 10px 0 0;color:var(--oxblood)}
+  /* version cards */
+  .rankhead{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+  .medal{font-family:var(--serif);font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+    padding:3px 10px;border-radius:999px;border:1px solid currentColor}
+  .m1{color:var(--gold)} .m2{color:var(--soft)} .m3{color:var(--faint)}
+  .ver{background:var(--paper);border:1px solid var(--rule);border-radius:14px;padding:22px 24px;box-shadow:var(--shadow);margin:16px 0;
+    border-top:3px solid var(--vc,var(--deep))}
+  .v1{--vc:var(--deep)} .v2{--vc:var(--violet)} .v3{--vc:var(--oxblood)}
+  .ver .name{font-family:var(--serif);font-size:24px;margin:0}
+  .ver .tagline{color:var(--soft);font-style:italic;margin:2px 0 14px}
+  .ver .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 26px}
+  @media(max-width:680px){.ver .grid{grid-template-columns:1fr}}
+  .ver .grid h4{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--vc);margin:0 0 3px;font-weight:700}
+  .ver .grid p{margin:0 0 4px;font-size:14px;color:var(--ink)}
+  .ver .grid .muted{color:var(--soft)}
+  .verdict{margin-top:14px;padding-top:12px;border-top:1px dashed var(--rule);font-size:14.5px}
+  .verdict b{color:var(--vc)}
+  /* score matrix */
+  table.mx{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--paper);border:1px solid var(--rule);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}
+  table.mx th,table.mx td{padding:11px 12px;border-bottom:1px solid var(--rule);text-align:center}
+  table.mx th{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--soft);font-weight:700}
+  table.mx td:first-child,table.mx th:first-child{text-align:left;font-family:var(--serif);font-size:15px}
+  table.mx tr:last-child td{border-bottom:0}
+  table.mx .sc{font-family:var(--serif);font-weight:700}
+  .tot{background:rgba(18,60,52,.06)}
+  :root[data-theme="dark"] .tot{background:rgba(63,174,149,.1)}
+  /* discussion */
+  .talk{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
+  .talk:last-child{border-bottom:0}
+  .av{flex:0 0 42px;height:42px;width:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-family:var(--serif);font-weight:700;font-size:15px;color:#fff;letter-spacing:.02em}
+  .who{font-weight:700;font-size:14px}
+  .role{font-size:12px;color:var(--faint);font-weight:400}
+  .say{font-size:15px;margin-top:2px;color:var(--ink)}
+  .a-gordon{background:var(--deep)} .a-alan{background:#2b5f8c} .a-sinjin{background:var(--violet)}
+  .a-sussanah{background:var(--gold)} .a-alex{background:var(--oxblood)} .a-stanley{background:#3a6b46}
+  .a-past{background:#8a5a2b} .a-future{background:#4a6b78}
+  .synth{background:var(--paper);border:1px solid var(--deep);border-radius:12px;padding:18px 22px;margin-top:18px;box-shadow:var(--shadow)}
+  .synth h3{margin-top:0;color:var(--deep2)}
+  /* rules */
+  .rules{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:720px){.rules{grid-template-columns:1fr}}
+  .rule{background:var(--paper);border:1px solid var(--rule);border-radius:12px;padding:16px 18px;box-shadow:var(--shadow)}
+  .rule h4{font-family:var(--serif);font-size:17px;margin:0 0 8px;display:flex;gap:8px;align-items:baseline}
+  .rule h4 .rn{font-size:12px;color:var(--gold);font-family:var(--sans);letter-spacing:.1em}
+  .rule ul{margin:0;padding-left:18px}
+  .rule li{font-size:13.5px;margin:4px 0;color:var(--ink)}
+  .rule li .k{color:var(--soft)}
+  /* kaleidoscope */
+  .kal{background:var(--paper);border:1px solid var(--rule);border-radius:12px;padding:6px 0;box-shadow:var(--shadow)}
+  .kgrp{padding:14px 22px;border-bottom:1px solid var(--line)}
+  .kgrp:last-child{border-bottom:0}
+  .kgrp .gh{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--deep2);font-weight:700;margin-bottom:8px}
+  .q{display:flex;gap:12px;padding:6px 0}
+  .q .qn{font-family:var(--serif);color:var(--gold);font-weight:700;flex:0 0 26px}
+  .q .qt{font-size:14.5px}
+  .q .qt .why{display:block;font-size:12.5px;color:var(--faint);margin-top:1px}
+  /* callout */
+  .callout{background:linear-gradient(180deg,var(--paper),var(--bg));border:1px solid var(--rule);border-radius:12px;padding:18px 22px;box-shadow:var(--shadow)}
+  .toc{font-size:13px;color:var(--soft);display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:center;margin:22px 0 0}
+  .toc a{color:var(--soft);text-decoration:none;border-bottom:1px solid var(--rule)}
+  .toggle{position:fixed;top:12px;right:12px;background:var(--paper);border:1px solid var(--rule);
+    border-radius:999px;padding:6px 12px;font-size:12px;cursor:pointer;color:var(--ink);box-shadow:var(--shadow);z-index:9}
+  footer{margin-top:52px;padding-top:18px;border-top:2px solid var(--ink);font-size:12px;color:var(--faint);line-height:1.6}
+</style>
+</head>
+<body>
+<button class="toggle" onclick="var r=document.documentElement;var d=(r.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'));r.setAttribute('data-theme',d==='dark'?'light':'dark')">◐ theme</button>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kick">GGP Scholars · Program Design</div>
+    <h1>Elite by outcome,<br>not by exclusion.</h1>
+    <p class="lede">A single consolidated scholars program that makes underestimated talent the most AI-empowered in games, preserves the warmth its grants were built on, and reads as the apex of the field's Directory.</p>
+    <div class="stamp">Working design · July 13, 2026 · three versions, stack ranked</div>
+    <nav class="toc">
+      <a href="#think">The thinking</a><a href="#core">The core idea</a><a href="#versions">3 versions</a>
+      <a href="#matrix">Scorecard</a><a href="#room">The roundtable</a><a href="#rules">Rules</a><a href="#kal">Kaleidoscope</a>
+    </nav>
+  </header>
+
+  <section id="think">
+    <div class="lbl">The thinking</div>
+    <h2>Four efforts, one tension, one throughline</h2>
+    <p>Consolidation is settled: the remnants of CYSTEM, GGP Scholars, the new Carter Lipscomb memorial strand, and the Games for Change scholars fold into one program. The design question is harder than the org chart. You asked for four things at once, and two of them pull against each other:</p>
+    <div class="principles" style="margin:18px 0">
+      <div class="p"><div class="t">AI empowerment</div><div class="d">Be the leaders. Every scholar learns to direct AI, not fear it.</div></div>
+      <div class="p"><div class="t">Preserve the values</div><div class="d">The mentorship warmth and belonging the grants were built on.</div></div>
+      <div class="p"><div class="t">Fund from both sides</div><div class="d">Attractive to personal foundations and to corporations alike.</div></div>
+      <div class="p"><div class="t">Perceptibly elite</div><div class="d">The apex of the Directory, unmistakably top of the field.</div></div>
+    </div>
+    <p><b>Elite and belonging look like opposites.</b> Prestige usually comes from who you turn away; belonging comes from who you welcome. If we chase elite the ordinary way, we betray the grant values. So the whole design rests on refusing that trade, and on one idea that turns the tension into an engine.</p>
+  </section>
+
+  <hr class="thin">
+
+  <section id="core">
+    <div class="lbl">The core idea</div>
+    <h2>Elite is a result we produce, not a door we guard</h2>
+    <div class="idea" style="margin:16px 0">
+      <p class="big">GGP is prestigious because a scholar comes out <em>elite</em>, with the deepest support, the strongest mentorship, and the best outcomes in the field. Not because only a chosen few get in.</p>
+      <p class="sub">Selectivity by depth, never by scarcity. We go far with each scholar, we do not brag about who we declined. That is how a program reads as top of the Directory while staying true to belonging.</p>
+    </div>
+    <p class="drop">And the differentiator that makes GGP <b>leaders in AI empowerment</b> is the same move you make every day with me. Every scholar learns to direct AI with a human always in the loop, so they are amplified, not replaced. They leave as the most AI-fluent underestimated talent in games. That is the promise no other program in the Directory is making, and it is the one a corporation and a family foundation will both pay to be part of.</p>
+    <div class="callout" style="margin-top:18px">
+      <div class="lbl" style="color:var(--deep2)">How the tension resolves into funding</div>
+      <p style="margin:.4em 0 0"><b>Named funds</b> give a personal foundation intimacy, a scholar to know, a name to honor, a story that is theirs. <b>Cohort and track sponsorships</b> give a corporation scale, brand at the apex of the field, and mentoring seats for its people. <b>The Directory</b> is the frame that makes the whole thing perceptibly elite: GGP is the capstone the entire pipeline points toward.</p>
+    </div>
+  </section>
+
+  <hr class="thin">
+
+  <section id="versions">
+    <div class="lbl">Three versions, stack ranked</div>
+    <h2>Same values and AI throughline, three shapes</h2>
+    <p style="color:var(--soft)">Each preserves the grant values and centers AI empowerment. They differ in how elite, how costly, and how they attract money. Working names; the program name itself is still your call.</p>
+
+    <div class="ver v1">
+      <div class="rankhead"><span class="medal m1">Rank 1 · Recommended</span><span class="num">balances all four goals, durable after Houser</span></div>
+      <p class="name">The Guild</p>
+      <p class="tagline">One elite brand. Four ways in. A lifelong arc from Scholar to Fellow to Mentor.</p>
+      <div class="grid">
+        <div><h4>Structure</h4><p>One program, one application, routed into the four tracks by fit. A three-stage arc: <b>Scholar</b> (the year), <b>Fellow</b> (a second-year build + paid opportunity), <b>Mentor</b> (alumni give back). The guild metaphor is craft mastery <span class="muted">and</span> belonging at once.</p></div>
+        <div><h4>AI empowerment</h4><p>Every scholar ships one AI-empowered capstone and learns human-in-the-loop direction. An "AI in the Studio" module, co-built with Take-Two, sits at the center, not the edge.</p></div>
+        <div><h4>Who funds it</h4><p><span class="muted">Personal foundations:</span> named scholarships (Carter Lipscomb is the first) with meet-your-scholar intimacy. <span class="muted">Corporations:</span> named cohorts, track sponsorships, mentoring seats.</p></div>
+        <div><h4>Why it reads elite</h4><p>Depth of support and published outcomes, the GDC capstone, and a Fellow tier that signals a career, not a certificate. Apex of the Directory without turning anyone away.</p></div>
+        <div><h4>Cost + effort</h4><p class="muted">Moderate. Reuses CYSTEM's mentorship spine and the existing GDC infrastructure. Runnable by the current team.</p></div>
+        <div><h4>Risk</h4><p class="muted">The four tracks must feel like one program, not four logos under a banner. Managed by the shared application, mentor pool, and capstone.</p></div>
+      </div>
+      <div class="verdict"><b>Verdict:</b> the best balance of every goal you set, and the only one that is clearly affordable and durable the year an anchor funder leaves. Lead with this.</div>
+    </div>
+
+    <div class="ver v2">
+      <div class="rankhead"><span class="medal m2">Rank 2</span><span class="num">most prestigious, highest cost and risk</span></div>
+      <p class="name">The Academy</p>
+      <p class="tagline">A named institute: resident AI lab, guest faculty from the studios, a demo day the industry attends.</p>
+      <div class="grid">
+        <div><h4>Structure</h4><p>A small, high-touch institute with named faculty, studio residencies, and a public capstone showcase. Fewer scholars, deeper immersion, a curriculum with a masthead.</p></div>
+        <div><h4>AI empowerment</h4><p>A resident AI lab is the flagship: scholars build alongside a named "AI studio," the most visible AI-leadership statement of the three.</p></div>
+        <div><h4>Who funds it</h4><p><span class="muted">Corporations:</span> irresistible naming (the AI Lab, the Academy itself). <span class="muted">Personal foundations:</span> named chairs and faculty seats, prestige giving.</p></div>
+        <div><h4>Why it reads elite</h4><p>Most perceptibly elite of the three. Faculty, residencies, and a demo day carry obvious prestige.</p></div>
+        <div><h4>Cost + effort</h4><p class="muted">High. Faculty, space, an AI lab, and a showcase are real budget and staff, hard to stand up the year Houser exits.</p></div>
+        <div><h4>Risk</h4><p class="muted">Formality can chill the warmth. "Academy" can read as gatekept, the exact failure the core idea warns against. Slowest to launch.</p></div>
+      </div>
+      <div class="verdict"><b>Verdict:</b> the aspirational north star. Grow The Guild into this once a corporate naming partner underwrites it. Right destination, wrong starting line for 2026-27.</div>
+    </div>
+
+    <div class="ver v3">
+      <div class="rankhead"><span class="medal m3">Rank 3</span><span class="num">widest reach, least elite</span></div>
+      <p class="name">The Constellation</p>
+      <p class="tagline">Network first: many scholars, a shared AI toolkit, a light touch, belonging at scale.</p>
+      <div class="grid">
+        <div><h4>Structure</h4><p>A large, open network with a common AI toolkit and community, lighter mentorship, more people served for less per person.</p></div>
+        <div><h4>AI empowerment</h4><p>AI literacy for everyone, broad reach, shallower depth. Empowerment as access rather than mastery.</p></div>
+        <div><h4>Who funds it</h4><p><span class="muted">Corporations:</span> reach and headcount stories. <span class="muted">Personal foundations:</span> harder, less intimacy, fewer named scholars to know.</p></div>
+        <div><h4>Why it reads elite</h4><p class="muted">It does not, by design. Its virtue is inclusion and scale, not prestige.</p></div>
+        <div><h4>Cost + effort</h4><p class="muted">Lowest per scholar. Cheapest to run.</p></div>
+        <div><h4>Risk</h4><p class="muted">Fails the "perceptibly elite" goal and weakens named-gift appeal. Depth of outcome, the thing funders renew for, is hardest to prove.</p></div>
+      </div>
+      <div class="verdict"><b>Verdict:</b> keep the network as the <i>alumni and community layer</i> beneath The Guild, not as the whole program. On its own it does not meet the brief.</div>
+    </div>
+  </section>
+
+  <hr class="thin">
+
+  <section id="matrix">
+    <div class="lbl">The scorecard</div>
+    <h2>Scored against your four goals, plus durability</h2>
+    <table class="mx">
+      <tr><th>Version</th><th>AI leadership</th><th>Preserves values</th><th>Dual-funder appeal</th><th>Perceptibly elite</th><th>Durable post-Houser</th><th>Total</th></tr>
+      <tr class="tot"><td>The Guild</td><td class="sc">5</td><td class="sc">5</td><td class="sc">5</td><td class="sc">4</td><td class="sc">5</td><td class="sc">24</td></tr>
+      <tr><td>The Academy</td><td class="sc">5</td><td class="sc">3</td><td class="sc">4</td><td class="sc">5</td><td class="sc">2</td><td class="sc">19</td></tr>
+      <tr><td>The Constellation</td><td class="sc">3</td><td class="sc">4</td><td class="sc">3</td><td class="sc">2</td><td class="sc">4</td><td class="sc">16</td></tr>
+    </table>
+    <p style="font-size:13px;color:var(--faint);margin-top:8px">Scored 1 to 5 against the goals you named. The Guild trails The Academy only on raw prestige, and the core idea (elite by outcome) is how it closes that single point over time without the cost or the gatekeeping.</p>
+  </section>
+
+  <hr class="thin">
+
+  <section id="room">
+    <div class="lbl">The roundtable</div>
+    <h2>An open discussion, in nine voices</h2>
+    <p style="color:var(--soft)">The recommended version, The Guild, put in front of the people who have to believe in it. Each speaks from their real stake. They argue, then they converge.</p>
+
+    <div style="margin-top:18px">
+      <div class="talk"><div class="av a-gordon">G</div><div><div class="who">Gordon <span class="role">founder, the vision</span></div><div class="say">Here is the whole of it. One program. Our scholars become the most AI-empowered underestimated talent in games, and they leave elite because of what we poured into them, not because we shut the door behind them. I want a family foundation and a global publisher to both see themselves in this.</div></div></div>
+
+      <div class="talk"><div class="av a-alan">A</div><div><div class="who">Alan Lewis <span class="role">Take-Two, corporate funder</span></div><div class="say">I am in at eighty thousand and I put our name on the front door of the Directory. What I need to renew is outcomes I can take to a committee: placements, projects shipped, scholars who become mentors. And bring EA and the ESA in with us. A coalition makes my gift look like leadership, not charity.</div></div></div>
+
+      <div class="talk"><div class="av a-stanley">S</div><div><div class="who">Stanley <span class="role">head of the ESA, field lens</span></div><div class="say">Then it cannot be one org's trophy. If GGP sits at the apex of the Directory, it has to lift the whole pipeline behind it. Show me standards and a give-back to the field and the ESA Foundation can stand with this. The AI-empowerment framing is the part the industry actually needs right now.</div></div></div>
+
+      <div class="talk"><div class="av a-sussanah">SP</div><div><div class="who">Sussanah Pollack <span class="role">personal foundation</span></div><div class="say">A committee wants a dashboard. I want a person. I want to endow a named scholarship, meet the young person who carries it, and hear from them a year later in their own words. Give me intimacy and values, not a logo on a banner, and I will give for a decade.</div></div></div>
+
+      <div class="talk"><div class="av a-alex">AR</div><div><div class="who">Alex Rogers <span class="role">CYSTEM lead, the operator</span></div><div class="say">All of that is beautiful and someone has to run it. CYSTEM's soul is the triangle buddy groups and real one-to-one mentorship. If "elite" makes it colder or heavier, we lose the thing that works. Keep the warmth, keep it runnable by our team, and I am with you.</div></div></div>
+
+      <div class="talk"><div class="av a-past">PS</div><div><div class="who">A past scholar <span class="role">alum</span></div><div class="say">The mentorship changed my life, and the belonging is why. My worry is the word elite. When I applied I almost did not, I thought it was not for someone like me. If "prestigious" means intimidating, the people who need this most will count themselves out before you ever see them.</div></div></div>
+
+      <div class="talk"><div class="av a-future">FA</div><div><div class="who">A future applicant <span class="role">prospective</span></div><div class="say">Honestly? I am scared AI is going to take the job before I get in the door. And I do not have a fancy portfolio. Tell me this program will teach me to use AI so I am ahead, not behind, and that you are looking at who I could become, not just what I have already made.</div></div></div>
+
+      <div class="talk"><div class="av a-sinjin">SB</div><div><div class="who">Sinjin Bain <span class="role">Bigglesworth, stepping back from CYSTEM</span></div><div class="say">I built toward the Directory and I care where this goes. Consolidation is right now that the anchor has moved on. My caution: do not let four things merging blur into mush. Keep the rigor that made CYSTEM credible to a board. And find me the right way to stay useful, the Collegiate Games Challenge, perhaps.</div></div></div>
+
+      <div class="talk"><div class="av a-gordon">G</div><div><div class="who">Gordon <span class="role">answering the room</span></div><div class="say">You are all naming the same fault line. So here is the rule that holds it together: elite by outcome, never by exclusion. Alan gets his outcomes and his coalition. Sussanah gets her named scholar and her story. Stanley gets a give-back to the field. Alex keeps the buddy groups intact as the spine. And to you two, elite here means we invest the most in you, so you rise, that is a welcome, not a wall.</div></div></div>
+
+      <div class="talk"><div class="av a-past">PS</div><div><div class="who">A past scholar</div><div class="say">If that is what elite means here, say it in exactly those words on the application. So the next me does not flinch.</div></div></div>
+
+      <div class="talk"><div class="av a-alan">A</div><div><div class="who">Alan Lewis</div><div class="say">Works for me, as long as the outcomes are real and named. Diversity of thought, results on the page. I will make the EA and ESA introductions.</div></div></div>
+
+      <div class="talk"><div class="av a-sussanah">SP</div><div><div class="who">Sussanah Pollack</div><div class="say">And keep the named funds high touch. The intimacy is the whole reason I am here rather than writing a check to something larger and colder.</div></div></div>
+    </div>
+
+    <div class="synth">
+      <h3>Where the room lands</h3>
+      <p style="margin-top:0"><b>Unanimous on The Guild, on four conditions the room itself set:</b></p>
+      <ul style="margin:0;padding-left:18px">
+        <li><b>Say what elite means, in plain words, on the application:</b> we invest the most in you so you rise. A welcome, not a wall. (the scholars)</li>
+        <li><b>Outcomes are named and real, and a coalition forms:</b> placements, projects, scholars-turned-mentors; EA and ESA brought in. (Alan, Stanley)</li>
+        <li><b>Named funds stay intimate and high touch:</b> meet-your-scholar, a story a year later, values over logos. (Sussanah)</li>
+        <li><b>The mentorship spine and board-grade rigor survive the merge:</b> triangle buddy groups intact, runnable by the team, credible to a board. (Alex, Sinjin)</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr class="thin">
+
+  <section id="rules">
+    <div class="lbl">Rules and guidelines</div>
+    <h2>How The Guild actually runs</h2>
+    <div class="rules">
+      <div class="rule"><h4><span class="rn">01</span> Eligibility</h4><ul>
+        <li>Students and recent alumni pursuing game craft: design, development, art, audio, production, writing, esports, or content creation.</li>
+        <li>A demonstrated tie to an <b>underestimated community</b> we serve (self-identified, in the applicant's own words), and a record of community service.</li>
+        <li>Undergraduate through graduate, plus a self-taught path. Craft and potential over pedigree.</li>
+      </ul></div>
+      <div class="rule"><h4><span class="rn">02</span> Selection principles</h4><ul>
+        <li>Judge <span class="k">excellence, values, and trajectory</span>, who they could become, not only what they have shipped.</li>
+        <li><b>Elite by depth, never by scarcity.</b> We do not publicize how many we decline. No "only the few" language, ever.</li>
+        <li>A human decides every scholar. AI may help organize an application; it never rejects one.</li>
+      </ul></div>
+      <div class="rule"><h4><span class="rn">03</span> The scholar arc</h4><ul>
+        <li><b>Scholar</b> (year one): curriculum, triangle buddy group, a 1:1 industry mentor, GDC capstone.</li>
+        <li><b>Fellow</b> (year two, selective): a deeper build and a paid opportunity or placement.</li>
+        <li><b>Mentor</b> (alumni): give back to the next cohort. The give-back is a lifelong membership, not a transaction.</li>
+      </ul></div>
+      <div class="rule"><h4><span class="rn">04</span> AI empowerment (the throughline)</h4><ul>
+        <li>Every scholar ships <b>one AI-empowered capstone</b> and learns human-in-the-loop direction.</li>
+        <li>The "AI in the Studio" module (with Take-Two) is core curriculum, taught as amplification, not replacement.</li>
+        <li>GGP publishes what it learns, so the program leads the field, not just its own cohort.</li>
+      </ul></div>
+      <div class="rule"><h4><span class="rn">05</span> Named funds (for personal foundations)</h4><ul>
+        <li>A donor may <b>name a scholarship</b> (the Carter Lipscomb Scholars is the first, honoring a beloved mentor).</li>
+        <li>High touch by design: meet-your-scholar, an annual letter in the scholar's own words, a multi-year relationship.</li>
+        <li><b>Values guardrail:</b> a named fund honors GGP's values and belonging. No condition may narrow who is welcome.</li>
+      </ul></div>
+      <div class="rule"><h4><span class="rn">06</span> Corporate sponsorship</h4><ul>
+        <li>Tiers: <span class="k">named cohort, track sponsor, AI-module underwriter, mentoring seats</span> for the sponsor's employees.</li>
+        <li>Recognition at the apex of the Directory; a coalition welcome (EA, ESA, and others) rather than exclusivity.</li>
+        <li>Outcomes dashboard: placements, projects shipped, scholars advanced to Fellow and Mentor.</li>
+      </ul></div>
+      <div class="rule"><h4><span class="rn">07</span> Funder stewardship</h4><ul>
+        <li><span class="k">Personal:</span> intimacy, story, the human. <span class="k">Corporate:</span> outcomes, brand, coalition. Two lanes, one program.</li>
+        <li>One 20th-anniversary narrative and one deck, so partners fund a program, not a line item.</li>
+      </ul></div>
+      <div class="rule"><h4><span class="rn">08</span> Dignity and data</h4><ul>
+        <li>Identity self-identification is <b>never</b> used to exclude, only to serve and to understand who we reach.</li>
+        <li>Language is fixed: <b>underestimated</b>, not underrepresented; <b>belonging</b>, not DEI; gratitude and coalition, never scarcity.</li>
+        <li>Chosen names and pronouns are honored everywhere, from the application to the stage at GDC.</li>
+      </ul></div>
+    </div>
+    <div class="callout" style="margin-top:16px">
+      <div class="lbl" style="color:var(--deep2)">Governance</div>
+      <p style="margin:.3em 0 0;font-size:14.5px">Gordon Bellamy, founder and vision. <b>Alex Rogers</b>, mentorship and scholar experience (the CYSTEM spine, preserved). Eric Francksen, executive producer. Sinjin Bain, a defined role rolling into GGP (Collegiate Games Challenge revival under discussion). The Carter Lipscomb strand co-developed with Phil Rosenberg and Carter's circle.</p>
+    </div>
+  </section>
+
+  <hr class="thin">
+
+  <section id="kal">
+    <div class="lbl">The application</div>
+    <h2>Kaleidoscope questions for prospective scholars</h2>
+    <p style="color:var(--soft)">Written to the values: dignity, belonging, AI empowerment, and the promise the room insisted on, that elite here is a welcome. Short where it can be, so the door feels open.</p>
+    <div class="kal" style="margin-top:16px">
+      <div class="kgrp">
+        <div class="gh">A · Who you are</div>
+        <div class="q"><span class="qn">1</span><span class="qt">Your legal name, and the name you go by. Your pronouns, if you wish to share them.<span class="why">Chosen name and pronouns honored from the first field onward.</span></span></div>
+        <div class="q"><span class="qn">2</span><span class="qt">Where you study or work, your level (undergraduate, graduate, recent alum, self-taught), and your location.</span></div>
+        <div class="q"><span class="qn">3</span><span class="qt">In your own words, which community or communities are you part of? <span class="why">Self-identified, optional, and never used to exclude, only to serve.</span></span></div>
+      </div>
+      <div class="kgrp">
+        <div class="gh">B · Your craft</div>
+        <div class="q"><span class="qn">4</span><span class="qt">Your discipline: design, development, art, audio, production, writing, esports, content creation, or another path.</span></div>
+        <div class="q"><span class="qn">5</span><span class="qt">Share a link to your work, and describe one project you are proudest of and your exact role in it. <span class="why">150 words. We read for craft and for potential, not polish alone.</span></span></div>
+        <div class="q"><span class="qn">6</span><span class="qt">A game, tool, or experience you wish existed, and why it matters to you. <span class="why">200 words.</span></span></div>
+      </div>
+      <div class="kgrp">
+        <div class="gh">C · AI empowerment</div>
+        <div class="q"><span class="qn">7</span><span class="qt">How do you use AI in your creative or technical work today, and where do you want to get better? If you have not started, what would you try first? <span class="why">200 words. There is no wrong answer. This is what we teach.</span></span></div>
+        <div class="q"><span class="qn">8</span><span class="qt">AI can amplify a creator or replace one. How do you want to work with it so it makes you more yourself, not less? <span class="why">150 words.</span></span></div>
+      </div>
+      <div class="kgrp">
+        <div class="gh">D · Community and character</div>
+        <div class="q"><span class="qn">9</span><span class="qt">Community service is core to GGP. Describe how you show up for a community you care about. <span class="why">150 words.</span></span></div>
+        <div class="q"><span class="qn">10</span><span class="qt">Tell us about a setback and what it taught you. <span class="why">200 words. We read for resilience, not perfection.</span></span></div>
+      </div>
+      <div class="kgrp">
+        <div class="gh">E · Fit and support</div>
+        <div class="q"><span class="qn">11</span><span class="qt">Which path fits you best, the year-long deep track, the GDC-week track, the civic and impact track, or "help me choose"? Tell us why.</span></div>
+        <div class="q"><span class="qn">12</span><span class="qt">What would this scholarship change for you? <span class="why">150 words. Opportunity and need, told with dignity, never a means test.</span></span></div>
+        <div class="q"><span class="qn">13</span><span class="qt">One reference who can speak to your character or your craft (name, relationship, contact). A second is welcome, not required.</span></div>
+        <div class="q"><span class="qn">14</span><span class="qt">Anything else we should know, including any access needs, so we can support you fully.<span class="why">The last word is yours, and it signals we plan to meet you where you are.</span></span></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p><b>Status:</b> internal working design, not yet a funder-facing or public document. The four merged strands, the Take-Two commitment ($80K plus Directory lead sponsorship), the Houser exit, and the Carter Lipscomb memorial are drawn from the July 13 deep-research dossier (reports/2026-07-13-ggp-scholars-directory-deep-research.md), which carries the primary-source receipts. The roundtable voices are perspective role-plays to pressure-test the design, not quotations from the named people. Program name, cohort sizes, and dollar figures per named fund are decisions still open to you.</p>
+  </footer>
+
+</div>
+</body>
+</html>

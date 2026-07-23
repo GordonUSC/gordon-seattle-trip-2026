@@ -1,0 +1,338 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The Dawn Set</title>
+<style>
+:root{
+ --void:#060B1E; --teal:#2EE6B7; --violet:#8C7BFF; --magenta:#FF4FC8; --gold:#FFB65C; --white:#EDF3FF;
+ --disp:"Avenir Next Condensed","Arial Narrow",system-ui,sans-serif;
+ --body:-apple-system,BlinkMacSystemFont,system-ui,"Segoe UI",sans-serif;
+ --mono:ui-monospace,"SF Mono",Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--void);color:var(--white);font-family:var(--body);font-size:18px;line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+#sky{position:fixed;inset:0;z-index:0;display:block;width:100vw;height:100vh}
+#veil{position:fixed;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse 100% 60% at 50% 120%,rgba(46,230,183,0.06),transparent 60%)}
+main{position:relative;z-index:2}
+.sec{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:80px 22px;max-width:780px;margin:0 auto;opacity:0;transform:translateY(30px);transition:opacity 1.2s cubic-bezier(.16,1,.3,1),transform 1.2s cubic-bezier(.16,1,.3,1)}
+.sec.in{opacity:1;transform:none}
+.organ{font-family:var(--mono);font-size:12px;letter-spacing:.34em;text-transform:uppercase;color:var(--teal);margin-bottom:16px}
+h1{font-family:var(--disp);font-weight:800;font-size:clamp(40px,11vw,88px);letter-spacing:.02em;text-transform:uppercase;margin:0;line-height:.98}
+.title{font-family:var(--disp);font-weight:800;font-size:clamp(30px,8vw,60px);letter-spacing:.03em;text-transform:uppercase;margin:0 0 18px;line-height:1}
+p{max-width:56ch;margin:0 0 16px;color:#cfd8ea}
+p b{color:var(--white)}
+.stat{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.bignum{font-family:var(--disp);font-weight:800;font-size:clamp(52px,15vw,120px);color:var(--white);letter-spacing:.01em;line-height:1;font-variant-numeric:tabular-nums}
+.sub{font-family:var(--mono);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:#8ea0c4}
+.card{background:rgba(12,20,42,.66);border:1px solid rgba(140,123,255,.28);border-radius:16px;padding:22px 24px;margin-top:22px;backdrop-filter:blur(7px);max-width:520px}
+.guesses{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+.g{font-family:var(--mono);font-size:15px;background:rgba(46,230,183,.08);border:1px solid rgba(46,230,183,.35);color:var(--teal);border-radius:30px;padding:11px 20px;cursor:pointer;transition:all .3s}
+.g:hover{background:rgba(46,230,183,.18)}
+.g.right{background:var(--teal);color:#04121a;border-color:var(--teal)}
+.g.wrong{opacity:.4}
+.reveal-line{min-height:1.6em;color:var(--gold);font-family:var(--body);font-style:italic;margin-top:14px}
+.stars-named{display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:center;margin-top:20px;max-width:560px}
+.named{font-family:var(--disp);font-weight:800;text-transform:uppercase;letter-spacing:.05em;font-size:clamp(16px,4vw,26px);color:var(--gold);opacity:.55;transition:opacity .5s,text-shadow .5s;cursor:default}
+.named.lit{opacity:1;text-shadow:0 0 18px rgba(255,182,92,.7)}
+.slider,input[type=range]{width:min(420px,80vw);accent-color:var(--gold)}
+.holdbtn{margin-top:20px;font-family:var(--mono);font-size:14px;letter-spacing:.1em;text-transform:uppercase;background:rgba(140,123,255,.12);border:1px solid rgba(140,123,255,.4);color:var(--violet);border-radius:14px;padding:16px 26px;cursor:pointer;user-select:none;-webkit-user-select:none}
+.holdbtn.held{background:rgba(255,79,200,.16);border-color:var(--magenta);color:var(--magenta)}
+.hint{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#6f7fa4;margin-top:22px}
+.enter{margin-top:30px;font-family:var(--mono);font-size:14px;letter-spacing:.16em;text-transform:uppercase;color:var(--void);background:var(--teal);border:none;border-radius:40px;padding:18px 34px;cursor:pointer;animation:pulse 2.4s ease-in-out infinite;box-shadow:0 0 40px -6px rgba(46,230,183,.6)}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:.92}50%{transform:scale(1.05);opacity:1}}
+.opencopy{font-family:var(--mono);font-size:14px;letter-spacing:.06em;color:#9fb0d4;min-height:1.6em;margin:6px 0}
+#name-c{margin:8px 0 4px}
+.creed{font-family:var(--disp);font-weight:800;text-transform:uppercase;font-size:clamp(20px,5vw,34px);line-height:1.15;letter-spacing:.02em;margin:8px 0}
+.creed span{display:block;opacity:0;transform:translateY(14px);transition:opacity 1s,transform 1s}
+.creed span.in{opacity:1;transform:none}
+#finalq{font-family:var(--disp);font-weight:800;text-transform:uppercase;font-size:clamp(24px,6vw,42px);color:var(--gold);letter-spacing:.02em;margin-top:30px;text-shadow:0 0 24px rgba(255,182,92,.5)}
+#lightfield{position:relative;width:min(560px,90vw);height:200px;margin-top:20px}
+#ctrls{position:fixed;top:14px;right:14px;z-index:20;display:flex;gap:8px}
+#ctrls button{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;background:rgba(6,11,30,.7);border:1px solid rgba(237,243,255,.22);color:#9fb0d4;border-radius:20px;padding:8px 12px;cursor:pointer;backdrop-filter:blur(6px)}
+#cap{position:fixed;left:0;right:0;bottom:0;z-index:19;pointer-events:none;padding:0 16px 18px}
+#cap .box{max-width:760px;margin:0 auto;background:rgba(6,11,30,.82);border:1px solid rgba(140,123,255,.3);border-radius:14px;padding:12px 18px;transform:translateY(150%);transition:transform .5s cubic-bezier(.16,1,.3,1);backdrop-filter:blur(8px)}
+#cap.show .box{transform:none}
+#cap .who{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);margin-bottom:3px}
+#cap .txt{font-size:15px;color:var(--white)}
+canvas.mini{display:block;margin:18px auto 0}
+@media (prefers-reduced-motion:reduce){.sec{transition:opacity .4s}#sky{opacity:.7}}
+</style></head>
+<body>
+<canvas id="sky"></canvas>
+<div id="veil"></div>
+<div id="ctrls"><button id="mute">Sound: on</button></div>
+<div id="cap"><div class="box"><div class="who">Narration</div><div class="txt" id="captxt"></div></div></div>
+
+<main>
+ <!-- OVERTURE -->
+ <section class="sec" id="overture" data-sec="overture">
+  <div class="opencopy" id="oc1">Every festival has a moment before the lights.</div>
+  <div class="title" id="name-c" style="min-height:1.1em"></div>
+  <div class="opencopy" id="oc2">You have five worlds. Tonight they play one set.</div>
+  <p style="color:#8ea0c4;max-width:34ch">One life. Five worlds. One of them never fades. Can you guess which?</p>
+  <button class="enter" id="enter">Tap to open the doors &#9835;</button>
+  <div class="hint">headphones up &middot; this is audiovisual</div>
+ </section>
+
+ <!-- HEART -->
+ <section class="sec" id="heart" data-sec="heart">
+  <div class="organ" style="color:var(--teal)">Stop 1 &middot; The Main Stage</div>
+  <h1 style="color:var(--teal)">HEART</h1>
+  <p>Instagram. Where they meet you first. <b>142,231</b> messages of celebration. And here is the tell.</p>
+  <div class="card">
+   <p style="margin:0">For every one post you saved for yourself, how many likes did you give away? Take a guess.</p>
+   <div class="guesses" id="heart-guess"><span class="g" data-v="10">10 to 1</span><span class="g" data-v="50">50 to 1</span><span class="g" data-v="115">115 to 1</span></div>
+   <div class="reveal-line" id="heart-reveal"></div>
+  </div>
+  <canvas class="mini" id="beams" width="320" height="150"></canvas>
+  <p class="sub" style="margin-top:14px">#edm 179 &nbsp;&middot;&nbsp; #instagay 127 &middot; the rave and the coming out are the same act of joy</p>
+  <p style="margin-top:18px;color:#8ea0c4;max-width:40ch">A thin ring of 9,925 cold satellites watches from above the crowd. Awareness, not shame. The party is not ending. The energy moved, and the next stage is already lit.</p>
+ </section>
+
+ <!-- HOME -->
+ <section class="sec" id="home" data-sec="home">
+  <div class="organ" style="color:var(--gold)">Stop 2 &middot; The Campfire</div>
+  <h1 style="color:var(--gold)">HOME</h1>
+  <div class="bignum" id="n818">0</div>
+  <div class="sub">messages on your home channel, 2016 to 2026</div>
+  <p style="margin-top:20px">This is the rarest number in your entire dataset. Not the biggest. <b>The flattest.</b> About 55,000 a year, four straight years, near zero fade. The research says people lose half their close friends every seven years. Your line does not bend.</p>
+  <input type="range" min="2022" max="2026" value="2022" step="1" id="years" aria-label="drag across your four years">
+  <div class="sub" id="yearlabel">drag across your four years</div>
+  <div class="stars-named" id="home-stars">
+   <span class="named">Mason</span><span class="named">Brennan</span><span class="named">Joe</span><span class="named">Vermillion</span><span class="named">Adam Arrigo</span><span class="named">Eric Hulsey</span><span class="named">Foster</span>
+  </div>
+  <p class="sub" style="margin-top:14px">Eric Hulsey: number one on Instagram AND top eight here. Deep on two channels.</p>
+ </section>
+
+ <!-- HANDS -->
+ <section class="sec" id="hands" data-sec="hands">
+  <div class="organ" style="color:var(--violet)">Stop 3 &middot; The Build Crew</div>
+  <h1 style="color:var(--violet)">HANDS</h1>
+  <p>LinkedIn. Purpose, and it is <b>surging</b>. 2025 was your biggest year since 2003: <span class="stat" style="color:var(--white)">7,017</span> messages, <span class="stat" style="color:var(--white)">1,058</span> new connections, a network of <span class="stat" style="color:var(--white)">643</span> founders and CEOs.</p>
+  <p style="font-family:var(--disp);font-weight:800;text-transform:uppercase;font-size:clamp(20px,5vw,30px);color:var(--white);letter-spacing:.03em">Not a ladder. A widening.</p>
+  <p style="color:#8ea0c4;max-width:44ch">Madden 95, where you put Black athletes on the box. IGDA, building the industry's commons. Now USC, teaching who gets to build the world. GGP the twenty year spine under all three.</p>
+  <canvas class="mini" id="rigging" width="340" height="200"></canvas>
+  <button class="holdbtn" id="holdnode">Press and hold your own node</button>
+  <div class="reveal-line" id="hands-reveal">You are the one bridge between four worlds that would not otherwise touch.</div>
+ </section>
+
+ <!-- MISSION -->
+ <section class="sec" id="mission" data-sec="mission">
+  <div class="organ" style="color:var(--teal)">Stop 4 &middot; Front of House</div>
+  <h1 style="color:var(--white)">MISSION</h1>
+  <p>Gmail. The desk where love notes with no ask sit beside introductions that move careers. You once moved <b>$50,000</b> for scholars inside a single email thread.</p>
+  <p style="font-family:var(--disp);font-weight:800;text-transform:uppercase;font-size:clamp(18px,5vw,28px);letter-spacing:.03em">Some people clear their inbox. You clear paths.</p>
+  <div id="lanterns" style="position:relative;width:min(520px,92vw);height:190px;margin-top:14px"></div>
+  <div class="hint" id="lantern-hint">tap the five glowing lanterns</div>
+  <div class="reveal-line" id="mission-reveal"></div>
+ </section>
+
+ <!-- MIND -->
+ <section class="sec" id="mind" data-sec="mind">
+  <div class="organ" style="color:var(--violet)">Stop 5 &middot; The Booth</div>
+  <h1 style="color:var(--violet)">MIND</h1>
+  <p>The machine, and the externalized mind. In one month, this booth ran the show.</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:12px;width:min(460px,92vw)">
+   <div><div class="bignum" style="font-size:clamp(34px,9vw,58px)" id="m1">0</div><div class="sub">sessions in a month</div></div>
+   <div><div class="bignum" style="font-size:clamp(34px,9vw,58px)" id="m2">0</div><div class="sub">things built</div></div>
+   <div><div class="bignum" style="font-size:clamp(34px,9vw,58px)" id="m3">0</div><div class="sub">memory files</div></div>
+   <div><div class="bignum" style="font-size:clamp(34px,9vw,58px)" id="m4">0</div><div class="sub">turns, one session</div></div>
+  </div>
+  <p style="margin-top:22px;max-width:46ch">Externalizing the mind is not outsourcing the soul. It is what every headliner does when the show outgrows one pair of hands. This page you are standing in is one of the things the booth built.</p>
+  <div class="sub" style="margin-top:18px">the room is yours</div>
+  <input type="range" min="0" max="100" value="55" id="fader" aria-label="mix the room">
+  <div class="sub">drag to mix the actual sound</div>
+ </section>
+
+ <!-- DAWN -->
+ <section class="sec" id="dawn" data-sec="dawn">
+  <div class="organ" style="color:var(--gold)">The Dawn Set</div>
+  <p class="sub">said plainly, only now, after every proof has been felt</p>
+  <h1 style="color:var(--white);font-size:clamp(38px,11vw,84px)">GENERATIVITY</h1>
+  <p style="max-width:38ch">Thirty years acquiring a life. Now the turn: giving one back.</p>
+  <div class="creed" id="creed">
+   <span>The heart brings them in.</span>
+   <span>The home keeps them for years.</span>
+   <span>The hands build something bigger than one life.</span>
+  </div>
+  <p style="color:var(--gold);font-style:italic">A giver whose love compounds rather than expires.</p>
+  <div id="lightfield"></div>
+  <div class="hint">tap the dark, and watch what one light does</div>
+  <div id="finalq" style="opacity:0;transition:opacity 2s">Whose light do you turn on next?</div>
+  <p class="stat" id="kept-line" style="color:#9fb0d4;margin-top:26px;min-height:1.4em"></p>
+ </section>
+</main>
+
+<script>
+/* ============ AUDIO ENGINE (Web Audio, generative, no files) ============ */
+var AC=null, master=null, lp=null, lpLFO=null, pad=[], padGain=null, started=false, muted=false, curOrgan="overture";
+var kickTimer=null, arpTimer=null, fireTimer=null;
+function initAudio(){
+ if(started) return; started=true;
+ try{
+  AC=new (window.AudioContext||window.webkitAudioContext)();
+  master=AC.createGain(); master.gain.value=0.0;
+  var comp=AC.createDynamicsCompressor();
+  master.connect(comp); comp.connect(AC.destination);
+  // fake reverb: 3 feedback delays with internal highpass
+  var mix=AC.createGain(); mix.gain.value=0.9; mix.connect(master);
+  [0.31,0.47,0.73].forEach(function(t){
+   var d=AC.createDelay(); d.delayTime.value=t; var fb=AC.createGain(); fb.gain.value=0.32;
+   var hp=AC.createBiquadFilter(); hp.type="highpass"; hp.frequency.value=300;
+   d.connect(hp); hp.connect(fb); fb.connect(d); d.connect(master); mix.connect(d);
+  });
+  lp=AC.createBiquadFilter(); lp.type="lowpass"; lp.frequency.value=400; lp.Q.value=0.7; lp.connect(mix);
+  lpLFO=AC.createOscillator(); var lfoG=AC.createGain(); lfoG.gain.value=60; lpLFO.frequency.value=0.05; lpLFO.connect(lfoG); lfoG.connect(lp.frequency); lpLFO.start();
+  padGain=AC.createGain(); padGain.gain.value=0.12; padGain.connect(lp);
+  // two detuned oscillators, root D
+  [{f:73.42,t:"triangle",d:-6},{f:146.83,t:"sawtooth",d:6}].forEach(function(o){
+   var osc=AC.createOscillator(); osc.type=o.t; osc.frequency.value=o.f; osc.detune.value=o.d;
+   var g=AC.createGain(); g.gain.value=0.5; osc.connect(g); g.connect(padGain); osc.start(); pad.push(osc);
+  });
+  master.gain.setTargetAtTime(0.6,AC.currentTime,2.5);
+ }catch(e){ started=false; }
+}
+function ramp(param,val,t){ if(AC) param.setTargetAtTime(val,AC.currentTime,t); }
+function stopTimers(){ [kickTimer,arpTimer,fireTimer].forEach(function(x){if(x)clearInterval(x);}); kickTimer=arpTimer=fireTimer=null; }
+function kick(vol){ if(!AC)return; var o=AC.createOscillator(),g=AC.createGain(); o.frequency.setValueAtTime(120,AC.currentTime); o.frequency.exponentialRampToValueAtTime(48,AC.currentTime+0.11); g.gain.setValueAtTime((vol||0.9)*0.9,AC.currentTime); g.gain.exponentialRampToValueAtTime(0.001,AC.currentTime+0.18); o.connect(g); g.connect(master); o.start(); o.stop(AC.currentTime+0.2);
+ if(padGain){ padGain.gain.setValueAtTime(0.12,AC.currentTime); padGain.gain.linearRampToValueAtTime(0.10,AC.currentTime+0.02); padGain.gain.linearRampToValueAtTime(0.12,AC.currentTime+0.22);} }
+function crackle(){ if(!AC)return; var b=AC.createBufferSource(),buf=AC.createBuffer(1,AC.sampleRate*0.06,AC.sampleRate),d=buf.getChannelData(0); for(var i=0;i<d.length;i++)d[i]=(Math.random()*2-1); b.buffer=buf; var f=AC.createBiquadFilter(); f.type="lowpass"; f.frequency.value=200+Math.random()*400; var g=AC.createGain(); g.gain.value=0.05; b.connect(f); f.connect(g); g.connect(master); b.start(); }
+function fmPluck(freq){ if(!AC)return; var c=AC.createOscillator(),m=AC.createOscillator(),mg=AC.createGain(),g=AC.createGain(); m.frequency.value=freq*2; mg.gain.value=freq*1.5; m.connect(mg); mg.connect(c.frequency); c.frequency.value=freq; g.gain.setValueAtTime(0.14,AC.currentTime); g.gain.exponentialRampToValueAtTime(0.001,AC.currentTime+0.4); c.connect(g); g.connect(lp); c.start(); m.start(); c.stop(AC.currentTime+0.45); m.stop(AC.currentTime+0.45); }
+function fmBell(freq){ if(!AC)return; var c=AC.createOscillator(),m=AC.createOscillator(),mg=AC.createGain(),g=AC.createGain(); m.frequency.value=freq*2; mg.gain.value=freq*3; m.connect(mg); mg.connect(c.frequency); c.frequency.value=freq; g.gain.setValueAtTime(0.18,AC.currentTime); g.gain.exponentialRampToValueAtTime(0.001,AC.currentTime+2); c.connect(g); g.connect(master); c.start(); m.start(); c.stop(AC.currentTime+2); m.stop(AC.currentTime+2); }
+var PENT=[293.66,329.63,392.00,440.00,587.33]; // D major pentatonic
+var DMIN=[293.66,349.23,392.00,440.00,523.25];
+function setOrgan(name){
+ if(!AC||name===curOrgan) return; curOrgan=name; stopTimers();
+ if(name==="heart"){ ramp(lp.frequency,900,3); ramp(padGain.gain,0.12,2); kickTimer=setInterval(function(){kick(0.55);},492); }
+ else if(name==="home"){ ramp(lp.frequency,520,4); pad.forEach(function(o,i){ o.frequency.setTargetAtTime(i?196:98,AC.currentTime,3);}); fireTimer=setInterval(function(){ if(Math.random()<0.6)crackle(); },260); }
+ else if(name==="hands"){ pad.forEach(function(o,i){o.frequency.setTargetAtTime(i?146.83:73.42,AC.currentTime,3);}); ramp(lp.frequency,1100,3); var st=0; arpTimer=setInterval(function(){ fmPluck(DMIN[st%DMIN.length]); st++; },312); }
+ else if(name==="mission"){ ramp(lp.frequency,700,4); }
+ else if(name==="mind"){ ramp(lp.frequency,2200,3); }
+ else if(name==="dawn"){ pad.forEach(function(o,i){o.frequency.setTargetAtTime(i?164.81:82.41,AC.currentTime,4);}); ramp(lp.frequency,4000,20); var da=0; kickTimer=setInterval(function(){kick(0.3);},545); arpTimer=setInterval(function(){ if(Math.random()<0.4){var o=AC.createOscillator(),g=AC.createGain(); o.type="sine"; o.frequency.setValueAtTime(2000+Math.random()*2000,AC.currentTime); o.frequency.exponentialRampToValueAtTime(3500,AC.currentTime+0.15); g.gain.setValueAtTime(0.05,AC.currentTime); g.gain.exponentialRampToValueAtTime(0.001,AC.currentTime+0.3); o.connect(g); g.connect(master); o.start(); o.stop(AC.currentTime+0.3);} },900); }
+ else { ramp(lp.frequency,400,3); }
+}
+document.getElementById("mute").onclick=function(){ muted=!muted; this.textContent="Sound: "+(muted?"off":"on"); if(AC) master.gain.setTargetAtTime(muted?0:0.6,AC.currentTime,0.4); };
+
+/* ============ NARRATION ============ */
+var VOICE=null;
+function pickV(){ var vs=(window.speechSynthesis&&speechSynthesis.getVoices())||[]; VOICE=vs.find(function(v){return /daniel|alex|google uk english male|samantha/i.test(v.name);})||vs.find(function(v){return v.lang.indexOf("en")===0;})||vs[0]; }
+if(window.speechSynthesis){ speechSynthesis.onvoiceschanged=pickV; pickV(); }
+var NARR={
+ overture:"This is one night through five worlds. All of them are yours. Walk the grounds with me.",
+ heart:"The heart is the main stage. It is where they meet you first. One hundred forty two thousand messages, and here is the tell. For every one thing you saved for yourself, you gave one hundred and fifteen away. You have always played for the crowd, not the mirror.",
+ home:"Away from the noise, the fire. The research says people lose half their close friends every seven years. Your line does not bend. Three hundred seventy seven thousand messages, and nobody fades. You keep what everyone else loses.",
+ hands:"Behind the barricade, the build crew. Twenty twenty five was your biggest year since two thousand three. And you are the one bridge between four worlds that would not otherwise touch. Pull you out, and the lights go dark.",
+ mission:"Front of house. Love notes with no ask, next to introductions that change careers. You once moved fifty thousand dollars for scholars inside a single email. Most people write emails. You release lanterns.",
+ mind:"The booth. Five hundred and eighty sessions in one month. Thirty six things built. You did not buy a tool. You hired a booth engineer, so the show could get bigger than one pair of hands.",
+ dawn:"Here is the story underneath all of it. You spent thirty years gathering a life. Now you are giving one back. The heart brings them in. The home keeps them. The hands build the door, and you hold it open behind you."
+};
+var narrated={};
+function narrate(name){ var t=NARR[name]; if(!t)return; var cap=document.getElementById("cap"); document.getElementById("captxt").textContent=t; cap.classList.add("show"); clearTimeout(cap._t); cap._t=setTimeout(function(){cap.classList.remove("show");},Math.max(6000,t.length*55));
+ if(!muted&&window.speechSynthesis){ try{ var u=new SpeechSynthesisUtterance(t); u.voice=VOICE; u.rate=0.94; u.pitch=0.96; speechSynthesis.speak(u);}catch(e){} } }
+
+/* ============ AURORA SKY ============ */
+var sky=document.getElementById("sky"),sx=sky.getContext("2d"),W,H,stars=[],t0=0,scrollP=0;
+function resize(){ W=sky.width=innerWidth; H=sky.height=innerHeight; stars=[]; for(var i=0;i<160;i++)stars.push({x:Math.random(),y:Math.random(),z:Math.random()*3,s:Math.random()*1.4+0.2}); }
+resize(); addEventListener("resize",resize);
+var reduce=matchMedia("(prefers-reduced-motion:reduce)").matches;
+function lerp(a,b,t){return a+(b-a)*t;}
+// palette drift: indigo night -> dawn (teal/violet with gold horizon) keyed to scrollP
+function draw(ts){
+ var t=ts*0.0004; scrollP=Math.min(1,(scrollY)/(document.body.scrollHeight-innerHeight||1));
+ // base
+ var dawn=Math.max(0,(scrollP-0.82)/0.18);
+ var topR=lerp(6,20,dawn),topG=lerp(11,24,dawn),topB=lerp(30,54,dawn);
+ var g=sx.createLinearGradient(0,0,0,H);
+ g.addColorStop(0,"rgb("+(topR|0)+","+(topG|0)+","+(topB|0)+")");
+ g.addColorStop(1,"rgb("+(lerp(6,60,dawn)|0)+","+(lerp(11,40,dawn)|0)+","+(lerp(30,30,dawn)|0)+")");
+ sx.fillStyle=g; sx.fillRect(0,0,W,H);
+ // dawn gold horizon band
+ if(dawn>0){ var hb=sx.createLinearGradient(0,H*0.6,0,H); hb.addColorStop(0,"rgba(255,182,92,0)"); hb.addColorStop(1,"rgba(255,182,92,"+(0.28*dawn)+")"); sx.fillStyle=hb; sx.fillRect(0,H*0.6,W,H*0.4); }
+ // stars parallax
+ for(var i=0;i<stars.length;i++){ var st=stars[i]; var py=(st.y*H + scrollY*0.02*(st.z+0.3))%H; sx.globalAlpha=0.4+0.5*Math.sin(t*2+i)*0.5+0.3; sx.fillStyle="#EDF3FF"; sx.fillRect(st.x*W, py, st.s, st.s); }
+ sx.globalAlpha=1;
+ // aurora ribbons (curl-ish via layered sines), hue keyed to scroll
+ if(!reduce){
+  var hueBase = lerp(165, 265, scrollP); // teal -> violet
+  for(var r=0;r<3;r++){
+   sx.beginPath();
+   var yb=H*(0.32+r*0.12);
+   for(var x=0;x<=W;x+=14){
+    var y=yb + Math.sin(x*0.006 + t*(1+r*0.4) + r)*40 + Math.sin(x*0.013 - t*0.7)*22;
+    x===0?sx.moveTo(x,y):sx.lineTo(x,y);
+   }
+   var hue=hueBase + r*22;
+   var grad=sx.createLinearGradient(0,yb-60,0,yb+60);
+   grad.addColorStop(0,"hsla("+hue+",80%,60%,0)");
+   grad.addColorStop(0.5,"hsla("+hue+",85%,62%,"+(0.16*auroraBright)+")");
+   grad.addColorStop(1,"hsla("+hue+",80%,60%,0)");
+   sx.strokeStyle=grad; sx.lineWidth=48; sx.lineCap="round"; sx.globalCompositeOperation="lighter"; sx.stroke();
+  }
+  sx.globalCompositeOperation="source-over";
+ }
+ // ripples
+ for(var k=ripples.length-1;k>=0;k--){ var rp=ripples[k]; rp.r+=6; rp.a-=0.02; if(rp.a<=0){ripples.splice(k,1);continue;} sx.beginPath(); sx.arc(rp.x,rp.y,rp.r,0,7); sx.strokeStyle="hsla("+rp.h+",90%,65%,"+rp.a+")"; sx.lineWidth=2; sx.stroke(); }
+ requestAnimationFrame(draw);
+}
+var auroraBright=1, ripples=[];
+function ripple(x,y,h){ ripples.push({x:x,y:y,r:4,a:0.7,h:h||170}); }
+requestAnimationFrame(draw);
+
+/* ============ SECTION ACTIVATION ============ */
+var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("in"); var s=e.target.dataset.sec; if(s){ setOrgan(s); if(!narrated[s]){narrated[s]=1; setTimeout(function(){narrate(s);},700);} onEnter(s); } } }); },{threshold:0.45});
+document.querySelectorAll(".sec").forEach(function(s){io.observe(s);});
+
+/* ============ COUNT-UP ============ */
+function countUp(el,to,dur){ var st=null; function step(ts){ if(!st)st=ts; var p=Math.min(1,(ts-st)/(dur||1400)); var e=1-Math.pow(1-p,3); el.textContent=Math.round(to*e).toLocaleString(); if(p<1)requestAnimationFrame(step); else el.textContent=to.toLocaleString(); } requestAnimationFrame(step); }
+var did={};
+function onEnter(s){
+ if(s==="home"&&!did.home){did.home=1; countUp(document.getElementById("n818"),377662);}
+ if(s==="mind"&&!did.mind){did.mind=1; countUp(document.getElementById("m1"),580); countUp(document.getElementById("m2"),36); countUp(document.getElementById("m3"),191); countUp(document.getElementById("m4"),9574);}
+ if(s==="dawn"&&!did.dawn){did.dawn=1; var sp=document.querySelectorAll("#creed span"); sp.forEach(function(x,i){setTimeout(function(){x.classList.add("in");},600+i*900);}); setTimeout(function(){document.getElementById("finalq").style.opacity=1;},3400); typeLine(document.getElementById("kept-line"),"Kept: everything that matters. Given: more than you kept. Fading: nothing.",4200);}
+}
+function typeLine(el,txt,delay){ setTimeout(function(){ var i=0; (function go(){ if(i<=txt.length){el.textContent=txt.slice(0,i);i++;setTimeout(go,32);} })(); },delay||0); }
+
+/* ============ OVERTURE: open the doors ============ */
+document.getElementById("enter").onclick=function(){ initAudio(); this.style.display="none";
+ var nm="GORDON", el=document.getElementById("name-c"), i=0;
+ (function draw(){ if(i<=nm.length){ el.textContent=nm.slice(0,i); i++; setTimeout(draw,120);} })();
+ narrated.overture=1; setTimeout(function(){narrate("overture");},400);
+ ripple(innerWidth/2,innerHeight/2,170);
+};
+
+/* ============ HEART: guess the ratio + beams ============ */
+document.querySelectorAll("#heart-guess .g").forEach(function(g){ g.onclick=function(){ initAudio(); var v=this.dataset.v; document.querySelectorAll("#heart-guess .g").forEach(function(x){ x.classList.add(x.dataset.v==="115"?"right":"wrong"); }); var r=document.getElementById("heart-reveal"); r.textContent = v==="115" ? "Yes. 115 to 1. You play for the crowd, not the mirror." : "Higher. 115 to 1. You give away far more than you keep."; fmBell(v==="115"?587:440); ripple(innerWidth/2,innerHeight*0.5,168); }; });
+(function(){ var c=document.getElementById("beams"),x=c.getContext("2d"); function d(ts){ x.clearRect(0,0,320,150); [[130,179,"#2EE6B7","#edm"],[190,127,"#FF4FC8","#instagay"]].forEach(function(b,i){ var h=(b[1]/179)*120; var fl=Math.sin(ts*0.003+i)*4; x.fillStyle=b[2]; x.globalAlpha=0.85; x.fillRect(b[0]-14,150-h+fl,28,h); x.globalAlpha=1; x.fillStyle="#EDF3FF"; x.font="10px ui-monospace"; x.textAlign="center"; x.fillText(b[1],b[0],150-h-8+fl); }); requestAnimationFrame(d);} requestAnimationFrame(d); })();
+
+/* ============ HOME: years slider + named stars ============ */
+var yrs={2022:56086,2023:52885,2024:55943,2025:55010,2026:32325};
+document.getElementById("years").oninput=function(){ var y=+this.value; document.getElementById("yearlabel").textContent=y+": "+yrs[y].toLocaleString()+" messages, and nobody fades"; var named=document.querySelectorAll("#home-stars .named"); var lit=Math.min(named.length, 3+(y-2022)); named.forEach(function(n,i){ n.classList.toggle("lit", i<lit); }); if(AC&&Math.random()<0.7)crackle(); };
+document.querySelectorAll("#home-stars .named").forEach(function(n){ n.addEventListener("mouseenter",function(){n.classList.add("lit");}); });
+
+/* ============ HANDS: rigging + hold your node ============ */
+(function(){ var c=document.getElementById("rigging"),x=c.getContext("2d"); var worlds=[[60,50,"Studios"],[280,50,"Big Tech"],[60,160,"Academia"],[280,160,"Queer Talent"]]; var held=false; window._handsHeld=function(v){held=v;}; function d(ts){ x.clearRect(0,0,340,200); // bridges through center (Gordon)
+  x.strokeStyle=held?"rgba(255,79,200,0.12)":"rgba(140,123,255,0.5)"; x.lineWidth=1.5; worlds.forEach(function(w){ x.beginPath(); x.moveTo(170,105); x.lineTo(w[0],w[1]); x.stroke(); });
+  worlds.forEach(function(w){ x.fillStyle="#8C7BFF"; for(var k=0;k<5;k++){ x.globalAlpha=0.6; x.beginPath(); x.arc(w[0]+Math.cos(k+ts*0.001)*14, w[1]+Math.sin(k*1.3+ts*0.001)*12, 3,0,7); x.fill(); } x.globalAlpha=1; x.fillStyle="#EDF3FF"; x.font="9px ui-monospace"; x.textAlign="center"; x.fillText(w[2],w[0],w[1]-20); });
+  // center node (Gordon)
+  x.beginPath(); x.arc(170,105,held?4:8,0,7); x.fillStyle=held?"#3a2a44":"#FFB65C"; x.shadowColor="#FFB65C"; x.shadowBlur=held?0:18; x.fill(); x.shadowBlur=0;
+  requestAnimationFrame(d);} requestAnimationFrame(d); })();
+var hb=document.getElementById("holdnode");
+function holdOn(){ initAudio(); hb.classList.add("held"); window._handsHeld(true); document.getElementById("hands-reveal").textContent="Pull you out, and the lights go dark. That is not ego. That is a load-bearing wall."; if(arpTimer){clearInterval(arpTimer);arpTimer=null;} }
+function holdOff(){ hb.classList.remove("held"); window._handsHeld(false); document.getElementById("hands-reveal").textContent="You are the one bridge between four worlds that would not otherwise touch."; setOrgan("_"); curOrgan="_"; setOrgan("hands"); }
+hb.addEventListener("mousedown",holdOn); hb.addEventListener("touchstart",function(e){e.preventDefault();holdOn();});
+hb.addEventListener("mouseup",holdOff); hb.addEventListener("mouseleave",function(){if(hb.classList.contains("held"))holdOff();}); hb.addEventListener("touchend",holdOff);
+
+/* ============ MISSION: lanterns ============ */
+(function(){ var box=document.getElementById("lanterns"); var kinds=["A love note with no ask.","An introduction that moved a career.","A reconnection across years.","A fifty thousand dollar yes for scholars.","Persistence as craft."]; for(var i=0;i<14;i++){ var l=document.createElement("div"); var glow=i<5; l.style.cssText="position:absolute;width:16px;height:22px;border-radius:8px 8px 10px 10px;background:"+(glow?"rgba(255,182,92,0.9)":"rgba(255,182,92,0.25)")+";left:"+(6+Math.random()*88)+"%;top:"+(10+Math.random()*70)+"%;box-shadow:0 0 "+(glow?"16px":"4px")+" rgba(255,182,92,"+(glow?0.7:0.2)+");transition:transform 2s cubic-bezier(.16,1,.3,1),opacity 2s;cursor:"+(glow?"pointer":"default"); l._up=0; if(glow){ (function(l,txt){ l.onclick=function(){ if(l._up)return; l._up=1; initAudio(); fmBell(PENT[Math.floor(Math.random()*PENT.length)]); l.style.transform="translateY(-160px)"; l.style.opacity="0"; document.getElementById("mission-reveal").textContent=txt; ripple(box.getBoundingClientRect().left+parseFloat(l.style.left)/100*box.offsetWidth, box.getBoundingClientRect().top+80, 40); }; })(l,kinds[i]); } box.appendChild(l); } })();
+
+/* ============ MIND: live fader ============ */
+document.getElementById("fader").oninput=function(){ var v=+this.value/100; initAudio(); if(AC&&lp) lp.frequency.setTargetAtTime(300+v*4000,AC.currentTime,0.1); auroraBright=0.4+v*1.1; };
+
+/* ============ DAWN: send the light (compounding) ============ */
+(function(){ var f=document.getElementById("lightfield"); var pts=[]; for(var i=0;i<120;i++){ var d=document.createElement("div"); d.style.cssText="position:absolute;width:5px;height:5px;border-radius:50%;background:rgba(237,243,255,0.14);left:"+(Math.random()*96)+"%;top:"+(Math.random()*90)+"%;transition:all .8s"; d._on=0; f.appendChild(d); pts.push(d); }
+ function light(p){ if(p._on)return; p._on=1; p.style.background="#FFB65C"; p.style.boxShadow="0 0 12px rgba(255,182,92,0.9)"; p.style.transform="scale(1.6)"; initAudio(); fmBell(PENT[Math.floor(Math.random()*PENT.length)]); // compounding: after a breath, light two neighbors
+  setTimeout(function(){ var off=pts.filter(function(x){return !x._on;}); for(var k=0;k<2&&off.length;k++){ light(off[Math.floor(Math.random()*off.length)]); } },700); }
+ f.addEventListener("click",function(e){ var off=pts.filter(function(x){return !x._on;}); if(off.length) light(off[Math.floor(Math.random()*off.length)]); });
+})();
+</script>
+</body></html>

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>GGP × Hasbro Marketing XP · The Dragon House Broadcast · One Pager</title>
+<style>
+  :root {
+    --bg: #F7F1E1;
+    --ink: #1F1A24;
+    --burgundy: #7B1F2F;
+    --gold: #C9A24B;
+    --vermilion: #E63946;
+    --cream: #FAF6EF;
+    --rule: rgba(31, 26, 36, 0.14);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: #ECE3CC;
+    color: var(--ink);
+    font-family: "Inter", -apple-system, "Segoe UI", system-ui, sans-serif;
+    font-size: 12.5px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    padding: 32px 20px;
+  }
+  .page {
+    width: 8.5in;
+    min-height: 11in;
+    margin: 0 auto;
+    background: var(--bg);
+    padding: 0.55in 0.6in;
+    display: grid;
+    grid-template-rows: auto auto 1fr auto;
+    gap: 18px;
+    box-shadow: 0 8px 32px rgba(31, 26, 36, 0.18);
+  }
+  .display {
+    font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.05;
+  }
+  .eyebrow {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--burgundy);
+    font-weight: 700;
+  }
+  /* Masthead */
+  .masthead {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 2px solid var(--burgundy);
+    padding-bottom: 14px;
+  }
+  .masthead .logo {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 22px;
+    color: var(--burgundy);
+    font-weight: 600;
+    line-height: 1;
+  }
+  .masthead .logo .sub {
+    font-family: "Inter", sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(31, 26, 36, 0.6);
+    font-weight: 600;
+    display: block;
+    margin-top: 4px;
+  }
+  .masthead .meta {
+    text-align: right;
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(31, 26, 36, 0.6);
+    font-weight: 600;
+    line-height: 1.7;
+  }
+  /* Hero */
+  .hero {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 24px;
+    align-items: center;
+  }
+  .hero .title {
+    font-size: 38px;
+    color: var(--ink);
+  }
+  .hero .title .accent { color: var(--burgundy); }
+  .hero .quote {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 14px;
+    line-height: 1.35;
+    font-style: italic;
+    color: rgba(31, 26, 36, 0.78);
+    border-left: 3px solid var(--gold);
+    padding: 4px 0 4px 14px;
+  }
+  .hero .quote .attr {
+    font-style: normal;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--burgundy);
+    font-weight: 700;
+    display: block;
+    margin-top: 8px;
+  }
+  /* Body grid */
+  .body {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr 1fr;
+    gap: 22px;
+  }
+  .col {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .col h3 {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--ink);
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 6px;
+  }
+  .col p, .col li {
+    font-size: 11.5px;
+    line-height: 1.5;
+    color: rgba(31, 26, 36, 0.85);
+  }
+  .col ul { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+  .col li {
+    padding-left: 14px;
+    position: relative;
+  }
+  .col li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 5px;
+    height: 5px;
+    background: var(--gold);
+    border-radius: 50%;
+  }
+  .col .stat {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .col .stat .num {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 26px;
+    color: var(--burgundy);
+    font-weight: 500;
+    line-height: 1;
+  }
+  .col .stat .lbl {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(31, 26, 36, 0.6);
+    font-weight: 600;
+  }
+  /* Bands */
+  .band {
+    background: var(--cream);
+    border-left: 3px solid var(--burgundy);
+    padding: 12px 14px;
+    border-radius: 0 3px 3px 0;
+  }
+  .band .label {
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--burgundy);
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .band .text {
+    font-size: 11px;
+    line-height: 1.45;
+    color: var(--ink);
+  }
+  /* Beats compact */
+  .beats {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 6px 14px;
+    margin-top: 4px;
+  }
+  .beats .t {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 13px;
+    color: var(--burgundy);
+    font-weight: 500;
+  }
+  .beats .b {
+    font-size: 11.5px;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+  /* KPI strip */
+  .kpi-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .kpi-strip .kpi {
+    background: var(--cream);
+    padding: 8px 10px;
+    border-top: 2px solid var(--gold);
+  }
+  .kpi-strip .kpi .num {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 24px;
+    color: var(--burgundy);
+    line-height: 1;
+  }
+  .kpi-strip .kpi .lbl {
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(31, 26, 36, 0.65);
+    font-weight: 600;
+    margin-top: 4px;
+  }
+  /* Footer */
+  .foot {
+    border-top: 2px solid var(--burgundy);
+    padding-top: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(31, 26, 36, 0.6);
+    font-weight: 600;
+  }
+  .foot .sign {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-style: italic;
+    font-size: 15px;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--ink);
+    font-weight: 500;
+  }
+  @media print {
+    html, body { background: white; padding: 0; }
+    .page { box-shadow: none; margin: 0; min-height: auto; }
+    .band, .kpi-strip .kpi, .col .stat .num { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Masthead -->
+  <div class="masthead">
+    <div class="logo">
+      Gay Gaming Professionals
+      <span class="sub">× Hasbro Marketing XP · Creators · June 2026</span>
+    </div>
+    <div class="meta">
+      The Dragon House Broadcast · June 2026<br>
+      A four-way collaboration · at the Dragon House
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div>
+      <div class="eyebrow">What June is</div>
+      <h1 class="title display">An intimate broadcast from the <span class="accent">Dragon Table</span>.</h1>
+    </div>
+    <div class="quote">
+      Come to Wisconsin. Join Gordon and Eric live around the Dragon Table. Broadcast to the XP community.
+      <span class="attr">Our paraphrase · for your correction</span>
+    </div>
+  </div>
+
+  <!-- Body -->
+  <div class="body">
+
+    <!-- Column 1: About GGP + Dragon Table -->
+    <div class="col">
+      <h3>About GGP</h3>
+      <p>A 501(c)(3) nonprofit, twenty years in service. Universal excellence, particular lens. Our lens — LGBTQ+ professionals and students in the games industry — positions us to serve and center underestimated communities. We are not niche. Eric Francksen, Executive Producer, lives in Wisconsin and hosts the Dragon House.</p>
+      <p style="color: var(--burgundy); font-weight: 600; font-size: 11px; line-height: 1.4;">Grateful to be in our third year of partnership with Wizards of the Coast. Hasbro CEO Chris Cocks and his son joined our community at Zero Proof 2025.</p>
+      <div class="stat"><span class="num">20</span><span class="lbl">Years in service</span></div>
+      <div class="stat"><span class="num">7</span><span class="lbl">Years of scholars</span></div>
+      <div class="stat"><span class="num">1</span><span class="lbl">2025 Forbes 30 / 30 Games (Joseph Kemp, Scholar Alum)</span></div>
+
+      <h3 style="margin-top: 6px;">The Dragon Table</h3>
+      <p>A custom Dungeons &amp; Dragons gaming table. Premiered at GDC March 2026. Now lives at the Dragon House in Wisconsin. Hasbro IP made personal by queer creators.</p>
+    </div>
+
+    <!-- Column 2: The session beats + brand mix -->
+    <div class="col">
+      <h3>The session, sixty minutes</h3>
+      <div class="beats">
+        <span class="t">0:00</span><span class="b">We open together. Casey welcomes XP, Eric welcomes us to the Dragon House.</span>
+        <span class="t">0:05</span><span class="b">Gordon shares GGP and the communities we serve.</span>
+        <span class="t">0:10</span><span class="b"><strong>The heart:</strong> Casey, Eric, and Gordon at the Dragon Table. Zero Proof Board Game Night and how GGP brings Hasbro brands to life with our community.</span>
+        <span class="t">0:45</span><span class="b">Marketer Q&amp;A. Curated together.</span>
+        <span class="t">0:55</span><span class="b">We close together. Hub pack handoff.</span>
+      </div>
+
+      <h3 style="margin-top: 6px;">Brands at the table</h3>
+      <div class="band">
+        <div class="label">Anchor</div>
+        <div class="text"><strong>Dungeons &amp; Dragons.</strong> Three years of receipts at Zero Proof. WotC's anchor since 2024.</div>
+      </div>
+      <div class="band">
+        <div class="label">Second</div>
+        <div class="text"><strong>Magic: The Gathering.</strong> Across every surface at Zero Proof 2025. The WotC neighbor that completes the dual-brand story.</div>
+      </div>
+      <div class="band" style="border-left-style: dashed;">
+        <div class="label">Third · for you to choose</div>
+        <div class="text"><strong>A wedge brand for portfolio reach.</strong> Monopoly Go (one of the largest games in the world), NERF, or Transformers. Casey and Steven decide with brand counterparts.</div>
+      </div>
+    </div>
+
+    <!-- Column 3: Hub pack + KPI + Receipts -->
+    <div class="col">
+      <h3>The Hub pack · 6 weeks</h3>
+      <ul>
+        <li>The broadcast, packaged + 90-second highlight cut</li>
+        <li>"Who is GGP" one-pager for internal sharing</li>
+        <li>POV: underestimated communities × Hasbro brand affinity</li>
+        <li>Power Up share posts pre-written per brand. Easy to take, never required.</li>
+        <li>Editorial workflow: all brand references pre-approved by your brand teams</li>
+      </ul>
+
+      <h3 style="margin-top: 6px;">XP KPIs · how the session moves them</h3>
+      <div class="kpi-strip">
+        <div class="kpi"><div class="num">80%</div><div class="lbl">Attend 5+</div></div>
+        <div class="kpi"><div class="num">50%</div><div class="lbl">Digital engage</div></div>
+        <div class="kpi"><div class="num">70%</div><div class="lbl">Satisfaction</div></div>
+      </div>
+
+      <h3 style="margin-top: 6px;">Scale context · receipts</h3>
+      <ul>
+        <li><strong>GGP @ GDC 2026:</strong> 20th annual anniversary event</li>
+        <li><strong>Zero Proof Board Game Night 2026:</strong> 600+ attendees · 3rd year with WotC · Mark Purvis opened · Chris Cocks joined in 2025</li>
+        <li><strong>Year-round:</strong> community programming and industry-wide convenings</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="foot">
+    <div>
+      <div class="sign">Gordon Bellamy, CEO &nbsp;·&nbsp; Eric Francksen, Executive Producer</div>
+      gaygamingpros.org · The Dragon House Broadcast · June 2026
+    </div>
+    <div style="text-align: right;">
+      Sturdy draft<br>
+      For shaping Tuesday
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

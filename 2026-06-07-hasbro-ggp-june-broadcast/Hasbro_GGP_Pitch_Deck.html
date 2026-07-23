@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>GGP × Hasbro Marketing XP · The Dragon House Broadcast · June 2026</title>
+<style>
+  :root {
+    --bg: #F7F1E1;
+    --ink: #1F1A24;
+    --burgundy: #7B1F2F;
+    --gold: #C9A24B;
+    --vermilion: #E63946;
+    --cream: #FAF6EF;
+    --rule: rgba(31, 26, 36, 0.12);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Inter", -apple-system, "Segoe UI", system-ui, sans-serif;
+    font-size: 17px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    scroll-snap-type: y mandatory;
+    overflow-x: hidden;
+  }
+  main {
+    width: 100%;
+  }
+  .slide {
+    width: 100%;
+    min-height: 100vh;
+    padding: 6vh 8vw 5vh 8vw;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    border-bottom: 1px solid var(--rule);
+    page-break-after: always;
+    break-after: page;
+  }
+  .slide:last-child { border-bottom: none; page-break-after: auto; }
+  .slide-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(31, 26, 36, 0.55);
+    margin-bottom: 4vh;
+  }
+  .slide-num { font-weight: 600; color: var(--burgundy); }
+  .slide-body { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+  .slide-foot {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(31, 26, 36, 0.45);
+    margin-top: 4vh;
+    padding-top: 1.5vh;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+  }
+  .display {
+    font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.05;
+  }
+  h1.display { font-size: clamp(48px, 7vw, 96px); color: var(--ink); }
+  h2.display { font-size: clamp(36px, 5.4vw, 72px); color: var(--ink); }
+  h3.display { font-size: clamp(28px, 4vw, 56px); color: var(--ink); }
+  .eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--burgundy);
+    font-weight: 600;
+    margin-bottom: 2vh;
+  }
+  .lede {
+    font-size: clamp(20px, 2vw, 26px);
+    line-height: 1.45;
+    color: rgba(31, 26, 36, 0.78);
+    max-width: 70ch;
+    margin-top: 3vh;
+  }
+  .small {
+    font-size: 14px;
+    color: rgba(31, 26, 36, 0.6);
+    margin-top: 2vh;
+  }
+  .accent { color: var(--burgundy); }
+  .gold { color: var(--gold); }
+
+  /* Slide 1 — Title */
+  .title-slide .slide-body {
+    justify-content: center;
+    align-items: flex-start;
+  }
+  .title-meta {
+    display: flex;
+    gap: 3vw;
+    margin-top: 6vh;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(31, 26, 36, 0.6);
+  }
+  .title-meta div { border-left: 2px solid var(--gold); padding-left: 1vw; }
+
+  /* Slide 2 — Quote */
+  .quote-slide .quote {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: clamp(32px, 4.4vw, 60px);
+    line-height: 1.18;
+    color: var(--ink);
+    max-width: 22ch;
+    position: relative;
+    padding-left: 3vw;
+    border-left: 4px solid var(--burgundy);
+  }
+
+  /* Slide 3 — GGP bento grid */
+  .bento {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin-top: 4vh;
+  }
+  .bento .card {
+    background: var(--cream);
+    border: 1px solid var(--rule);
+    padding: 28px 24px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .bento .card .num {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 52px;
+    line-height: 1;
+    color: var(--burgundy);
+    font-weight: 500;
+  }
+  .bento .card .label {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(31, 26, 36, 0.55);
+    font-weight: 600;
+  }
+  .bento .card .desc {
+    font-size: 15px;
+    line-height: 1.5;
+    color: rgba(31, 26, 36, 0.78);
+  }
+
+  /* Slide 4 — Dragon Table */
+  .dragon-slide {
+    background: linear-gradient(180deg, var(--bg) 0%, #EEE2C5 100%);
+  }
+  .dragon-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 5vw;
+    align-items: center;
+  }
+  .dragon-photo {
+    width: 100%;
+    max-width: 560px;
+    height: auto;
+    border-radius: 6px;
+    box-shadow: 0 16px 44px rgba(31, 26, 36, 0.28);
+    display: block;
+  }
+
+  /* Slide 5 — What June is */
+  .three-points {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5vh;
+    margin-top: 4vh;
+    max-width: 60ch;
+  }
+  .three-points .point {
+    display: flex;
+    gap: 24px;
+    align-items: baseline;
+    padding-bottom: 2vh;
+    border-bottom: 1px solid var(--rule);
+  }
+  .three-points .point:last-child { border-bottom: none; }
+  .three-points .point .marker {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 36px;
+    color: var(--burgundy);
+    line-height: 1;
+    min-width: 40px;
+  }
+  .three-points .point .text {
+    font-size: 22px;
+    line-height: 1.4;
+    color: var(--ink);
+  }
+
+  /* Slide 6 — Beat sheet */
+  .beats {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 16px 32px;
+    margin-top: 4vh;
+    max-width: 76ch;
+  }
+  .beats .t {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 28px;
+    color: var(--burgundy);
+    line-height: 1;
+    min-width: 90px;
+  }
+  .beats .b {
+    font-size: 18px;
+    line-height: 1.4;
+    color: var(--ink);
+    padding-bottom: 16px;
+    border-bottom: 1px dashed var(--rule);
+  }
+  .beats .who {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 700;
+    padding-bottom: 16px;
+    border-bottom: 1px dashed var(--rule);
+    align-self: end;
+    white-space: nowrap;
+  }
+  .beats > div:nth-last-child(-n+3) { border-bottom: none; padding-bottom: 0; }
+
+  /* Slide 7 — Brand mix */
+  .brand-mix {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 4vh;
+  }
+  .brand-card {
+    border: 2px solid var(--rule);
+    border-radius: 4px;
+    padding: 28px 24px;
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .brand-card.anchor {
+    border-color: var(--burgundy);
+    background: var(--cream);
+  }
+  .brand-card.open {
+    border-style: dashed;
+  }
+  .brand-card .tag {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--burgundy);
+    font-weight: 600;
+  }
+  .brand-card .name {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 40px;
+    line-height: 1;
+    color: var(--ink);
+    margin-top: 12px;
+  }
+  .brand-card .open-mark {
+    font-size: 64px;
+    color: var(--rule);
+    font-family: "Cormorant Garamond", Georgia, serif;
+    line-height: 0.8;
+  }
+  .brand-card .note {
+    font-size: 14px;
+    color: rgba(31, 26, 36, 0.65);
+    line-height: 1.45;
+    margin-top: auto;
+  }
+
+  /* Slide 8 — Hub pack */
+  .hub-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 4vh;
+    max-width: 80ch;
+  }
+  .hub-list .item {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    align-items: baseline;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--rule);
+    gap: 24px;
+  }
+  .hub-list .item:last-child { border-bottom: none; }
+  .hub-list .num {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 56px;
+    color: var(--gold);
+    line-height: 0.9;
+  }
+  .hub-list .title {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 28px;
+    line-height: 1.15;
+    color: var(--ink);
+  }
+  .hub-list .desc {
+    font-size: 15px;
+    color: rgba(31, 26, 36, 0.7);
+    margin-top: 6px;
+    max-width: 60ch;
+  }
+
+  /* Slide 9 — KPI */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    margin-top: 5vh;
+  }
+  .kpi-card {
+    padding: 32px 24px;
+    background: var(--cream);
+    border-top: 4px solid var(--burgundy);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .kpi-card .stat {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 84px;
+    line-height: 0.85;
+    color: var(--burgundy);
+    font-weight: 500;
+  }
+  .kpi-card .stat .pct { font-size: 48px; color: var(--gold); }
+  .kpi-card .label {
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(31, 26, 36, 0.65);
+    font-weight: 600;
+  }
+  .kpi-card .how {
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+
+  /* Slide 10 — Receipts */
+  .receipts {
+    display: flex;
+    flex-direction: column;
+    gap: 3vh;
+    margin-top: 4vh;
+    max-width: 88ch;
+  }
+  .receipt {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 32px;
+    padding-bottom: 3vh;
+    border-bottom: 1px solid var(--rule);
+  }
+  .receipt:last-child { border-bottom: none; }
+  .receipt .when {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 26px;
+    color: var(--burgundy);
+    line-height: 1.1;
+  }
+  .receipt .what {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 26px;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .receipt .stat {
+    font-size: 14px;
+    color: rgba(31, 26, 36, 0.7);
+    margin-top: 8px;
+    line-height: 1.55;
+  }
+
+  /* Slide 11 — Tuesday */
+  .tuesday-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 5vw;
+    margin-top: 4vh;
+  }
+  .col-head {
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--burgundy);
+    font-weight: 600;
+    margin-bottom: 2vh;
+  }
+  .tuesday-grid ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .tuesday-grid li {
+    font-size: 17px;
+    line-height: 1.4;
+    color: var(--ink);
+    padding-left: 22px;
+    position: relative;
+  }
+  .tuesday-grid li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.6em;
+    width: 8px;
+    height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+  }
+  .tuesday-grid .shape li::before { background: var(--burgundy); }
+
+  /* Slide 12 — Closing */
+  .closing-slide {
+    background: var(--burgundy);
+    color: var(--cream);
+  }
+  .closing-slide .slide-header { color: rgba(250, 246, 239, 0.55); }
+  .closing-slide .slide-foot { color: rgba(250, 246, 239, 0.55); border-top-color: rgba(250, 246, 239, 0.15); }
+  .closing-slide .slide-num { color: var(--gold); }
+  .closing-slide h2.display { color: var(--cream); max-width: 22ch; }
+  .closing-slide .lede { color: rgba(250, 246, 239, 0.78); }
+  .closing-slide .signoff {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 24px;
+    color: var(--gold);
+    margin-top: 6vh;
+  }
+
+  /* Slide 7 — Topics & brands compact entries */
+  .entry-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .entry-card {
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 14px 18px;
+  }
+  .entry-card.primary {
+    border-color: var(--burgundy);
+    background: var(--cream);
+  }
+  .entry-tag {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--burgundy);
+    font-weight: 600;
+  }
+  .entry-name {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 22px;
+    line-height: 1.1;
+    color: var(--ink);
+    margin: 4px 0;
+  }
+  .entry-note {
+    font-size: 13px;
+    color: rgba(31, 26, 36, 0.7);
+    line-height: 1.45;
+  }
+  .topics-brands-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-top: 3vh;
+  }
+
+  /* Slide 8 — Case study */
+  .case-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 40px;
+    margin-top: 3vh;
+  }
+  .case-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-top: 16px;
+  }
+  .case-list li {
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--ink);
+    padding-left: 22px;
+    position: relative;
+  }
+  .case-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 8px;
+    height: 8px;
+    background: var(--burgundy);
+    border-radius: 50%;
+  }
+  .case-results {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 16px;
+  }
+  .case-stat {
+    background: var(--cream);
+    border-left: 3px solid var(--burgundy);
+    padding: 12px 16px;
+    border-radius: 0 4px 4px 0;
+  }
+  .case-num {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 36px;
+    line-height: 1;
+    color: var(--burgundy);
+    font-weight: 500;
+  }
+  .case-lbl {
+    font-size: 12.5px;
+    color: rgba(31, 26, 36, 0.75);
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+  .case-note {
+    font-size: 13px;
+    color: rgba(31, 26, 36, 0.7);
+    line-height: 1.5;
+    margin-top: 16px;
+    font-style: italic;
+  }
+
+  /* Print */
+  @media print {
+    html, body { background: white; scroll-snap-type: none; }
+    .slide {
+      min-height: auto;
+      height: 100vh;
+      padding: 1.5cm;
+      border-bottom: none;
+    }
+    .closing-slide { background: var(--burgundy) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .dragon-slide { background: var(--bg) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .bento .card, .kpi-card { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+<main>
+
+<!-- Slide 1 — Title -->
+<section class="slide title-slide">
+  <header class="slide-header">
+    <span><span class="slide-num">01</span> &nbsp; Title</span>
+    <span class="slide-meta">GGP × Hasbro Marketing XP · June 2026</span>
+  </header>
+  <div class="slide-body">
+    <div class="eyebrow">For Casey Reed and Steven Bava</div>
+    <h1 class="display">The Dragon House<br><span class="accent">Broadcast.</span></h1>
+    <p class="lede">Four collaborators building a Marketing XP session, broadcast from the Dragon House around the Dragon Table.</p>
+    <div class="title-meta">
+      <div>Prepared by<br>Gordon Bellamy + Eric Francksen</div>
+      <div>For<br>Hasbro Marketing XP · Creators</div>
+      <div>Date<br>June 2026</div>
+    </div>
+  </div>
+  <footer class="slide-foot">
+    <span>Gay Gaming Professionals</span>
+    <span>gaygamingpros.org</span>
+  </footer>
+</section>
+
+<!-- Slide 2 — Your idea, played back -->
+<section class="slide quote-slide">
+  <header class="slide-header">
+    <span><span class="slide-num">02</span> &nbsp; Your idea</span>
+    <span class="slide-meta">GGP × Hasbro Marketing XP · June 2026</span>
+  </header>
+  <div class="slide-body">
+    <div class="eyebrow">What we heard from Casey · played back</div>
+    <p class="quote">Come to Wisconsin. Join Gordon and Eric live around the Dragon Table. Broadcast to the XP community.</p>
+    <p class="lede">Our paraphrase. Yours to correct on Tuesday. We think you have it exactly right.</p>
+  </div>
+  <footer class="slide-foot">
+    <span>The Dragon House Broadcast</span>
+    <span>For Casey Reed and Steven Bava</span>
+  </footer>
+</section>
+
+<!-- Slide 3 — GGP at a glance -->
+<section class="slide">
+  <header class="slide-header">
+    <span><span class="slide-num">03</span> &nbsp; GGP at a glance</span>
+    <span class="slide-meta">GGP × Hasbro Marketing XP · June 2026</span>
+  </header>
+  <div class="slide-body">
+    <div class="eyebrow">Introducing GGP</div>
+    <h2 class="display">Who we are, briefly.</h2>
+    <p class="small" style="margin-top: 2vh; color: var(--burgundy); font-weight: 600;">Grateful to be in our third year of partnership with Wizards of the Coast. Hasbro CEO Chris Cocks and his son joined our community at Zero Proof 2025.</p>
+    <div class="bento">
+      <div class="card">
+        <div class="num">20</div>
+        <div class="label">Years in service</div>
+        <div class="desc">501(c)(3) nonprofit. Universal excellence, particular lens. Our lens — LGBTQ+ professionals and students in the games industry — positions us to serve and center underestimated communities. We are not niche.</div>
+      </div>
+      <div class="card">
+        <div class="num">7</div>
+        <div class="label">Years of scholars</div>
+        <div class="desc">Alumni placed at studios, publishers, and platforms across the industry.</div>
+      </div>
+      <div class="card">
+        <div class="num">1</div>
+        <div class="label">2025 Forbes 30 / 30</div>
+        <div class="desc">Joseph Kemp, GGP Scholar Alum, Games category 2025.</div>
+      </div>
+      <div class="card">
+        <div class="num">3</div>
+        <div class="label">Flagship events</div>
+        <div class="desc">GGP @ GDC (March), Pride Jam (June), and the Casino Fundraiser (December). Plus year-round community programming. Executive Producer Eric Francksen hosts the Dragon House in Wisconsin.</div>
+      </div>
+    </div>
+  </div>
+  <footer class="slide-foot">
+    <span>The Dragon House Broadcast</span>
+    <span>gaygamingpros.org</span>
+  </footer>
+</section>
+
+<!-- Slide 4 — The Dragon Table -->
+<section class="slide dragon-slide">
+  <header class="slide-header">
+    <span><span class="slide-num">04</span> &nbsp; The artifact</span>
+    <span class="slide-meta">GGP × Hasbro Marketing XP · June 2026</span>
+  </header>
+  <div class="slide-body">
+    <div class="dragon-grid">
+      <div>
+        <img src="dragon-table.jpg" alt="The Dragon Table at the Dragon House, custom Dungeons &amp; Dragons gaming table" class="dragon-photo">
+      </div>
+      <div>
+        <div class="eyebrow">The Dragon Table</div>
+        <h2 class="display">Hasbro IP made personal.</h2>
+        <p class="lede">A custom Dungeons &amp; Dragons gaming table. Premiered at GDC March 2026. Now lives at the Dragon House in Wisconsin.</p>
+        <p class="small">An artifact you cannot manufacture. Photo: the Dragon Table at the Dragon House, June 2026.</p>
+      </div>
+    </div>
+  </div>
+  <footer class="slide-foot">
+    <span>The Dragon House Broadcast</span>
+    <span>Wisconsin · June 2026</span>
+  </footer>
+</section>
+
+<!-- Slide 5 — What June is -->
+<section class="slide">
+  <header class="slide-header">
+    <span><span class="slide-num">05</span> &nbsp; What June is</span>
+    <span class="slide-meta">GGP × Hasbro Marketing XP · June 2026</span>
+  </header>
+  <div class="slide-body">
+    <div class="eyebrow">The session</div>
+    <h2 class="display">The Dragon Table at the Dragon House. A bespoke setting for the discussion.</h2>
+    <div class="three-points">
+      <div class="point">
+        <span class="marker">I</span>
+        <span class="text"><strong>Casey hosts from Wisconsin</strong> with Eric and Gordon at the Dragon Table. Steven helps shape the session.</span>
+      </div>
+      <div class="point">
+        <span class="marker">II</span>
+        <span class="text"><strong>The heart of the hour:</strong> Zero Proof Board Game Night and how GGP brings Hasbro brands to life with the LGBTQ+ professional gaming community. Three years of receipts.</span>
+      </div>
+      <div class="point">
+        <span class="marker">III</span>
+        <span class="text"><strong>The XP community joins virtually</strong>, meeting a perspective they will not meet at any other XP session.</span>
+      </div>
+    </div>
+  </div>
+  <footer class="slide-foot">
+    <span>The Dragon House Broadcast</span>
+    <span>gaygamingpros.org</span>
+  </footer>
+</section>
+
+<!-- Slide 6 — Beat sheet -->
+<section class="slide">
+  <header class="slide-header">
+    <span><span class="slide-num">06</span> &nbsp; The hour, beat by beat</span>
+    <span class="slide-meta">GGP × Hasbro Marketing XP · June 2026</span>
+  </header>
+  <div class="slide-body">
+    <div class="eyebrow">Sturdy draft · yours to shape</div>
+    <h2 class="display">Sixty minutes around the table.</h2>
+    <div class="beats">
+      <div class="t">0:00</div>
+      <div class="b">We open together. Casey welcomes the XP audience. Eric welcomes everyone to the Dragon House.</div>
+      <div class="who">Casey + Eric</div>
+
+      <div class="t">0:05</div>
+      <div class="b">Gordon shares GGP and the community we serve in the games industry.</div>
+      <div class="who">Gordon</div>
+
+      <div class="t">0:10</div>
+      <div class="b"><strong>The heart of the hour.</strong> Casey, Eric, and Gordon at the Dragon Table. A real conversation about Zero Proof Board Game Night and how GGP brings Hasbro brands to life with the LGBTQ+ professional gaming community. Three years of receipts, hero stories, and the mechanics of brand activation in a room of pros.</div>
+      <div class="who">At the Table</div>
+
+      <div class="t">0:45</div>
+      <div class="b">Marketer Q&amp;A. Curated questions, live answers.</div>
+      <div class="who">Curated together</div>
+
+      <div class="t">0:55</div>
+      <div class="b">We close together. Hub pack handoff.</div>
+      <div class="who">Together</div>
+    </div>
+  </div>
+  <footer class="slide-foot">
+    <span>The Dragon House Broadcast</span>
+    <span>Sturdy draft · for shaping</span>
+  </footer>
+</section>
+
+<!-- Slide 7 — Topics & brands -->
+<section class="slide">
+  <header class="slide-header">
+    <span><span class="slide-num">07</span> &nbsp; Topics &amp; brands</span>
+    <span class="slide-meta">GGP × Hasbro Marketing XP · June 2026</span>
+  </header>
+  <div class="slide-body">
+    <div class="eyebrow">Zero Proof is the example · other topics can emerge</div>
+    <h2 class="display">Topics &amp; brands in the conversation.</h2>
+    <div class="topics-brands-grid">
+      <div>
+        <div class="col-head">Topics for ideation</div>
+        <div class="entry-list">
+          <div class="entry-card primary">
+            <div class="entry-tag">The example topic</div>
+            <div class="entry-name">Zero Proof Board Game Night</div>
+            <div class="entry-note">Three years activating WotC brands with the LGBTQ+ professional gaming community. The detailed case study we walk through together.</div>
+          </div>
+          <div class="entry-card">
+            <div class="entry-tag">Topic that can emerge</div>
+            <div class="entry-name">GGP Scholars Program</div>
+            <div class="entry-note">Seven years of pipeline investment. Alumni at studios, publishers, and platforms across the industry, including a 2025 Forbes 30 Under 30 in Games. A different model: pipeline versus event.</div>
+          </div>
+          <div class="entry-card">
+            <div class="entry-tag">Topic that can emerge</div>
+            <div class="entry-name">Pride Jam</div>
+            <div class="entry-note">Our annual June celebration of community and craft. A cultural moment that meets brands where culture is being made.</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="col-head">Brands the conversation can pull in</div>
+        <div class="entry-list">
+          <div class="entry-card primary">
+            <div class="entry-tag">Anchor</div>
+            <div class="entry-name">Dungeons &amp; Dragons</div>
+            <div class="entry-note">Three years of receipts at Zero Proof. WotC's anchor brand since 2024.</div>
+          </div>
+          <div class="entry-card primary">
+            <div class="entry-tag">Second</div>
+            <div class="entry-name">Magic: The Gathering</div>
+            <div class="entry-note">Magic across every surface at Zero Proof 2025.</div>
+          </div>
+          <div class="entry-card">
+            <div class="entry-tag">Third · for you to choose</div>
+            <div class="entry-name">—</div>
+            <div class="entry-note">Monopoly Go (one of the largest games in the world), NERF, or Transformers. You decide with brand counterparts.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="slide-foot">
+    <span>The Dragon House Broadcast</span>
+    <span>gaygamingpros.org</span>
+  </footer>
+</section>
+
+<!-- Slide 8 — Zero Proof case study -->
+<section class="slide">
+  <header class="slide-header">
+    <span><span class="slide-num">08</span> &nbsp; Zero Proof · case study</span>
+    <span class="slide-meta">GGP × Hasbro Marketing XP · June 2026</span>
+  </header>
+  <div class="slide-body">
+    <div class="eyebrow">The example topic, detailed</div>
+    <h2 class="display">The event that redefined community activation at GDC.</h2>
+    <div class="case-grid">
+      <div>
+        <div class="col-head">What made the partnership work</div>
+        <ul class="case-list">
+          <li><strong>Authentic alignment.</strong> WotC's brand, built on imagination, adventure, and diverse heroes, genuinely reflects the GGP community.</li>
+          <li><strong>Audience you cannot buy.</strong> GGP brings a credentialed, discerning audience. A community with trust and history.</li>
+          <li><strong>Shared stage presence.</strong> When Mark Purvis and John Hight took the stage alongside Gordon and Eric, that was not a logo placement. It was a public commitment.</li>
+          <li><strong>Sober-inclusive design.</strong> Zero Proof was not a gimmick. It was intentional design that expanded who could be fully present.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="col-head">The results</div>
+        <div class="case-results">
+          <div class="case-stat">
+            <div class="case-num">600+</div>
+            <div class="case-lbl">Guests. Far exceeded projected attendance.</div>
+          </div>
+          <div class="case-stat">
+            <div class="case-num">#1</div>
+            <div class="case-lbl">Largest flagship event in GGP history.</div>
+          </div>
+          <div class="case-stat">
+            <div class="case-num">4</div>
+            <div class="case-lbl">GGP and WotC leaders shared the stage.</div>
+          </div>
+        </div>
+        <p class="case-note">Partnership opened the door to a continuing relationship, including upcoming Dragon House Sessions at WotC HQ in Seattle.</p>
+      </div>
+    </div>
+  </div>
+  <footer class="slide-foot">
+    <span>The Dragon House Broadcast</span>
+    <span>Zero Proof at GDC 2026</span>
+  </footer>
+</section>
+
+<!-- Slide 9 — What this means for Hasbro marketers -->
+<section class="slide">
+  <header class="slide-header">
+    <span><span class="slide-num">09</span> &nbsp; What this means</span>
+    <span class="slide-meta">GGP × Hasbro Marketing XP · June 2026</span>
+  </header>
+  <div class="slide-body">
+    <div class="eyebrow">Takeaways from Zero Proof for your marketers</div>
+    <h2 class="display">Four lessons your marketers carry into Monday.</h2>
+    <div class="hub-list">
+      <div class="item">
+        <div class="num">01</div>
+        <div>
+          <div class="title">Community trust is a distribution channel.</div>
+          <div class="desc">GGP gave WotC access to 600+ credentialed gaming professionals with a single activation. Communities like GGP can move your brand faster and deeper than paid reach alone.</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="num">02</div>
+        <div>
+          <div class="title">Brand alignment is a product decision.</div>
+          <div class="desc">The partnership worked because WotC's IP values (inclusion, imagination, heroism) matched GGP's community values. Hasbro brands have enormous latent alignment with diverse gaming communities.</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="num">03</div>
+        <div>
+          <div class="title">Inclusive design is marketing strategy.</div>
+          <div class="desc">Zero Proof was not just an event choice. It was a statement that expanded the tent. Designing for inclusion in activations creates advocates, not just attendees.</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="num">04</div>
+        <div>
+          <div class="title">Live events create relationship infrastructure.</div>
+          <div class="desc">The GDC event did not end at GDC. It opened doors to ongoing collaboration. The best activations live beyond the moment and grow into durable partnerships.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="slide-foot">
+    <span>The Dragon House Broadcast</span>
+    <span>What marketers carry forward</span>
+  </footer>
+</section>
+
+<!-- Slide 10 — Hub pack -->
+<section class="slide">
+  <header class="slide-header">
+    <span><span class="slide-num">10</span> &nbsp; The Hub pack</span>
+    <span class="slide-meta">GGP × Hasbro Marketing XP · June 2026</span>
+  </header>
+  <div class="slide-body">
+    <div class="eyebrow">Six weeks of digital life</div>
+    <h2 class="display">What lives on the Hub.</h2>
+    <div class="hub-list">
+      <div class="item">
+        <div class="num">01</div>
+        <div>
+          <div class="title">The broadcast, packaged for marketer rewatching.</div>
+          <div class="desc">Full session and a 90-second highlight cut. Designed to clip and share without us asking.</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="num">02</div>
+        <div>
+          <div class="title">"Who is GGP" one-pager.</div>
+          <div class="desc">For marketers to share internally with their brand teams. Mission, scale, partnership history.</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="num">03</div>
+        <div>
+          <div class="title">A POV on underestimated communities and Hasbro brand affinity.</div>
+          <div class="desc">A one-pager marketers carry into Monday's brief: how LGBTQ+ pro communities, and the coalitions GGP convenes, act as early signal, brand multiplier, and trusted voice for the Hasbro brands they love.</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="num">04</div>
+        <div>
+          <div class="title">Power Up share posts, pre-written per brand.</div>
+          <div class="desc">Optional drafts marketers can edit and share under #HasbroMarketingXP. Built so the +50 share moment is easy to take, never required.</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="num">05</div>
+        <div>
+          <div class="title">Editorial workflow. Brand safety by design.</div>
+          <div class="desc">All Hasbro brand references are reviewed and approved by your brand teams before broadcast and before anything lands on the Hub. No surprises on the day.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="slide-foot">
+    <span>The Dragon House Broadcast</span>
+    <span>Lands within 5 business days. Lives 6 weeks.</span>
+  </footer>
+</section>
+
+<!-- Slide 11 — Tuesday -->
+<section class="slide">
+  <header class="slide-header">
+    <span><span class="slide-num">11</span> &nbsp; Tuesday</span>
+    <span class="slide-meta">GGP × Hasbro Marketing XP · June 2026</span>
+  </header>
+  <div class="slide-body">
+    <div class="eyebrow">What we bring · what we shape together</div>
+    <h2 class="display">Tuesday is for collaboration.</h2>
+    <div class="tuesday-grid">
+      <div>
+        <div class="col-head">What we bring</div>
+        <ul>
+          <li>A read-back of Marketing XP (theme, KPIs, points)</li>
+          <li>A sketch of the broadcast (beats and brand options)</li>
+          <li>An outline of the Hub pack</li>
+          <li>Cadence + accountability path through June</li>
+        </ul>
+      </div>
+      <div>
+        <div class="col-head">What we shape together</div>
+        <ul class="shape">
+          <li>Casey walks us through the Hub — what past sessions published, how content lives there, what marketers expect</li>
+          <li>Steven's role in shaping the session</li>
+          <li>June date window</li>
+          <li>Broadcast audience size + how it counts toward 5+ sessions</li>
+          <li>Third brand at the table (alongside D&amp;D and Magic)</li>
+          <li>Production scope: camera, streaming, Hub upload</li>
+          <li>Brand safety + content approval workflow</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <footer class="slide-foot">
+    <span>The Dragon House Broadcast</span>
+    <span>For Casey Reed and Steven Bava</span>
+  </footer>
+</section>
+
+<!-- Slide 12 — Closing -->
+<section class="slide closing-slide">
+  <header class="slide-header">
+    <span><span class="slide-num">12</span> &nbsp; Closing</span>
+    <span class="slide-meta">GGP × Hasbro Marketing XP · June 2026</span>
+  </header>
+  <div class="slide-body">
+    <div class="eyebrow gold">June 2026</div>
+    <h2 class="display">The Dragon Table.<br>The broadcast.<br>June lands.</h2>
+    <p class="signoff">Gordon Bellamy, CEO<br>Eric Francksen, Executive Producer<br>Gay Gaming Professionals</p>
+  </div>
+  <footer class="slide-foot">
+    <span>gaygamingpros.org</span>
+    <span>The Dragon House Broadcast</span>
+  </footer>
+</section>
+
+</main>
+</body>
+</html>

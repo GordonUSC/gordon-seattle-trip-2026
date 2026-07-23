@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GGP Scholars · Pressure Test</title>
+<style>
+  :root{
+    --bg:#f4f1ec; --paper:#fffdfa; --ink:#1a1712; --soft:#5d564b; --faint:#8a8275;
+    --line:#e5ddce;
+    --crit:#b23124; --high:#bf7a1c; --med:#5a7d4f; --steel:#2c6a8f; --plum:#6a4487; --heart:#a23a5b;
+    --shadow:0 1px 2px rgba(0,0,0,.05),0 10px 26px rgba(30,22,10,.08);
+    --sans:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --serif:"Iowan Old Style",Palatino,Georgia,serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --bg:#100e0a; --paper:#191611; --ink:#efe9df; --soft:#aaa192; --faint:#7d7566;
+    --line:#2a2419;
+    --crit:#e0685a; --high:#e0a94e; --med:#8bb47f; --steel:#63a8cf; --plum:#a888cc; --heart:#d67a94;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 14px 34px rgba(0,0,0,.5);}}
+  :root[data-theme="dark"]{
+    --bg:#100e0a; --paper:#191611; --ink:#efe9df; --soft:#aaa192; --faint:#7d7566;
+    --line:#2a2419;
+    --crit:#e0685a; --high:#e0a94e; --med:#8bb47f; --steel:#63a8cf; --plum:#a888cc; --heart:#d67a94;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 14px 34px rgba(0,0,0,.5);}
+  :root[data-theme="light"]{
+    --bg:#f4f1ec; --paper:#fffdfa; --ink:#1a1712; --soft:#5d564b; --faint:#8a8275;
+    --line:#e5ddce;
+    --crit:#b23124; --high:#bf7a1c; --med:#5a7d4f; --steel:#2c6a8f; --plum:#6a4487; --heart:#a23a5b;
+    --shadow:0 1px 2px rgba(0,0,0,.05),0 10px 26px rgba(30,22,10,.08);}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.58;
+    -webkit-font-smoothing:antialiased;padding:clamp(16px,3.5vw,52px)}
+  .wrap{max-width:1000px;margin:0 auto}
+  .mono{font-family:var(--mono)}
+  h1{font-family:var(--serif);font-size:clamp(28px,5vw,46px);line-height:1.03;margin:.15em 0 .12em;letter-spacing:-.01em}
+  h2{font-family:var(--serif);font-size:clamp(21px,3vw,29px);margin:.1em 0 .4em}
+  h3{font-size:17px;margin:.2em 0 .3em;font-weight:700}
+  p{margin:.5em 0}
+  section{margin:44px 0}
+  hr.r{border:0;border-top:1px solid var(--line);margin:0}
+  .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--crit);font-weight:600}
+  .hero{border-top:3px solid var(--crit);border-bottom:1px solid var(--line);padding:20px 0 18px}
+  .hero .sub{color:var(--soft);max-width:66ch;font-size:16.5px}
+  .hero .note{margin-top:12px;font-size:12.5px;color:var(--faint);font-family:var(--mono)}
+  /* severity legend */
+  .legend{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+  .sev{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.06em;padding:4px 10px;border-radius:6px;border:1px solid currentColor}
+  .s-crit{color:var(--crit)} .s-high{color:var(--high)} .s-med{color:var(--med)}
+  /* findings */
+  .find{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px 18px;box-shadow:var(--shadow);margin:14px 0;border-left:5px solid var(--fc,var(--crit))}
+  .f-crit{--fc:var(--crit)} .f-high{--fc:var(--high)} .f-med{--fc:var(--med)}
+  .find .fhead{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .find .ftag{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--fc);border:1px solid var(--fc);border-radius:5px;padding:2px 7px}
+  .find h3{margin:0;flex:1;min-width:60%}
+  .find .who{font-family:var(--mono);font-size:11px;color:var(--soft)}
+  .find .quote{font-family:var(--serif);font-style:italic;font-size:15.5px;color:var(--ink);margin:8px 0 6px;padding-left:12px;border-left:2px solid var(--line)}
+  .find .risk{font-size:13.5px;color:var(--soft)}
+  .find .risk b{color:var(--fc)}
+  /* Emily block */
+  .emily{background:linear-gradient(180deg,var(--paper),var(--bg));border:1px solid var(--heart);border-radius:14px;padding:20px 24px;box-shadow:var(--shadow)}
+  .emily .el{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--heart);font-weight:700}
+  .emily h2{margin-top:4px}
+  .emily .q{font-family:var(--serif);font-size:clamp(17px,2.4vw,21px);line-height:1.4;font-style:italic;color:var(--ink);margin:12px 0}
+  .emily p{color:var(--soft);font-size:14.5px}
+  .emily .care{background:var(--paper);border:1px dashed var(--heart);border-radius:10px;padding:12px 16px;margin-top:12px;font-size:14px}
+  .emily .care b{color:var(--heart)}
+  /* collisions */
+  .col{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 18px;box-shadow:var(--shadow);margin:12px 0}
+  .col .vs{font-family:var(--mono);font-size:12px;color:var(--crit);font-weight:700}
+  .col p{margin:5px 0 0;font-size:14px;color:var(--soft)}
+  /* ranked breaks */
+  ol.breaks{counter-reset:b;list-style:none;padding:0;margin:0}
+  ol.breaks li{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:12px 16px 12px 52px;position:relative;margin:9px 0;box-shadow:var(--shadow)}
+  ol.breaks li::before{counter-increment:b;content:counter(b);position:absolute;left:14px;top:12px;font-family:var(--serif);font-weight:700;font-size:22px;color:var(--crit)}
+  ol.breaks li b{color:var(--ink)}
+  ol.breaks li .fx{display:block;margin-top:4px;font-size:13.5px;color:var(--med)}
+  ol.breaks li .fx b{color:var(--med)}
+  .verdict{background:var(--paper);border:1px solid var(--steel);border-left:5px solid var(--steel);border-radius:12px;padding:18px 22px;box-shadow:var(--shadow)}
+  .verdict h3{color:var(--steel);margin-top:0}
+  .toggle{position:fixed;top:12px;right:12px;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:6px 11px;font-size:12px;cursor:pointer;color:var(--ink);box-shadow:var(--shadow);z-index:9;font-family:var(--mono)}
+  footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--faint)}
+</style>
+</head>
+<body>
+<button class="toggle" onclick="var r=document.documentElement;var d=(r.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'));r.setAttribute('data-theme',d==='dark'?'light':'dark')">◐ theme</button>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="lbl">GGP Scholars · Pressure Test</div>
+    <h1>Where the plan breaks.</h1>
+    <p class="sub">A hard red-team of the operating manual, run in the voices of the people who have to live with it. Not a review of the idea, a stress test of the machine: the 50-scholar target, the Fellow tier, Alex's load, the AI teaching bench, the funding math after Houser. Each voice is aimed at a real crack.</p>
+    <p class="note">Simulated stakeholder critique. No one was actually contacted. Emily is Carter's widow, and her section is handled as conscience, not critique.</p>
+    <div class="legend">
+      <span class="sev s-crit">■ Critical · could sink it</span>
+      <span class="sev s-high">■ High · fix before scaling</span>
+      <span class="sev s-med">■ Medium · watch</span>
+    </div>
+  </div>
+
+  <section>
+    <div class="lbl" style="color:var(--soft)">The findings</div>
+    <h2>Eight voices, eight cracks</h2>
+
+    <div class="find f-crit">
+      <div class="fhead"><span class="ftag">Critical</span><h3>You just tripled my job and left the bus factor at one.</h3><span class="who">Alex Rogers · operator</span></div>
+      <div class="quote">The RACI puts the mentorship engine, scholar experience, GDC logistics, and now four tracks plus a new paid Fellow tier all on me. If I burn out or leave, the whole program stops. Where is my team?</div>
+      <div class="risk"><b>The crack:</b> the plan scales the work without scaling the people. Alex is the single point of failure for the one thing the roundtable said we cannot lose, the mentorship soul. No co-lead, no succession, no added capacity.</div>
+    </div>
+
+    <div class="find f-crit">
+      <div class="fhead"><span class="ftag">Critical</span><h3>You are expanding the year you lost your anchor funder.</h3><span class="who">Alan Lewis · corporate funder</span></div>
+      <div class="quote">Fifty scholars and a paid Fellow tier, in the same year Houser's ninety thousand walked out the door. Show me the funded budget, not the wish. And I need help selling an openly elite program to a committee that just took DEI out of our own annual report.</div>
+      <div class="risk"><b>The crack:</b> the expansion is unfunded. The Fellow tier's "paid opportunity or placement" is a real budget line with no dollars behind it, arriving exactly when the money got smaller. Plus a live political-climate headwind the plan does not address.</div>
+    </div>
+
+    <div class="find f-high">
+      <div class="fhead"><span class="ftag">High</span><h3>Your AI leadership has no one to teach it.</h3><span class="who">Stanley · head of the ESA</span></div>
+      <div class="quote">You claim to lead the field on AI empowerment. Who delivers the module? Take-Two co-builds it, but co-building is not staffing. You cannot lead a field on a curriculum you do not have the bench to teach. And if GGP is the apex of the Directory, what do you give back to the pipeline beneath you?</div>
+      <div class="risk"><b>The crack:</b> the differentiator is an unstaffed promise. Claiming AI leadership without a named instructor or curriculum owner is the exact "fabricated capability" trap GGP already got burned by with the removed program counts.</div>
+    </div>
+
+    <div class="find f-high">
+      <div class="fhead"><span class="ftag">High</span><h3>The Fellow tier builds an in-group inside a program about belonging.</h3><span class="who">A past scholar</span></div>
+      <div class="quote">A selective, paid second year sounds great until you are the scholar who did not make Fellow. You just sorted us into chosen and not-chosen, inside the one place that told me everyone belonged. That is the elite-by-exclusion you said you would never do, wearing a nicer name.</div>
+      <div class="risk"><b>The crack:</b> the tier that most impresses funders may quietly betray the core value. "Elite by outcome" turns into a ranking the moment Fellow is scarce and coveted.</div>
+    </div>
+
+    <div class="find f-high">
+      <div class="fhead"><span class="ftag">High</span><h3>You promised me intimacy and a dashboard in the same breath.</h3><span class="who">Sussanah Pollack · personal foundation</span></div>
+      <div class="quote">Meet-your-scholar, an annual letter, a real bond, and fifty scholars and a corporate outcomes dashboard. At that scale my named scholar becomes a row in a spreadsheet. Prove the intimacy survives the volume, or I am funding something colder than I was promised.</div>
+      <div class="risk"><b>The crack:</b> the two funding lanes compete operationally. High-touch stewardship does not scale linearly, and nothing in the plan protects the personal-foundation intimacy from the corporate-scale machine.</div>
+    </div>
+
+    <div class="find f-high">
+      <div class="fhead"><span class="ftag">High</span><h3>You made Gordon the single point on every dollar, and you cannot prove "elite."</h3><span class="who">Sinjin Bain · board rigor</span></div>
+      <div class="quote">Every funder line in that chart runs through Gordon personally. That is not a development plan, it is one exhausted person in June. And you say elite by outcome, so where is the outcome data? CYSTEM was credible to a board because we measured. Show me the placements and the numbers, or the word elite is just branding.</div>
+      <div class="risk"><b>The crack:</b> two at once. Fundraising has no redundancy beyond Gordon, and the "elite by outcome" claim has no measurement system behind it yet. You cannot renew on outcomes you do not track.</div>
+    </div>
+
+    <div class="find f-med">
+      <div class="fhead"><span class="ftag">Medium</span><h3>One application, one capstone, four very different people.</h3><span class="who">A future applicant</span></div>
+      <div class="quote">I am a self-taught content creator, not a CMU grad student. Does the same rubric really see me, or am I quietly losing to people with far more polish? And is one capstone format fair across a grad researcher and a kid making TikToks about games?</div>
+      <div class="risk"><b>The crack:</b> the unified funnel that makes the merge elegant may flatten real differences between the tracks, and disadvantage exactly the underestimated applicants the program exists for.</div>
+    </div>
+
+    <div class="find f-med">
+      <div class="fhead"><span class="ftag">Medium</span><h3>Is this real integration, or four logos under a banner?</h3><span class="who">Gordon · self-critique</span></div>
+      <div class="quote">If I am honest, the risk I own is that "one program, four tracks" is just relabeling until the shared spine actually binds them. A funder will ask what is genuinely unified versus what we just drew a box around.</div>
+      <div class="risk"><b>The crack:</b> the integration has to be lived, one application, one mentor pool, one capstone, one story, or the merge is cosmetic and does not deliver the durability that justified it.</div>
+    </div>
+  </section>
+
+  <hr class="r">
+
+  <section>
+    <div class="emily">
+      <div class="el">The conscience of the memorial</div>
+      <h2>Emily, Carter's widow</h2>
+      <p>Her voice is not one critique among eight. The Carter Lipscomb strand carries her husband's name, and whether it honors him is hers to say, before anyone else's opinion counts.</p>
+      <div class="q">"Carter opened doors for people because he loved them, not because they ranked. He was the glue, the one who made you feel you belonged in the room. So when I hear elite, and Guild, and apex, I have to ask: is that him? Or is that the institution talking?"</div>
+      <p>She would likely bless the deepest idea in the plan, elite by welcome, not by wall, because that is exactly how Carter worked. But she would push hard on the packaging. A man remembered as warm and connective should not be honored by language that sounds like a members-only club. And she would ask the quieter question: are Carter's people being cared for, or hurried? Jon needs a job. She is grieving. Fall 2026 is a hope, not a deadline to impose on a widow.</p>
+      <div class="care">
+        <b>What this means for the plan:</b> the Carter strand cannot be designed and then shown to Emily. It has to be <b>co-designed with her</b>, at her pace, its values and its criteria shaped by what she knows Carter stood for. The right move is not to launch it by Fall; it is to sit with Emily first and let the program earn the name. Get this wrong and it is not a program risk, it is a wound.
+      </div>
+    </div>
+  </section>
+
+  <hr class="r">
+
+  <section>
+    <div class="lbl" style="color:var(--soft)">Where they collide</div>
+    <h2>The tensions the plan has not resolved</h2>
+    <div class="col"><span class="vs">Sussanah × Alan</span><p>Personal-foundation intimacy versus corporate-scale outcomes. The same program is sold as high-touch and as high-volume. At 50 scholars, one of them is being misled unless the plan builds a real firewall between the two stewardship models.</p></div>
+    <div class="col"><span class="vs">Alan × the past scholar</span><p>The Fellow tier is Alan's favorite outcome and the past scholar's deepest fear. What funders read as prestige, scholars can read as rejection. Both cannot be fully right as written.</p></div>
+    <div class="col"><span class="vs">Alex × everyone</span><p>Every ambition in the plan lands on one operator. The more elite, intimate, and measured it becomes, the heavier Alex's single seat gets. Ambition and capacity are on a collision course.</p></div>
+    <div class="col"><span class="vs">Emily × the calendar</span><p>The institution wants a Fall 2026 launch. The widow needs time. If those two are forced to meet on the institution's schedule, the memorial loses its soul to hit a date.</p></div>
+  </section>
+
+  <hr class="r">
+
+  <section>
+    <div class="lbl" style="color:var(--soft)">The synthesis</div>
+    <h2>What actually breaks, ranked, and the fix</h2>
+    <ol class="breaks">
+      <li><b>Unfunded expansion after Houser.</b> Scaling to 50 plus a paid Fellow tier the year the anchor left. <span class="fx"><b>Fix:</b> do not scale year one. Hold near the current cohort size, close the EA and ESA coalition first, prove outcomes, then grow. Make the Fellow tier a stretch goal contingent on new funding, not a core promise.</span></li>
+      <li><b>Alex as single point of failure.</b> The mentorship soul depends entirely on one person with no team. <span class="fx"><b>Fix:</b> fund a co-lead or coordinator before adding any load. Capacity precedes ambition. This is the first hire, not the last.</span></li>
+      <li><b>AI leadership with no teaching bench.</b> A differentiator that is currently a claim, not a capability. <span class="fx"><b>Fix:</b> name the instructor and the curriculum owner before saying "leaders." If it is Gordon plus a guest, say exactly that. Never repeat the fabricated-counts mistake.</span></li>
+      <li><b>The Fellow tier as a hidden exclusion.</b> A ranking inside a belonging program. <span class="fx"><b>Fix:</b> reframe Fellow as an opt-in continuation open to anyone who wants it, not a scarce prize. Everyone keeps the core and the alumni membership; Fellow is a door, not a verdict.</span></li>
+      <li><b>Intimacy versus scale, unresolved.</b> Two funding lanes that fight at volume. <span class="fx"><b>Fix:</b> cap named-fund scholars per donor and protect the high-touch cadence as a named person's job, separate from the corporate dashboard.</span></li>
+      <li><b>No measurement, so "elite" is unproven.</b> Cannot renew on outcomes you do not track. <span class="fx"><b>Fix:</b> build the outcomes system (placements, projects, Fellows, service) before the elite claim goes public. Measure first, brand second.</span></li>
+      <li><b>The Carter memorial's pace and dignity.</b> A grieving widow on an institutional clock. <span class="fx"><b>Fix:</b> co-design with Emily at her pace; drop Fall 2026 as a fixed deadline. Dignity is the deliverable.</span></li>
+      <li><b>Political climate for an elite LGBTQ+ program.</b> A real headwind, unaddressed. <span class="fx"><b>Fix:</b> lean on the coalition and the universal-excellence framing; give corporate funders the language that lets them say yes in 2026.</span></li>
+    </ol>
+  </section>
+
+  <div class="verdict">
+    <h3>Verdict</h3>
+    <p style="margin-top:0">The design survives the pressure test, the core idea (elite by outcome, AI empowerment, one program) holds. What does not survive is the <b>speed and scale</b> as written. The plan tries to become its full self in one year, right after losing its anchor funder, on one operator's back, with the memorial forced to a deadline. Every critical crack is a <b>sequencing problem, not a design flaw.</b></p>
+    <p><b>The move:</b> phase it. Year one, consolidate at current size, fund Alex a partner, name the AI teacher, close the coalition, and sit with Emily. Prove the outcomes. Then, year two, scale to 50 and stand up the Fellow tier on new money. The Guild is right. It just should not try to be born fully grown.</p>
+  </div>
+
+  <footer>
+    <p><b>Status:</b> simulated red-team of the operating manual (reports/... and projects/sites/2026-07-13-ggp-scholars-operating-manual). No real person was contacted; the voices are adversarial role-plays to find failure modes, except that Emily's standing as Carter's widow (Gordon, 2026-07-13) is a real fact and her section is written as conscience, not critique. Confirmed anchors: Houser exit, Take-Two $80K, Alex as sole CYSTEM lead, the Carter memorial with Emily and Phil Rosenberg. The 50-scholar target and Fellow tier are proposals under test, and the synthesis recommends phasing both.</p>
+  </footer>
+
+</div>
+</body>
+</html>

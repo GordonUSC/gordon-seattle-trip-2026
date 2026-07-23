@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GGP Scholars · One Program</title>
+<style>
+  :root{
+    --bg:#f6f4ef; --panel:#fffdf9; --ink:#1c1a17; --soft:#5c574e; --line:#e4ded2;
+    --accent:#b8402e; --accent2:#1f6f6b; --gold:#c08a2d; --violet:#6a4a8f;
+    --shadow:0 1px 2px rgba(0,0,0,.05),0 8px 24px rgba(0,0,0,.06);
+    --radius:16px;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --bg:#14130f; --panel:#1d1b16; --ink:#f2eee6; --soft:#a9a294; --line:#302c24;
+           --accent:#e66350; --accent2:#4bb3ad; --gold:#e0ad50; --violet:#a789cf;
+           --shadow:0 1px 2px rgba(0,0,0,.4),0 12px 32px rgba(0,0,0,.4);}
+  }
+  :root[data-theme="dark"]{ --bg:#14130f; --panel:#1d1b16; --ink:#f2eee6; --soft:#a9a294; --line:#302c24;
+           --accent:#e66350; --accent2:#4bb3ad; --gold:#e0ad50; --violet:#a789cf;
+           --shadow:0 1px 2px rgba(0,0,0,.4),0 12px 32px rgba(0,0,0,.4);}
+  :root[data-theme="light"]{ --bg:#f6f4ef; --panel:#fffdf9; --ink:#1c1a17; --soft:#5c574e; --line:#e4ded2;
+           --accent:#b8402e; --accent2:#1f6f6b; --gold:#c08a2d; --violet:#6a4a8f;
+           --shadow:0 1px 2px rgba(0,0,0,.05),0 8px 24px rgba(0,0,0,.06);}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:16px/1.55 ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;padding:clamp(16px,4vw,48px)}
+  .wrap{max-width:1060px;margin:0 auto}
+  header.hero{margin-bottom:28px}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700}
+  h1{font-size:clamp(28px,5vw,46px);line-height:1.05;margin:.25em 0 .1em;letter-spacing:-.01em}
+  .sub{font-size:clamp(16px,2.4vw,20px);color:var(--soft);max-width:64ch;margin:.4em 0 0}
+  .meta{font-size:12.5px;color:var(--soft);margin-top:14px}
+  .band{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 8px}
+  .pill{background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:7px 13px;font-size:13px;box-shadow:var(--shadow)}
+  .pill b{color:var(--ink)}
+  section{margin:34px 0}
+  h2{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);font-weight:700;margin:0 0 14px;
+     display:flex;align-items:center;gap:10px}
+  h2::after{content:"";flex:1;height:1px;background:var(--line)}
+  /* funnel */
+  .roof{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);
+        padding:20px 22px;margin-bottom:18px;position:relative;overflow:hidden}
+  .roof::before{content:"";position:absolute;inset:0 0 auto 0;height:4px;
+    background:linear-gradient(90deg,var(--accent),var(--gold),var(--accent2),var(--violet))}
+  .roof h3{margin:6px 0 4px;font-size:22px}
+  .roof p{margin:0;color:var(--soft);max-width:70ch}
+  .tracks{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  @media(max-width:820px){.tracks{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:480px){.tracks{grid-template-columns:1fr}}
+  .track{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);
+    padding:16px 15px;border-top:3px solid var(--tc,var(--accent));display:flex;flex-direction:column;gap:7px}
+  .track .tag{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--tc);font-weight:700}
+  .track h4{margin:0;font-size:16.5px;line-height:1.2}
+  .track .desc{font-size:13.5px;color:var(--soft);flex:1}
+  .track .facts{font-size:12px;color:var(--soft);border-top:1px dashed var(--line);padding-top:8px;margin-top:2px}
+  .track .facts span{display:block;margin:2px 0}
+  .t-cystem{--tc:var(--accent2)} .t-ggp{--tc:var(--accent)}
+  .t-carter{--tc:var(--gold)} .t-g4c{--tc:var(--violet)}
+  /* shared spine */
+  .spine{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  @media(max-width:820px){.spine{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:480px){.spine{grid-template-columns:1fr}}
+  .shared{background:linear-gradient(180deg,var(--panel),var(--bg));border:1px solid var(--line);
+    border-radius:14px;padding:15px;box-shadow:var(--shadow)}
+  .shared .n{font-size:12px;font-weight:700;color:var(--accent2);letter-spacing:.05em}
+  .shared h4{margin:6px 0 4px;font-size:15px}
+  .shared p{margin:0;font-size:13px;color:var(--soft)}
+  /* funnel arrows */
+  .flow{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;
+    background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:var(--shadow);font-size:13.5px}
+  .flow .step{font-weight:600}
+  .flow .arw{color:var(--accent);font-weight:800}
+  .flow .muted{color:var(--soft);font-weight:400}
+  /* money */
+  .money{display:grid;grid-template-columns:1.1fr 1fr;gap:16px}
+  @media(max-width:720px){.money{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 18px}
+  .card h3{margin:0 0 12px;font-size:16px}
+  .row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}
+  .row:last-child{border-bottom:0}
+  .row .v{font-weight:700;white-space:nowrap}
+  .row.out .v{color:var(--accent)} .row.in .v{color:var(--accent2)}
+  .total{margin-top:10px;padding-top:10px;border-top:2px solid var(--ink);font-weight:800;display:flex;justify-content:space-between}
+  .note{font-size:12.5px;color:var(--soft);margin-top:10px;line-height:1.5}
+  /* why / decisions */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:720px){.grid2{grid-template-columns:1fr}}
+  ul.clean{margin:0;padding-left:0;list-style:none}
+  ul.clean li{padding:8px 0 8px 26px;position:relative;font-size:14.5px;border-bottom:1px solid var(--line)}
+  ul.clean li:last-child{border-bottom:0}
+  ul.clean li::before{content:"";position:absolute;left:4px;top:15px;width:8px;height:8px;border-radius:2px;background:var(--accent)}
+  ol.dec{margin:0;padding-left:20px}
+  ol.dec li{padding:7px 0;font-size:14.5px;border-bottom:1px solid var(--line)}
+  ol.dec li:last-child{border-bottom:0}
+  ol.dec b{color:var(--ink)}
+  footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--soft)}
+  .recepit{font-size:11.5px;color:var(--soft);font-style:italic}
+  .toggle{position:fixed;top:12px;right:12px;background:var(--panel);border:1px solid var(--line);
+    border-radius:999px;padding:6px 12px;font-size:12px;cursor:pointer;color:var(--ink);box-shadow:var(--shadow)}
+</style>
+</head>
+<body>
+<button class="toggle" onclick="var r=document.documentElement;var d=(r.getAttribute('data-theme')|| (matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'));r.setAttribute('data-theme',d==='dark'?'light':'dark')">◐ theme</button>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">GGP · Consolidation working draft</div>
+    <h1>One Scholars Program.<br>Four ways in.</h1>
+    <p class="sub">Four scholar efforts, built at different times for different funders, become a single program with one front door, one mentorship spine, one GDC-week finale, and one story funders can rally behind.</p>
+    <div class="meta">Private working draft · July 13, 2026 · every number carries a receipt from the primary record</div>
+    <div class="band">
+      <span class="pill">Trigger: <b>Houser Foundation is out</b></span>
+      <span class="pill">Anchor stays: <b>Take-Two $80K</b></span>
+      <span class="pill">GGP turns <b>20</b> in 2026</span>
+      <span class="pill">First Forbes 30U30 alum: <b>Joseph Kemp</b></span>
+    </div>
+  </header>
+
+  <section>
+    <h2>Why consolidate now</h2>
+    <div class="roof" style="margin-bottom:0">
+      <p style="color:var(--ink);font-size:15.5px;max-width:74ch">
+        The old structure ran four separate efforts chasing four separate funders. That worked while the money was distributed. It stops working the moment an anchor leaves. <b>Dan Houser (Houser Foundation, roughly $90K to CYSTEM) is no longer supporting</b>, and Sinjin Bain is stepping back from CYSTEM. Rather than let CYSTEM quietly fade, we fold its strongest parts, and three other scholar efforts, into one durable program with a shared funder base. One program is easier to fund, easier to run, and tells a bigger story than four.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>The structure</h2>
+    <div class="roof">
+      <div class="kicker" style="color:var(--accent2)">One roof</div>
+      <h3>GGP Scholars</h3>
+      <p>The unified home for developing underestimated talent in games, from the year-long deep track to the GDC-week intensive. Universal excellence, a particular lens, serving neurodiverse, Latine, BIPOC, disabled, women, LGBTQIA+, AANHPI, and growing communities.</p>
+    </div>
+    <div class="tracks">
+      <div class="track t-cystem">
+        <div class="tag">Deep track</div>
+        <h4>CYSTEM</h4>
+        <div class="desc">The year-long graduate curriculum and 1:1 industry mentorship. The depth engine.</div>
+        <div class="facts">
+          <span>Grad students · USC, CMU, NYU</span>
+          <span>~24/yr · triangle buddy groups</span>
+          <span>Aug → March · Year 4 = 2026-27</span>
+          <span>Lead: Alex Rogers</span>
+        </div>
+      </div>
+      <div class="track t-ggp">
+        <div class="tag">Broad track</div>
+        <h4>GGP Scholars</h4>
+        <div class="desc">The GDC-week intensive for queer and underestimated developers. The reach engine.</div>
+        <div class="facts">
+          <span>Global pool · 100+ applications</span>
+          <span>GDC All-Access · Scholars Breakfast</span>
+          <span>7 years running</span>
+          <span>Anchored to GDC, every March</span>
+        </div>
+      </div>
+      <div class="track t-carter">
+        <div class="tag">Memorial · new</div>
+        <h4>Carter Lipscomb Scholars</h4>
+        <div class="desc">A named strand honoring the late mentor Carter Lipscomb. Warmth and industry access, in his spirit.</div>
+        <div class="facts">
+          <span>Building with Phil Rosenberg (Sony)</span>
+          <span>+ Jon + Emily, Carter's circle</span>
+          <span>Target launch: Fall 2026</span>
+          <span>Model: Gerald A. Lawson Endowment</span>
+        </div>
+      </div>
+      <div class="track t-g4c">
+        <div class="tag">Civic track</div>
+        <h4>Games for Change</h4>
+        <div class="desc">Civic and impact-games scholars, routed in through the G4C collaboration.</div>
+        <div class="facts">
+          <span>G4C Student Challenge alumni</span>
+          <span>Cross-judging with GGP scholars</span>
+          <span>Via the GGP × G4C collaboration</span>
+          <span>Civic / impact-games lens</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>One funnel, not four</h2>
+    <div class="flow">
+      <span class="step">One application</span><span class="arw">→</span>
+      <span class="step">Routed to the right track <span class="muted">by readiness + fit</span></span><span class="arw">→</span>
+      <span class="step">Shared mentorship year</span><span class="arw">→</span>
+      <span class="step">GDC-week finale</span><span class="arw">→</span>
+      <span class="step">Alumni network</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>The shared spine (what every track uses)</h2>
+    <div class="spine">
+      <div class="shared"><div class="n">01</div><h4>One application</h4><p>A single intake funnel, routed to the right track by track and readiness. No more four front doors.</p></div>
+      <div class="shared"><div class="n">02</div><h4>Shared mentorship</h4><p>One pool of industry mentors and the triangle buddy model, drawn from across the coalition.</p></div>
+      <div class="shared"><div class="n">03</div><h4>GDC-week finale</h4><p>Every track culminates at GDC: All-Access, the Scholars Breakfast, and the 2K studio tour (Take-Two in-kind).</p></div>
+      <div class="shared"><div class="n">04</div><h4>One funder story</h4><p>A single 20th-anniversary narrative and one deck, so partners fund a program, not a line item.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>The money after Houser</h2>
+    <div class="money">
+      <div class="card">
+        <h3>What changed</h3>
+        <div class="row out"><span>Houser Foundation (CYSTEM anchor)</span><span class="v">OUT · ~$90K</span></div>
+        <div class="row"><span>Bigglesworth / Sinjin Bain</span><span class="v" style="color:var(--soft)">stepping back</span></div>
+        <div class="note">The gap consolidation has to close, and the reason one shared funder base beats four separate ones.</div>
+      </div>
+      <div class="card">
+        <h3>Take-Two, committed for 2026-27</h3>
+        <div class="row in"><span>CYSTEM support (up from $10K)</span><span class="v">$25K</span></div>
+        <div class="row in"><span>GGP Scholars (up from $15K)</span><span class="v">$25K</span></div>
+        <div class="row in"><span>The Directory · inaugural, lead sponsor</span><span class="v">$30K</span></div>
+        <div class="row in"><span>2K studio tour at GDC</span><span class="v">in-kind</span></div>
+        <div class="total"><span>Take-Two total</span><span>$80K</span></div>
+        <div class="note">Alan Lewis invited a coalition top-up: <b>EA (Tammy) and ESA (Aubrey)</b>. That is where the Houser gap gets closed.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>What consolidation wins</h2>
+    <div class="grid2">
+      <ul class="clean">
+        <li><b>Fundable.</b> One program with one story, easier to underwrite than four scattered lines.</li>
+        <li><b>Durable.</b> No single funder's exit can collapse a whole track anymore.</li>
+        <li><b>Simpler to run.</b> One application, one mentor pool, one calendar, one lead structure.</li>
+      </ul>
+      <ul class="clean">
+        <li><b>Bigger for scholars.</b> A CYSTEM year flows straight into the GDC-week experience.</li>
+        <li><b>A place for Sinjin.</b> Rolled into GGP, potentially reviving the Collegiate Games Challenge.</li>
+        <li><b>Honors Carter.</b> A living memorial strand, not a one-time tribute.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Decisions this needs from you</h2>
+    <ol class="dec">
+      <li><b>Confirm the merge</b> of all four strands into one program (this draft assumes yes).</li>
+      <li><b>Sinjin's landing spot</b> in GGP, and whether he takes the CGC revival. Get his outstanding CYSTEM news first.</li>
+      <li><b>Make Carter Scholars real:</b> re-open the Phil Rosenberg thread, plus Jon and Emily. Fall is close.</li>
+      <li><b>Close the Houser gap:</b> decide the EA / ESA coalition ask Alan invited.</li>
+      <li><b>One program name + public status</b> so CYSTEM's "folded, not gone" is clear everywhere.</li>
+    </ol>
+  </section>
+
+  <footer>
+    <p class="recepit">Sources: Gordon iMessage 2026-06-29 (the four-strand merge, in his words) and 2026-07-13 (Houser out) · Alan Lewis email 2026-06-18 (Take-Two $80K + Directory lead sponsor) · GGP program records · Carter Lipscomb obituaries (Game Developer, GamesBeat). Full dossier: reports/2026-07-13-ggp-scholars-directory-deep-research.md. Working draft for internal alignment, not yet a public or funder-facing document.</p>
+  </footer>
+
+</div>
+</body>
+</html>
