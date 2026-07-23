@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seattle Trip · Gordon · Jul 23–29 2026</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#0c1512;--bg2:#0f1b17;--panel:#132320;--panel2:#18302a;--line:#25423a;
+    --ink:#eef6f1;--ink2:#a9c4b8;--ink3:#6f8f83;
+    --pine:#3fae86;--teal:#46c7c0;--glow:#ffb26b;--alpen:#ff8f6b;--gold:#f4c65a;--violet:#9d8bff;--sky:#6cb8e6;
+  }
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:var(--gold);text-decoration:none}
+  .wrap{max-width:940px;margin:0 auto;padding:0 18px}
+
+  /* ===== NAV ===== */
+  nav{position:sticky;top:0;z-index:50;background:rgba(12,21,18,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;gap:6px;height:56px;overflow-x:auto;scrollbar-width:none}
+  nav .wrap::-webkit-scrollbar{display:none}
+  nav .brand{font-weight:800;letter-spacing:.02em;margin-right:auto;white-space:nowrap;font-size:15px}
+  nav .brand b{color:var(--pine)}
+  nav a{color:var(--ink2);font-size:13px;letter-spacing:.04em;padding:7px 11px;border-radius:9px;white-space:nowrap;font-weight:600}
+  nav a.on,nav a:hover{color:#fff;background:var(--panel2)}
+  .audio{cursor:pointer;border:1px solid var(--line);background:var(--panel);color:var(--ink2);border-radius:9px;padding:6px 10px;font-size:12px;white-space:nowrap}
+  .audio.on{color:var(--teal);border-color:var(--teal)}
+
+  /* ===== PAGES ===== */
+  .page{display:none;animation:fade .5s ease}
+  .page.on{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  section{padding:26px 0}
+  .eyebrow{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--pine);font-weight:700}
+  h2.big{font:800 26px/1.15 sans-serif;margin:6px 0 16px}
+  h2.big span{color:var(--pine)}
+
+  /* ===== HERO ===== */
+  .hero{position:relative;min-height:82vh;display:flex;flex-direction:column;justify-content:center;overflow:hidden;
+    background:radial-gradient(120% 90% at 50% -10%, #17352b 0%, #0f1f1a 46%, #0c1512 100%)}
+  .ridge{position:absolute;left:0;right:0;bottom:0;height:46%;pointer-events:none}
+  .ridge svg{width:100%;height:100%}
+  .sun{position:absolute;top:16%;left:50%;transform:translateX(-50%);width:220px;height:220px;border-radius:50%;
+    background:radial-gradient(circle,#ffd99a 0%,#ff9d5c55 40%,transparent 70%);filter:blur(4px);animation:rise 6s ease-out both}
+  @keyframes rise{from{transform:translateX(-50%) translateY(60px);opacity:0}to{transform:translateX(-50%) translateY(0);opacity:1}}
+  .hero .wrap{position:relative;z-index:2;text-align:center}
+  .hero .kick{font-size:12px;letter-spacing:.4em;text-transform:uppercase;color:var(--glow)}
+  .hero h1{font:800 clamp(40px,9vw,76px)/.98 sans-serif;margin:10px 0 6px;letter-spacing:-.02em}
+  .hero h1 em{font-style:normal;background:linear-gradient(90deg,var(--pine),var(--teal),var(--sky));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .hero .dates{color:var(--ink2);font-size:16px;letter-spacing:.14em;text-transform:uppercase}
+  .cdrow{display:flex;gap:10px;justify-content:center;margin:26px 0 8px;flex-wrap:wrap}
+  .cd{background:rgba(19,35,32,.7);border:1px solid var(--line);border-radius:14px;padding:12px 16px;min-width:74px}
+  .cd .n{font:800 30px/1 "SF Mono",ui-monospace,monospace;color:var(--gold);font-variant-numeric:tabular-nums}
+  .cd .l{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);margin-top:5px}
+  .scroll{margin-top:20px;color:var(--ink3);font-size:12px;letter-spacing:.2em;text-transform:uppercase;animation:bob 2s infinite}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+  /* ===== STAT STRIP ===== */
+  .strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  .strip .s{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:15px 12px;text-align:center}
+  .strip .s .n{font:800 24px/1 sans-serif;color:var(--teal)}
+  .strip .s .l{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-top:6px}
+  @media(max-width:620px){.strip{grid-template-columns:repeat(2,1fr)}}
+
+  /* ===== ARC MAP ===== */
+  .arc{background:linear-gradient(180deg,#0f1f1a,#0c1512);border:1px solid var(--line);border-radius:18px;padding:20px;margin-top:8px}
+  .arc svg{width:100%;height:auto;display:block}
+  .legw{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+  .legw .lg{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ink2);background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:5px 11px}
+  .dot{width:9px;height:9px;border-radius:50%}
+
+  /* ===== TIMELINE ===== */
+  .tl{position:relative;margin-left:8px;padding-left:26px}
+  .tl:before{content:"";position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:linear-gradient(180deg,var(--pine),var(--teal),var(--violet))}
+  .day{position:relative;margin:0 0 14px}
+  .day:before{content:"";position:absolute;left:-26px;top:20px;width:14px;height:14px;border-radius:50%;background:var(--pine);border:3px solid var(--bg);box-shadow:0 0 0 2px var(--pine)}
+  .day.wed:before{background:var(--gold);box-shadow:0 0 0 2px var(--gold)}
+  .day.cab:before{background:var(--teal);box-shadow:0 0 0 2px var(--teal)}
+  .day.dnd:before{background:var(--violet);box-shadow:0 0 0 2px var(--violet)}
+  .daycard{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;transition:border-color .2s}
+  .daycard:hover{border-color:var(--pine)}
+  .daytop{display:flex;align-items:center;gap:12px;padding:15px 18px;cursor:pointer}
+  .daytop .dd{font:800 15px/1 sans-serif;color:#fff;min-width:64px}
+  .daytop .dd small{display:block;color:var(--ink3);font-size:11px;font-weight:600;margin-top:3px;letter-spacing:.06em}
+  .daytop .dh{font-size:15px;color:var(--ink);font-weight:700}
+  .daytop .dh em{font-style:normal;color:var(--ink3);font-weight:500;font-size:13px;display:block}
+  .daytop .chev{margin-left:auto;color:var(--ink3);transition:transform .25s}
+  .daycard.open .chev{transform:rotate(90deg)}
+  .daybody{max-height:0;overflow:hidden;transition:max-height .35s ease}
+  .daycard.open .daybody{max-height:640px}
+  .daybody .in{padding:0 18px 16px 18px}
+  .ev{display:grid;grid-template-columns:58px 1fr;gap:12px;padding:9px 0;border-top:1px solid var(--line)}
+  .ev .t{font:700 13px/1.3 "SF Mono",monospace;color:var(--teal);font-variant-numeric:tabular-nums}
+  .ev .x b{color:#fff} .ev .x span{color:var(--ink2);font-size:13.5px}
+  .tag{display:inline-block;font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:6px;margin-left:6px;vertical-align:1px}
+  .tag.key{background:#4a2f13;color:var(--gold)} .tag.pin{background:#123a33;color:var(--teal)}
+
+  /* ===== CARDS ===== */
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  @media(max-width:620px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px 18px}
+  .card h3{font-size:16px;margin-bottom:2px}
+  .card .role{font-size:12px;color:var(--pine);letter-spacing:.04em;text-transform:uppercase;font-weight:700;margin-bottom:9px}
+  .card p{font-size:14px;color:var(--ink2);margin-bottom:8px}
+  .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .chip{font-size:11.5px;color:var(--ink2);background:var(--panel2);border:1px solid var(--line);border-radius:16px;padding:3px 10px}
+  .chip b{color:#fff}
+  .av{width:42px;height:42px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;color:#0c1512;float:right}
+
+  /* ===== PLACE ===== */
+  .place{background:var(--panel);border:1px solid var(--line);border-radius:18px;overflow:hidden;margin-bottom:14px}
+  .placehead{padding:18px;background:linear-gradient(120deg,var(--panel2),var(--panel))}
+  .placehead h3{font-size:19px}
+  .placehead .sub{color:var(--ink3);font-size:12.5px;letter-spacing:.05em;margin-top:2px}
+  .placebody{padding:16px 18px}
+  .placebody p{color:var(--ink2);font-size:14px;margin-bottom:10px}
+  .wx{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+  .wxc{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:9px 13px;text-align:center;min-width:78px}
+  .wxc .v{font:800 17px/1 sans-serif;color:var(--sky)} .wxc .k{font-size:10px;color:var(--ink3);text-transform:uppercase;letter-spacing:.08em;margin-top:5px}
+
+  /* ===== LOGISTICS ===== */
+  .lt{width:100%;border-collapse:collapse;font-size:14px}
+  .lt td{padding:11px 10px;border-top:1px solid var(--line);vertical-align:top}
+  .lt tr td:first-child{color:var(--ink3);white-space:nowrap;font-size:12.5px;letter-spacing:.03em;text-transform:uppercase;width:120px}
+  .lt b{color:#fff}
+  .note{background:var(--panel2);border-left:3px solid var(--glow);border-radius:0 10px 10px 0;padding:12px 15px;font-size:13.5px;color:var(--ink2);margin:12px 0}
+  .note b{color:#fff}
+
+  footer{padding:40px 0;text-align:center;color:var(--ink3);font-size:12.5px;border-top:1px solid var(--line);margin-top:20px}
+  .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s,transform .6s}
+  .reveal.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <div class="brand"><b>◆</b> SEATTLE RUN</div>
+  <a href="#overview" class="on">Overview</a>
+  <a href="#itinerary">Itinerary</a>
+  <a href="#wedding">Wedding</a>
+  <a href="#people">People</a>
+  <a href="#places">Places</a>
+  <a href="#logistics">Logistics</a>
+  <span class="audio" id="aud">♪ ambient</span>
+</div></nav>
+
+<!-- ============ OVERVIEW ============ -->
+<div class="page on" id="overview">
+  <header class="hero">
+    <div class="sun"></div>
+    <div class="ridge">
+      <svg viewBox="0 0 1200 300" preserveAspectRatio="none">
+        <path d="M0,300 L0,180 L120,120 L240,170 L360,90 L480,150 L600,60 L720,140 L840,100 L960,160 L1080,110 L1200,175 L1200,300 Z" fill="#0f2620"/>
+        <path d="M0,300 L0,220 L160,170 L320,210 L480,150 L640,205 L800,160 L960,210 L1120,175 L1200,215 L1200,300 Z" fill="#0b1a16"/>
+      </svg>
+    </div>
+    <div class="wrap">
+      <div class="kick">The dossier</div>
+      <h1>Gordon goes<br><em>Pacific Northwest</em></h1>
+      <div class="dates">July 23 – 29, 2026 · NYC → Seattle → Cascades</div>
+      <div class="cdrow" id="cd"></div>
+      <div class="scroll">scroll ↓</div>
+    </div>
+  </header>
+
+  <section class="wrap reveal">
+    <div class="eyebrow">At a glance</div>
+    <h2 class="big">One week, <span>six legs</span></h2>
+    <div class="strip">
+      <div class="s"><div class="n">7</div><div class="l">Days on the ground</div></div>
+      <div class="s"><div class="n">1</div><div class="l">Wedding you officiate</div></div>
+      <div class="s"><div class="n">2</div><div class="l">Nights at the cabin lake</div></div>
+      <div class="s"><div class="n">3</div><div class="l">Days of D&amp;D at Wizards</div></div>
+    </div>
+  </section>
+
+  <section class="wrap reveal">
+    <div class="eyebrow">The arc</div>
+    <h2 class="big">How the week <span>moves</span></h2>
+    <div class="arc">
+      <svg viewBox="0 0 1000 260" preserveAspectRatio="xMidYMid meet">
+        <defs><linearGradient id="road" x1="0" x2="1"><stop offset="0" stop-color="#3fae86"/><stop offset=".5" stop-color="#46c7c0"/><stop offset="1" stop-color="#9d8bff"/></linearGradient></defs>
+        <path d="M60,190 C200,60 300,60 420,110 C540,160 560,60 690,70 C820,80 860,150 940,120" fill="none" stroke="url(#road)" stroke-width="3.5" stroke-dasharray="7 6" opacity=".85"/>
+        <!-- nodes -->
+        <g font-family="sans-serif" font-size="12" fill="#eef6f1" text-anchor="middle">
+          <circle cx="60" cy="190" r="7" fill="#6cb8e6"/><text x="60" y="216">JFK ✈</text><text x="60" y="232" fill="#6f8f83" font-size="10">Thu AM</text>
+          <circle cx="230" cy="86" r="7" fill="#3fae86"/><text x="230" y="60">SEA lands</text><text x="230" y="46" fill="#6f8f83" font-size="10">2:50p PT</text>
+          <circle cx="420" cy="110" r="8" fill="#f4c65a"/><text x="420" y="140">Leavenworth</text><text x="420" y="156" fill="#6f8f83" font-size="10">wedding · Sat</text>
+          <circle cx="560" cy="72" r="7" fill="#46c7c0"/><text x="560" y="48">Snohomish</text><text x="560" y="34" fill="#6f8f83" font-size="10">cabin · Sun</text>
+          <circle cx="690" cy="70" r="7" fill="#9d8bff"/><text x="690" y="46">Renton / WOTC</text><text x="690" y="32" fill="#6f8f83" font-size="10">D&amp;D · Mon–Wed</text>
+          <circle cx="940" cy="120" r="7" fill="#ff8f6b"/><text x="940" y="148">Burbank ✈</text><text x="940" y="164" fill="#6f8f83" font-size="10">Wed home</text>
+        </g>
+      </svg>
+      <div class="legw">
+        <span class="lg"><span class="dot" style="background:#6cb8e6"></span>Fly in</span>
+        <span class="lg"><span class="dot" style="background:#f4c65a"></span>The wedding</span>
+        <span class="lg"><span class="dot" style="background:#46c7c0"></span>Cabin day</span>
+        <span class="lg"><span class="dot" style="background:#9d8bff"></span>Wizards / D&amp;D</span>
+        <span class="lg"><span class="dot" style="background:#ff8f6b"></span>Fly home</span>
+      </div>
+    </div>
+    <div class="note">You arrive straight off the NYC week (G4C, Foster's birthday, the World Cup final). This trip is the exhale after that sprint, then a soft ramp back into work with Wizards and DeLoura. <b>Joe is with you for the wedding, then flies home before the D&amp;D days.</b></div>
+  </section>
+</div>
+
+<!-- ============ ITINERARY ============ -->
+<div class="page" id="itinerary">
+  <section class="wrap">
+    <div class="eyebrow" style="padding-top:20px">Day by day</div>
+    <h2 class="big">The <span>itinerary</span></h2>
+    <div class="tl">
+
+      <div class="day"><div class="daycard open">
+        <div class="daytop"><div class="dd">THU<small>Jul 23</small></div><div class="dh">Fly in + drive to the mountains<em>NYC → Seattle → Leavenworth</em></div><div class="chev">›</div></div>
+        <div class="daybody"><div class="in">
+          <div class="ev"><div class="t">AM<br>ET</div><div class="x"><b>NY → Seattle</b> <span>· WOTC-booked on <b>Alaska</b> (your Mileage Plan, arranged via Megan Marx). Exact flight # / time not yet confirmed.</span><span class="tag key">lock #</span></div></div>
+          <div class="ev"><div class="t">3:00p</div><div class="x"><b>Pick up rental — Seattle</b> <span>· Midsize, booked, 2d 20h (due back ~Sun late morning)</span><span class="tag pin">booked</span></div></div>
+          <div class="ev"><div class="t">PM</div><div class="x"><b>Drive to Leavenworth</b> <span>· ~2.5 hrs east over Stevens Pass (US-2)</span><span class="tag pin">drive</span></div></div>
+          <div class="ev"><div class="t">3p+</div><div class="x"><b>Check in — Hampton Inn &amp; Suites Leavenworth</b> <span>· booked, 1 night</span><span class="tag pin">booked</span></div></div>
+          <div class="ev"><div class="t">eve</div><div class="x"><b>Dinner: München Haus</b> <span>· Bavarian grill + beer garden, Front St. Order at the counter.</span><span class="tag key">tonight</span></div></div>
+        </div></div>
+      </div></div>
+
+      <div class="day"><div class="daycard">
+        <div class="daytop"><div class="dd">FRI<small>Jul 24</small></div><div class="dh">Leavenworth · settle + rehearse<em>with Joe, near the venue</em></div><div class="chev">›</div></div>
+        <div class="daybody"><div class="in">
+          <div class="ev"><div class="t">day</div><div class="x"><b>Leavenworth</b> <span>· Bavarian village day; rest after the red-eye week</span></div></div>
+          <div class="ev"><div class="t">TBC</div><div class="x"><b>Rehearsal?</b> <span>· confirm with Dane if there is one and if he wants you there</span><span class="tag key">confirm</span></div></div>
+        </div></div>
+      </div></div>
+
+      <div class="day wed"><div class="daycard">
+        <div class="daytop"><div class="dd">SAT<small>Jul 25</small></div><div class="dh">You marry Dane &amp; Megan<em>Mountain Springs Lodge · Ponderosa Meadow</em></div><div class="chev">›</div></div>
+        <div class="daybody"><div class="in">
+          <div class="ev"><div class="t">4:55p</div><div class="x"><b>Guests seated</b> <span>· you in place</span></div></div>
+          <div class="ev"><div class="t">5:00p</div><div class="x"><b>Ceremony — SHARP</b> <span>· 30 min. You officiate. No first look.</span><span class="tag key">the moment</span></div></div>
+          <div class="ev"><div class="t">5:30p</div><div class="x"><b>Cocktail hour + photos</b></div></div>
+          <div class="ev"><div class="t">6:30p</div><div class="x"><b>Dinner</b> <span>· toasts + first dances 7:30 · dancing 8–10</span></div></div>
+          <div class="ev"><div class="t">10p+</div><div class="x"><b>After-party at the ponderosa</b></div></div>
+        </div></div>
+      </div></div>
+
+      <div class="day cab"><div class="daycard">
+        <div class="daytop"><div class="dd">SUN<small>Jul 26</small></div><div class="dh">Cabin Day at the lake<em>Ryan Madsen + Freddy · Snohomish</em></div><div class="chev">›</div></div>
+        <div class="daybody"><div class="in">
+          <div class="ev"><div class="t">day</div><div class="x"><b>Cabin Day</b> <span>· 112 S Tulloch, Snohomish WA (~1 hr from Seattle, on the Hwy-2 way back from Leavenworth)</span><span class="tag pin">on the way</span></div></div>
+          <div class="ev"><div class="t">host</div><div class="x"><b>Ryan Madsen</b> (cabin owner) <b>+ Freddy Molitch</b> <span>· bring something to share; sleepover option</span></div></div>
+          <div class="ev"><div class="t">Joe</div><div class="x"><b>Joe flies home from Seattle today</b> <span>· his own separate ticket (Joe, 4/16)</span></div></div>
+        </div></div>
+      </div></div>
+
+      <div class="day dnd"><div class="daycard">
+        <div class="daytop"><div class="dd">MON<small>Jul 27</small></div><div class="dh">Into Seattle · Wizards block begins<em>Wizards-booked hotel</em></div><div class="chev">›</div></div>
+        <div class="daybody"><div class="in">
+          <div class="ev"><div class="t">check-in</div><div class="x"><b>Wizards-booked hotel</b> <span>· Mon 7/27 → Wed 7/29, "before we game" (Megan Marx)</span></div></div>
+          <div class="ev"><div class="t">eve</div><div class="x"><b>In-person D&amp;D</b> <span>· D20 Deathmatch / Dragon House · you play Darby, Aasimar Paladin L11 · <b>PRIVATE game</b></span><span class="tag pin">private</span></div></div>
+        </div></div>
+      </div></div>
+
+      <div class="day dnd"><div class="daycard">
+        <div class="daytop"><div class="dd">TUE<small>Jul 28</small></div><div class="dh">D&amp;D days<em>The Four Loko (now six)</em></div><div class="chev">›</div></div>
+        <div class="daybody"><div class="in">
+          <div class="ev"><div class="t">day</div><div class="x"><b>Gaming with the WOTC crew</b> <span>· DM Bec Godsey · keep it private, never public-facing</span></div></div>
+        </div></div>
+      </div></div>
+
+      <div class="day wed"><div class="daycard">
+        <div class="daytop"><div class="dd">WED<small>Jul 29</small></div><div class="dh">DeLoura meeting, then fly home<em>GDC content · SEA → Burbank</em></div><div class="chev">›</div></div>
+        <div class="daybody"><div class="in">
+          <div class="ev"><div class="t">AM</div><div class="x"><b>Into Seattle to meet Mark DeLoura</b> <span>· come with the GDC content you dream of. Pitch the track only you can host, not "an AI track."</span><span class="tag key">GDC</span></div></div>
+          <div class="ev"><div class="t">later</div><div class="x"><b>SEA → Burbank</b> <span>· home</span></div></div>
+        </div></div>
+      </div></div>
+
+    </div>
+  </section>
+</div>
+
+<!-- ============ WEDDING ============ -->
+<div class="page" id="wedding">
+  <section class="wrap">
+    <div class="eyebrow" style="padding-top:20px">Saturday, the main event</div>
+    <h2 class="big">Dane &amp; Megan · <span>you officiate</span></h2>
+    <div class="strip">
+      <div class="s"><div class="n">5:00</div><div class="l">Ceremony sharp</div></div>
+      <div class="s"><div class="n">30</div><div class="l">Minutes</div></div>
+      <div class="s"><div class="n">4:55</div><div class="l">Seated by</div></div>
+      <div class="s"><div class="n">NO</div><div class="l">First look</div></div>
+    </div>
+
+    <div class="note" style="border-left-color:var(--gold);margin-top:16px">☀️ <b>Light is on your side.</b> Sunset in Leavenworth on July 25 is <b>8:48pm</b>, so a 5:00 ceremony sits in full, warm daylight with a long golden hour after. The meadow will glow. Temps drop toward the low 50s after dark for the reception.</div>
+
+    <div class="note" style="border-left-color:var(--alpen);margin-top:12px">
+      <b>Handle with care.</b> Megan asked directly (6/2): keep it short, don't go over the top. Five minutes that feel like shelter, not a show. Plan through <b>Dane only</b>. Never reference the maid-of-honor, the bachelorette, or who is / isn't in the seats. The spine is <b>the ski story</b> — the day Dane picked Megan over the powder.
+    </div>
+
+    <div class="grid" style="margin-top:14px">
+      <div class="card"><div class="role">The story you tell</div><h3>Whistler, Feb 2024</h3><p>Barely spoke all week. On the last day Megan broke her foot; Dane skipped the best snow of the trip to stay with her. Friends that day, first date that August, engaged a year later at Schweitzer Mountain.</p></div>
+      <div class="card"><div class="role">The run of show</div><h3>5:00 → 5:30</h3><p>Processional 5:00 · gathering 5:03 · ski story 5:04 · on marriage 5:06 · <b>their vows 5:07</b> (you step back) · rings 5:18 · pronouncement + kiss 5:22 · recessional 5:24.</p></div>
+    </div>
+
+    <div class="card" style="margin-top:14px;border-color:var(--gold)">
+      <div class="role" style="color:var(--gold)">Confirm with Dane before you stand</div>
+      <div class="chips">
+        <span class="chip"><b>Name:</b> present her as "Megan Lennon"?</span>
+        <span class="chip">Processional song + walk order</span>
+        <span class="chip">Vows seated or standing</span>
+        <span class="chip">Rings during vows or after</span>
+        <span class="chip">Mic or unamplified in the meadow</span>
+        <span class="chip">Anything said / left out</span>
+      </div>
+      <p style="margin-top:12px;font-size:13px;color:var(--ink3)">Full script + the read-from sheet live in your Officiant Command PDF (already on your phone and Joe's).</p>
+    </div>
+  </section>
+</div>
+
+<!-- ============ PEOPLE ============ -->
+<div class="page" id="people">
+  <section class="wrap">
+    <div class="eyebrow" style="padding-top:20px">Who's in the week</div>
+    <h2 class="big">The <span>people</span></h2>
+    <div class="grid">
+
+      <div class="card"><span class="av" style="background:var(--glow)">J</span><h3>Joe Heally</h3><div class="role">Your husband</div><p>With you for the wedding weekend, then flies home before the D&amp;D block. Your anchor across the whole trip.</p></div>
+
+      <div class="card"><span class="av" style="background:var(--gold)">D</span><h3>Dane Lennon</h3><div class="role">The groom · your friend</div><p>One of the two who got you into Shambhala. You're marrying him on what would've been festival weekend. Plan everything through Dane.</p><div class="chips"><span class="chip">509-847-5036</span><span class="chip">Countdown energy: "let's go bb"</span></div></div>
+
+      <div class="card"><span class="av" style="background:var(--alpen)">M</span><h3>Megan Williams → Lennon</h3><div class="role">The bride</div><p>The planning was hard on her. Maximum tenderness, no wedding talk directed at her, keep the ceremony brief and true.</p></div>
+
+      <div class="card"><span class="av" style="background:var(--teal)">R</span><h3>Ryan Madsen</h3><div class="role">Cabin host · games + chosen-family</div><p>COO of Magboot Games, Seattle Indies. Owns the Snohomish cabin. You broker doors for him. PNW chosen-family.</p><div class="chips"><span class="chip">206-818-7410</span><span class="chip">112 S Tulloch, Snohomish</span></div></div>
+
+      <div class="card"><span class="av" style="background:var(--violet)">F</span><h3>Freddy Molitch</h3><div class="role">DJ King of Pants · cabin co-host</div><p>Seattle DJ + playwright, Bootie resident, C89.5 mashup show. Your PNW EDM-and-queer-scene family.</p></div>
+
+      <div class="card"><span class="av" style="background:var(--pine)">M</span><h3>Megan Marx</h3><div class="role">WOTC · owns your travel</div><p>Lead EA to John Hight. Booked the hotel + D&amp;D block. Treat as a durable ally, not a logistics vendor. Holds your CTIN 463 speaker asks.</p><div class="chips"><span class="chip">megan.marx@wizards.com</span><span class="chip">206-294-9790</span></div></div>
+
+      <div class="card"><span class="av" style="background:var(--sky)">JH</span><h3>John Hight</h3><div class="role">WOTC leadership</div><p>"This is John Hight's house" — lead with warmth. Giant Skull context lives here. Gateway is Megan Marx.</p><div class="chips"><span class="chip">john.hight@wizards.com</span></div></div>
+
+      <div class="card"><span class="av" style="background:var(--gold)">MD</span><h3>Mark DeLoura</h3><div class="role">GDC · Wed meeting</div><p>ED of Innovation &amp; Growth for the rebranded GDC "Festival of Gaming" (40th ed. drew ~20k). Ex-White House OSTP games advisor. 9,305 msgs on 818 — a deep peer friendship. Pitch the track only you can host, with an eye to <b>GDC 2027 (Mar 1–5, Moscone)</b>.</p></div>
+
+      <div class="card"><span class="av" style="background:var(--teal)">A</span><h3>Alex Garcia</h3><div class="role">Seattle constellation</div><p>Old friend — you two used to throw PAX parties; he owns a pinball sports bar on the West side. Part of your Seattle soccer-summer crew. <b>Contact still TBD</b> — grab his number if you want to see him.</p></div>
+
+      <div class="card"><span class="av" style="background:var(--sky)">MM</span><h3>Mike Morrow</h3><div class="role">Seattle · possible meetup</div><p>Wants to do "all the things" this visit (6/2). You asked him to connect Dane with Seattle solar / nonprofit contacts. No time set yet — a loose thread if you have an open window.</p><div class="chips"><span class="chip">206-853-4557</span></div></div>
+
+    </div>
+  </section>
+</div>
+
+<!-- ============ PLACES ============ -->
+<div class="page" id="places">
+  <section class="wrap">
+    <div class="eyebrow" style="padding-top:20px">Where the week lives</div>
+    <h2 class="big">The <span>places</span></h2>
+
+    <div class="place">
+      <div class="placehead"><h3>🏔️ Leavenworth, WA</h3><div class="sub">Bavarian village in the Cascades · ~2.5 hrs east of Seattle via US-2</div></div>
+      <div class="placebody">
+        <p>A former railroad-and-logging town remade in the 1960s as a Bavarian alpine village — timbered facades, biergartens, the Wenatchee River, mountains on every side. Draws ~2 million visitors a year. Front Street is the walkable German-themed core. Your base for the wedding weekend.</p>
+        <div class="wx" id="wx-leav"><span class="wxc"><span class="v">~85°</span><span class="k">Late-Jul high</span></span><span class="wxc"><span class="v">~52°</span><span class="k">Overnight low</span></span><span class="wxc"><span class="v">8:48p</span><span class="k">Sunset 7/25</span></span></div>
+        <p style="font-size:12.5px;color:var(--ink3);margin-top:8px">Warm and dry (driest month). Highs/lows are climate normals, not a dated forecast. Bring a layer for the evening reception.</p>
+      </div>
+    </div>
+
+    <div class="place">
+      <div class="placehead"><h3>💒 Mountain Springs Lodge · Ponderosa Meadow</h3><div class="sub">The wedding venue · ~25–40 min from downtown Leavenworth (Plain, WA)</div></div>
+      <div class="placebody">
+        <p>Destination wedding property in Beaver Valley (Plain, WA), meadows, ponds, Aspen groves and towering Ponderosa Pines, up to 250 guests, with onsite cabins. Ceremony spaces: <b>Ponderosa Meadow</b> (yours, pond + Cascade view), Aspengrove, and the Beaver Creek Barn. After-party at the ponderosa house. Elevation ~1,850–1,900 ft.</p>
+        <div class="wx"><span class="wxc"><span class="v">25–40m</span><span class="k">from Leavenworth</span></span><span class="wxc"><span class="v">250</span><span class="k">guest capacity</span></span></div>
+        <p style="margin-top:10px"><a href="https://mtsprings.com">mtsprings.com</a> · <a href="https://www.zola.com/wedding/daneandmegan2026">their Zola site</a></p>
+      </div>
+    </div>
+
+    <div class="place">
+      <div class="placehead"><h3>🍺 München Haus</h3><div class="sub">Tonight's dinner · 709 Front St, Leavenworth · daily 11a–10p</div></div>
+      <div class="placebody"><p>Bavarian grill + open-air beer garden, est. 2001. Order at the counter: sausages charbroiled outdoors on artisan buns, 20+ condiments and house mustards, their famous apple cider kraut, local <b>Icicle Brewing</b> beers on tap. Pet-friendly, no reservations. Recommended to you today.</p><p style="font-size:12.5px;color:var(--ink3)">Hours are aggregator-sourced, worth a quick same-week check.</p></div>
+    </div>
+
+    <div class="place">
+      <div class="placehead"><h3>🛶 The Cabin · Snohomish</h3><div class="sub">Cabin Day Sunday · 112 S Tulloch, Snohomish WA</div></div>
+      <div class="placebody"><p>Ryan's place, ~1 hour outside Seattle and right on the Hwy-2 route back from Leavenworth. Lake nearby, cousin's place next door may be open, sleepover on the table.</p></div>
+    </div>
+
+    <div class="place">
+      <div class="placehead"><h3>🐉 Wizards of the Coast · Renton</h3><div class="sub">Mon–Wed · D&amp;D block (private) · Southport, 1107 Lake Washington Blvd N</div></div>
+      <div class="placebody"><p>Home of D&amp;D and Magic: The Gathering, on Lake Washington in Renton (~12 mi / 20–30 min southeast of downtown Seattle). A private corporate campus, not a public attraction, you're there by invitation. Wizards-booked hotel Mon–Wed, then the private in-person game. This is John Hight's house — warmth first.</p></div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ LOGISTICS ============ -->
+<div class="page" id="logistics">
+  <section class="wrap">
+    <div class="eyebrow" style="padding-top:20px">The operational layer</div>
+    <h2 class="big">Flights, beds &amp; <span>contacts</span></h2>
+
+    <div class="card"><div class="role">Travel</div>
+    <table class="lt">
+      <tr><td>Outbound</td><td><b>NY → SEA · Thu Jul 23 AM</b> · WOTC-booked on <b>Alaska</b> (Mileage Plan ATMOS 283208380, arranged via Megan Marx). <span style="color:var(--glow)">Flight # / time still to confirm ✱</span> <span style="color:var(--ink3)">(an older note lists "Delta DL1719 2:50pm" — reconcile.)</span></td></tr>
+      <tr><td>Return</td><td><b>SEA → Burbank</b> · Wed Jul 29 (after DeLoura) <span style="color:var(--glow)">✱ date/flight to confirm</span></td></tr>
+      <tr><td>Joe</td><td>With you for the wedding; flies home from Seattle <b>Sun Jul 26</b> on a separate ticket</td></tr>
+      <tr><td>Rental car</td><td><b>Midsize · booked</b> · pick up Seattle 3:00pm Thu · 2d 20h (due back ~Sun late morning)</td></tr>
+      <tr><td>Ground</td><td>SEA → Leavenworth ~2.5 hrs (US-2, Stevens Pass) · back via Hwy 2 through Snohomish</td></tr>
+    </table></div>
+
+    <div class="card" style="margin-top:14px"><div class="role">Where you sleep</div>
+    <table class="lt">
+      <tr><td>Thu</td><td><b>Hampton Inn &amp; Suites Leavenworth</b> · booked, 1 night</td></tr>
+      <tr><td>Fri–Sat</td><td>Leavenworth area, with Joe <span style="color:var(--glow)">✱ Fri/Sat lodging not yet on file (Hampton is 1 night)</span></td></tr>
+      <tr><td>Sun</td><td>Ryan's cabin — 112 S Tulloch, Snohomish (bring something to share; sleepover option; cousin's place next door may be open)</td></tr>
+      <tr><td>Mon–Wed</td><td><b>Wizards-booked hotel</b> (Megan Marx owns it) <span style="color:var(--glow)">✱ name/address in email only</span></td></tr>
+    </table></div>
+
+    <div class="card" style="margin-top:14px"><div class="role">Contacts</div>
+    <table class="lt">
+      <tr><td>Dane</td><td>509-847-5036 · <b>plan the ceremony through him</b></td></tr>
+      <tr><td>Ryan</td><td>206-818-7410 · cabin host</td></tr>
+      <tr><td>Megan Marx</td><td>megan.marx@wizards.com · 206-294-9790 (day-of travel only)</td></tr>
+      <tr><td>John Hight</td><td>john.hight@wizards.com</td></tr>
+    </table></div>
+
+    <div class="note"><b>Closed ✓ (your 7/23 booking screenshot):</b> Thu lodging = Hampton Inn &amp; Suites Leavenworth · Midsize rental, Seattle 3pm, 2d 20h.
+    <br><br><b>Still open ✱:</b> reconcile the outbound flight (Alaska via WOTC vs. the old "Delta DL1719" note) and get the actual # / time · lock return SEA→Burbank date · <b>Fri/Sat lodging</b> (Hampton is 1 night only) · Wizards hotel address · confirm the six ceremony calls with Dane · rehearsal time (if any) Friday · grab Alex Garcia's number if you want to see him.
+    <br><br><span style="color:var(--ink3);font-size:12.5px">Note: the iMessage mirror ends Jul 9, so anything booked after that (final flights, day-of details) isn't reflected here and lives in email/calendar.</span></div>
+  </section>
+  <footer>Built for Gordon · Seattle run, Jul 23–29 2026 · sources: iMessage, memory, calendar, web research<br>Verify the ✱ open items before you rely on them. — Darby</footer>
+</div>
+
+<script>
+  // ---- page routing ----
+  const pages=[...document.querySelectorAll('.page')], links=[...document.querySelectorAll('nav a')];
+  function go(id){
+    pages.forEach(p=>p.classList.toggle('on',p.id===id));
+    links.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+id));
+    window.scrollTo({top:0,behavior:'instant'});
+    reveal();
+  }
+  links.forEach(a=>a.addEventListener('click',e=>{e.preventDefault();const id=a.getAttribute('href').slice(1);history.replaceState(null,'',a.getAttribute('href'));go(id);}));
+  if(location.hash) go(location.hash.slice(1));
+
+  // ---- countdown to ceremony (Sat Jul 25 2026 5:00pm PT = 00:00 UTC Jul 26) ----
+  function cd(){
+    const target=new Date('2026-07-26T00:00:00Z');
+    const now=new Date();
+    let s=Math.max(0,Math.floor((target-now)/1000));
+    const d=Math.floor(s/86400);s-=d*86400;const h=Math.floor(s/3600);s-=h*3600;const m=Math.floor(s/60);s-=m*60;
+    const box=[['Days',d],['Hrs',h],['Min',m],['Sec',s]];
+    document.getElementById('cd').innerHTML=box.map(b=>`<div class="cd"><div class="n">${String(b[1]).padStart(2,'0')}</div><div class="l">${b[0]} to "I do"</div></div>`).join('');
+  }
+  cd();setInterval(cd,1000);
+
+  // ---- scroll reveal ----
+  function reveal(){document.querySelectorAll('.page.on .reveal').forEach(el=>{const r=el.getBoundingClientRect();if(r.top<innerHeight-60)el.classList.add('in');});}
+  addEventListener('scroll',reveal);reveal();
+
+  // ---- day accordions ----
+  document.querySelectorAll('.daytop').forEach(t=>t.addEventListener('click',()=>t.closest('.daycard').classList.toggle('open')));
+
+  // ---- ambient audio (Web Audio, optional, off by default) ----
+  let actx,nodes=[],playing=false;
+  document.getElementById('aud').addEventListener('click',function(){
+    if(!actx)actx=new (window.AudioContext||window.webkitAudioContext)();
+    if(playing){nodes.forEach(n=>{try{n.stop&&n.stop()}catch(e){}n.disconnect&&n.disconnect()});nodes=[];playing=false;this.classList.remove('on');this.textContent='♪ ambient';return;}
+    const master=actx.createGain();master.gain.value=0.06;master.connect(actx.destination);
+    [146.83,220,293.66].forEach((f,i)=>{const o=actx.createOscillator();o.type='sine';o.frequency.value=f;const g=actx.createGain();g.gain.value=i===0?.5:.22;
+      const lfo=actx.createOscillator();lfo.frequency.value=0.07+i*0.03;const lg=actx.createGain();lg.gain.value=.15;lfo.connect(lg);lg.connect(g.gain);
+      o.connect(g);g.connect(master);o.start();lfo.start();nodes.push(o,lfo);});
+    nodes.push(master);playing=true;this.classList.add('on');this.textContent='♪ playing';
+  });
+</script>
+</body>
+</html>
