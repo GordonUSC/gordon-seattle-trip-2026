@@ -1,0 +1,1215 @@
+<title>Gordon's Summer Setlist · NY & Seattle 2026</title>
+<style>
+  /* =========================================================
+     TWO SIDES, ONE RECORD. Gordon's Summer Setlist
+     Side A: New York (the drop) · Side B: Seattle (the afterglow)
+     Single self-contained file. All CSS/JS inline. No external assets.
+     ========================================================= */
+
+  :root {
+    /* Subject palette */
+    --ink-night: #0B0E1A;
+    --marquee-magenta: #FF3D8B;
+    --electric-cyan: #29E0D8;
+    --marquee-gold: #F5C542;
+    --evergreen: #1F5C4A;
+    --afterglow-coral: #FF6B5A;
+
+    /* Type stacks (no external fonts; condensed poster + clean body + mono logistics) */
+    --font-display: "Anton", "Haettenschweiler", "Arial Narrow Bold", "Impact", sans-serif;
+    --font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+
+    --maxw: 1180px;
+    --radius: 14px;
+    --ease: cubic-bezier(.22,.61,.36,1);
+  }
+
+  /* ---- DARK (default) tokens ---- */
+  :root, :root[data-theme="dark"] {
+    --bg: #0B0E1A;
+    --bg-2: #0F1426;
+    --surface: rgba(255,255,255,.045);
+    --surface-2: rgba(255,255,255,.07);
+    --border: rgba(255,255,255,.12);
+    --text: #EEF1FA;
+    --muted: #A6ADC4;
+    --faint: #6C7492;
+    --gold: #F5C542;
+    --vinyl: #05060C;
+    --shadow: 0 20px 60px rgba(0,0,0,.55);
+  }
+  :root[data-theme="light"] {
+    --bg: #F4F1EC;
+    --bg-2: #ECE7DE;
+    --surface: rgba(11,14,26,.035);
+    --surface-2: rgba(11,14,26,.06);
+    --border: rgba(11,14,26,.14);
+    --text: #14182A;
+    --muted: #4E5570;
+    --faint: #8A8FA6;
+    --gold: #C89416;
+    --vinyl: #14182A;
+    --shadow: 0 18px 44px rgba(20,24,42,.18);
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme]) {
+      --bg: #F4F1EC;
+      --bg-2: #ECE7DE;
+      --surface: rgba(11,14,26,.035);
+      --surface-2: rgba(11,14,26,.06);
+      --border: rgba(11,14,26,.14);
+      --text: #14182A;
+      --muted: #4E5570;
+      --faint: #8A8FA6;
+      --gold: #C89416;
+      --vinyl: #14182A;
+      --shadow: 0 18px 44px rgba(20,24,42,.18);
+    }
+  }
+
+  /* ---- SIDE accent tokens (cross-fade on flip) ---- */
+  :root, :root[data-side="A"] {
+    --accent: var(--marquee-magenta);
+    --accent-2: var(--electric-cyan);
+    --leg-tint: rgba(255,61,139,.09);
+    --wash-1: rgba(255,61,139,.20);
+    --wash-2: rgba(41,224,216,.16);
+  }
+  :root[data-side="B"] {
+    --accent: var(--afterglow-coral);
+    --accent-2: #37A07E;
+    --leg-tint: rgba(31,92,74,.14);
+    --wash-1: rgba(31,92,74,.30);
+    --wash-2: rgba(255,107,90,.16);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.55;
+    overflow-x: hidden;
+    transition: background .8s var(--ease), color .5s var(--ease);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; animation: none !important; }
+  }
+
+  a { color: var(--accent-2); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 22px; }
+  .mono { font-family: var(--font-mono); }
+  .kicker {
+    font-family: var(--font-mono);
+    font-size: .72rem;
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+
+  /* Ambient background wash that shifts per side */
+  .ambient {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(60% 45% at 82% 8%, var(--wash-1), transparent 60%),
+      radial-gradient(55% 50% at 10% 92%, var(--wash-2), transparent 62%);
+    opacity: .9;
+    transition: background .8s var(--ease);
+  }
+  .grain {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: .5;
+    background-image: repeating-linear-gradient(0deg, rgba(255,255,255,.012) 0 1px, transparent 1px 3px);
+    mix-blend-mode: overlay;
+  }
+
+  /* =================== TOP BAR =================== */
+  header.bar {
+    position: sticky; top: 0; z-index: 60;
+    backdrop-filter: blur(14px);
+    background: color-mix(in srgb, var(--bg) 78%, transparent);
+    border-bottom: 1px solid var(--border);
+  }
+  .bar-inner {
+    max-width: var(--maxw); margin: 0 auto; padding: 10px 22px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .brand {
+    font-family: var(--font-display);
+    letter-spacing: .04em; text-transform: uppercase;
+    font-size: 1.02rem; line-height: 1; white-space: nowrap;
+  }
+  .brand b { color: var(--accent); }
+  .bar-spacer { flex: 1; }
+
+  .flip-toggle {
+    display: inline-flex; align-items: center; gap: 2px;
+    border: 1px solid var(--border); border-radius: 999px; padding: 3px;
+    background: var(--surface);
+  }
+  .flip-toggle button {
+    font-family: var(--font-mono); font-size: .72rem; letter-spacing: .12em;
+    text-transform: uppercase; cursor: pointer;
+    border: 0; background: transparent; color: var(--muted);
+    padding: 6px 12px; border-radius: 999px; transition: all .3s var(--ease);
+  }
+  .flip-toggle button[aria-pressed="true"] {
+    background: var(--accent); color: #0B0E1A; font-weight: 600;
+  }
+  :root[data-side="B"] .flip-toggle button[aria-pressed="true"] { color: #fff; }
+
+  .theme-btn {
+    border: 1px solid var(--border); background: var(--surface);
+    color: var(--text); width: 38px; height: 34px; border-radius: 10px;
+    cursor: pointer; font-size: 1rem; display: grid; place-items: center;
+  }
+  .theme-btn:hover { background: var(--surface-2); }
+
+  /* =================== HERO =================== */
+  .hero { position: relative; z-index: 1; padding: 46px 0 26px; }
+  .hero-grid {
+    display: grid; grid-template-columns: 1.25fr .9fr; gap: 40px; align-items: center;
+  }
+  .side-flags { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+  .side-flag {
+    font-family: var(--font-mono); font-size: .7rem; letter-spacing: .14em; text-transform: uppercase;
+    padding: 6px 11px; border-radius: 999px; border: 1px solid var(--border); color: var(--muted);
+  }
+  .side-flag.a { border-color: color-mix(in srgb, var(--marquee-magenta) 55%, transparent); color: var(--marquee-magenta); }
+  .side-flag.b { border-color: color-mix(in srgb, var(--evergreen) 60%, transparent); color: color-mix(in srgb, var(--evergreen) 82%, var(--text)); }
+  :root[data-theme="dark"] .side-flag.b { color: #6FD3AE; }
+
+  h1.hero-title {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: .01em;
+    line-height: .86;
+    margin: 4px 0 6px;
+    font-size: clamp(3rem, 9vw, 6.6rem);
+  }
+  .hero-title .l1 { display: block; color: var(--text); }
+  .hero-title .l2 {
+    display: block;
+    color: transparent;
+    background: linear-gradient(92deg, var(--marquee-magenta), var(--marquee-gold) 55%, var(--electric-cyan));
+    -webkit-background-clip: text; background-clip: text;
+  }
+  :root[data-side="B"] .hero-title .l2 {
+    background: linear-gradient(92deg, var(--afterglow-coral), var(--marquee-gold) 50%, #5FC4A0);
+    -webkit-background-clip: text; background-clip: text;
+  }
+  .hero-sub {
+    color: var(--muted); font-size: 1.08rem; max-width: 42ch; margin: 14px 0 0;
+  }
+  .hero-meta {
+    display: flex; flex-wrap: wrap; gap: 8px 10px; margin-top: 20px;
+  }
+  .chip {
+    font-family: var(--font-mono); font-size: .74rem; letter-spacing: .06em;
+    padding: 7px 11px; border-radius: 8px; border: 1px solid var(--border);
+    background: var(--surface); color: var(--muted);
+  }
+  .chip b { color: var(--text); font-weight: 600; }
+
+  /* Countdown */
+  .countdown {
+    margin-top: 26px; border: 1px solid var(--border); border-radius: var(--radius);
+    background: var(--surface); padding: 16px 18px;
+  }
+  .countdown .lab {
+    font-family: var(--font-mono); font-size: .68rem; letter-spacing: .22em;
+    text-transform: uppercase; color: var(--faint); display: flex; align-items: center; gap: 8px;
+  }
+  .dot-live { width: 8px; height: 8px; border-radius: 50%; background: var(--accent);
+    box-shadow: 0 0 0 0 var(--accent); animation: pulse 2.2s infinite; }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 60%, transparent); }
+    70% { box-shadow: 0 0 0 12px transparent; }
+    100% { box-shadow: 0 0 0 0 transparent; }
+  }
+  .cd-row { display: flex; gap: 16px; margin-top: 10px; align-items: baseline; flex-wrap: wrap; }
+  .cd-unit { display: flex; flex-direction: column; align-items: flex-start; }
+  .cd-num {
+    font-family: var(--font-display); font-size: clamp(1.8rem, 5vw, 2.9rem);
+    line-height: .9; color: var(--gold); letter-spacing: .02em;
+  }
+  .cd-unit small { font-family: var(--font-mono); font-size: .6rem; letter-spacing: .2em;
+    text-transform: uppercase; color: var(--faint); margin-top: 4px; }
+  .cd-sep { font-family: var(--font-display); font-size: 1.8rem; color: var(--faint); align-self: flex-start; }
+  .cd-caption { font-family: var(--font-mono); font-size: .72rem; color: var(--muted); margin-top: 12px; }
+
+  /* Record art */
+  .record-stage { display: grid; place-items: center; position: relative; }
+  .record {
+    position: relative; width: min(360px, 78vw); aspect-ratio: 1; }
+  .vinyl {
+    position: absolute; inset: 0; border-radius: 50%;
+    background:
+      repeating-radial-gradient(circle at 50% 50%, rgba(255,255,255,.03) 0 2px, transparent 2px 5px),
+      radial-gradient(circle at 50% 50%, #1a1f34 0 30%, var(--vinyl) 31%);
+    box-shadow: var(--shadow), inset 0 0 60px rgba(0,0,0,.6);
+    animation: spin 14s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .label-disc {
+    position: absolute; inset: 33%; border-radius: 50%;
+    background: radial-gradient(circle at 50% 35%, var(--accent), color-mix(in srgb, var(--accent) 40%, #101427));
+    display: grid; place-items: center; text-align: center;
+    box-shadow: inset 0 0 22px rgba(0,0,0,.35);
+    transition: background .8s var(--ease);
+  }
+  .label-disc .lbl-side { font-family: var(--font-display); font-size: 2.4rem; color: #0B0E1A; line-height: 1; }
+  :root[data-side="B"] .label-disc .lbl-side { color: #fff; }
+  .label-disc .lbl-city { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .2em;
+    text-transform: uppercase; color: rgba(11,14,26,.7); margin-top: 3px; }
+  :root[data-side="B"] .label-disc .lbl-city { color: rgba(255,255,255,.8); }
+  .spindle { position: absolute; inset: 48.5%; background: #05060c; border-radius: 50%; box-shadow: 0 0 0 3px rgba(255,255,255,.06); }
+  .needle {
+    position: absolute; top: 6%; right: 2%; width: 44%; height: 8px;
+    transform-origin: right center; transform: rotate(-16deg);
+    display: flex; align-items: center; z-index: 3;
+  }
+  .needle .arm { flex: 1; height: 5px; border-radius: 4px;
+    background: linear-gradient(90deg, var(--gold), color-mix(in srgb, var(--gold) 50%, #999)); }
+  .needle .head { width: 16px; height: 16px; border-radius: 3px; background: var(--gold);
+    box-shadow: 0 0 14px color-mix(in srgb, var(--gold) 70%, transparent); }
+  .record-caption { font-family: var(--font-mono); font-size: .72rem; color: var(--muted); margin-top: 20px; text-align: center; }
+
+  /* =================== SECTION SHELL =================== */
+  section.block { position: relative; z-index: 1; padding: 40px 0; }
+  .sec-head { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 8px; }
+  .sec-head h2 {
+    font-family: var(--font-display); text-transform: uppercase; letter-spacing: .02em;
+    font-size: clamp(1.7rem, 4.4vw, 2.8rem); margin: 0; line-height: .95;
+  }
+  .sec-desc { color: var(--muted); max-width: 62ch; margin: 4px 0 22px; }
+
+  /* =================== WAVEFORM NAV =================== */
+  .wf-shell {
+    border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface);
+    padding: 18px 16px 14px; box-shadow: var(--shadow);
+  }
+  .wf-scale { display: flex; justify-content: space-between; font-family: var(--font-mono);
+    font-size: .64rem; letter-spacing: .1em; color: var(--faint); margin-bottom: 6px; }
+  .wf-canvas-holder { position: relative; touch-action: none; cursor: ew-resize; }
+  .waveform { display: block; width: 100%; height: 118px; }
+  .wf-needle-line {
+    position: absolute; top: 0; bottom: 0; width: 2px; background: var(--gold);
+    box-shadow: 0 0 12px var(--gold); pointer-events: none; transform: translateX(-1px);
+  }
+  .wf-needle-line::before {
+    content: ""; position: absolute; top: -6px; left: -6px; width: 14px; height: 14px;
+    border-radius: 3px; background: var(--gold); box-shadow: 0 0 12px color-mix(in srgb, var(--gold) 70%, transparent);
+  }
+  .wf-flip-mark { position: absolute; top: 0; bottom: 0; width: 0; border-left: 2px dashed var(--faint);
+    pointer-events: none; }
+  .wf-flip-mark span {
+    position: absolute; top: 4px; left: 6px; font-family: var(--font-mono); font-size: .58rem;
+    letter-spacing: .12em; color: var(--faint); white-space: nowrap;
+  }
+
+  /* Tracklist */
+  .tracklist { display: grid; gap: 8px; margin-top: 22px; }
+  .track {
+    display: grid; grid-template-columns: 58px 1fr auto; align-items: center; gap: 14px;
+    border: 1px solid var(--border); border-radius: 12px; background: var(--surface);
+    padding: 12px 15px; cursor: pointer; text-align: left; width: 100%;
+    color: inherit; font: inherit; transition: transform .25s var(--ease), border-color .25s var(--ease), background .25s var(--ease);
+  }
+  .track:hover { transform: translateX(4px); border-color: color-mix(in srgb, var(--accent) 55%, var(--border)); background: var(--surface-2); }
+  .track.active { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), 0 10px 30px color-mix(in srgb, var(--accent) 25%, transparent); }
+  .track.sideB { --accent: var(--afterglow-coral); }
+  .tnum { font-family: var(--font-display); font-size: 1.9rem; color: var(--faint); line-height: 1; }
+  .track.active .tnum, .track:hover .tnum { color: var(--accent); }
+  .tmain .tname { font-weight: 600; font-size: 1rem; }
+  .tmain .tsub { font-family: var(--font-mono); font-size: .72rem; color: var(--muted); margin-top: 2px; }
+  .tmeta { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+  .runtime { font-family: var(--font-mono); font-size: .72rem; color: var(--muted); }
+
+  /* status badges */
+  .badge {
+    font-family: var(--font-mono); font-size: .58rem; letter-spacing: .12em; text-transform: uppercase;
+    padding: 3px 8px; border-radius: 999px; border: 1px solid transparent; white-space: nowrap;
+  }
+  .badge.confirmed { color: #0B0E1A; background: var(--gold); font-weight: 700; }
+  :root[data-theme="light"] .badge.confirmed { color: #fff; }
+  .badge.tentative { color: var(--muted); border-color: var(--faint); border-style: dashed; }
+  .badge.locked { color: var(--gold); border: 1px solid var(--gold); background: color-mix(in srgb, var(--gold) 12%, transparent); }
+
+  .track.tentative { border-style: dashed; }
+  .track.tentative .tname { color: var(--muted); }
+  .track.tentative::after {
+    content: ""; position: absolute;
+  }
+  .flip-divider {
+    grid-column: 1 / -1; display: flex; align-items: center; gap: 12px; margin: 6px 2px;
+    font-family: var(--font-mono); font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: var(--faint);
+  }
+  .flip-divider::before, .flip-divider::after { content: ""; height: 1px; background: var(--border); flex: 1; }
+  .flip-divider button {
+    border: 1px solid var(--gold); color: var(--gold); background: transparent; cursor: pointer;
+    font-family: var(--font-mono); font-size: .66rem; letter-spacing: .12em; text-transform: uppercase;
+    padding: 6px 12px; border-radius: 999px;
+  }
+  .flip-divider button:hover { background: color-mix(in srgb, var(--gold) 14%, transparent); }
+
+  /* legend */
+  .legend { display: flex; flex-wrap: wrap; gap: 14px; margin: 16px 2px 0; font-family: var(--font-mono);
+    font-size: .68rem; color: var(--muted); }
+  .legend span { display: inline-flex; align-items: center; gap: 7px; }
+  .sw { width: 20px; height: 10px; border-radius: 3px; }
+  .sw.g { background: var(--gold); }
+  .sw.d { border: 1px dashed var(--faint); }
+  .sw.k { border: 1px solid var(--gold); background: color-mix(in srgb, var(--gold) 12%, transparent); }
+
+  /* =================== LEG / DAY CARDS =================== */
+  .leg-section { padding-top: 12px; }
+  .leg-banner {
+    border-radius: var(--radius); border: 1px solid var(--border); padding: 20px 22px; margin-bottom: 20px;
+    background: linear-gradient(120deg, var(--leg-tint), transparent 70%);
+  }
+  .leg-banner .kicker { color: var(--accent); }
+  .leg-banner h3 { font-family: var(--font-display); text-transform: uppercase; margin: 6px 0 4px;
+    font-size: clamp(2rem, 6vw, 3.4rem); line-height: .9; }
+  .leg-banner p { color: var(--muted); margin: 6px 0 0; max-width: 60ch; }
+
+  .day-card {
+    scroll-margin-top: 84px;
+    border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface);
+    padding: 18px 20px; margin-bottom: 14px; position: relative; overflow: hidden;
+    transition: border-color .3s var(--ease), box-shadow .3s var(--ease);
+  }
+  .day-card:target, .day-card.flash {
+    border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), var(--shadow);
+  }
+  .day-card.tentative { border-style: dashed; }
+  .day-card.tentative::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: repeating-linear-gradient(45deg, color-mix(in srgb, var(--gold) 4%, transparent) 0 10px, transparent 10px 20px);
+  }
+  .dc-top { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .dc-num { font-family: var(--font-display); font-size: 2.1rem; color: var(--accent); line-height: 1; }
+  .dc-date { font-family: var(--font-mono); font-size: .78rem; color: var(--muted); }
+  .dc-title { font-family: var(--font-display); text-transform: uppercase; letter-spacing: .01em;
+    font-size: 1.5rem; margin: 8px 0 0; line-height: 1; }
+  .dc-body { color: var(--text); margin: 10px 0 0; }
+  .dc-body p { margin: 0 0 10px; }
+  .dc-body strong { color: var(--text); }
+
+  /* logistics rows inside day cards */
+  .log-row {
+    display: grid; grid-template-columns: 130px 1fr; gap: 4px 14px; font-family: var(--font-mono);
+    font-size: .78rem; padding: 7px 0; border-top: 1px dashed var(--border);
+  }
+  .log-row:first-of-type { border-top: 0; }
+  .log-row .k { color: var(--faint); letter-spacing: .06em; text-transform: uppercase; font-size: .68rem; }
+  .log-row .v { color: var(--text); }
+  .log-row .v .muted { color: var(--muted); }
+
+  /* dual timezone stamp */
+  .tz {
+    display: inline-flex; align-items: center; gap: 6px; cursor: help; position: relative;
+    border-bottom: 1px dotted var(--faint);
+  }
+  .tz .alt {
+    position: absolute; bottom: 130%; left: 50%; transform: translateX(-50%) translateY(4px);
+    background: var(--text); color: var(--bg); font-family: var(--font-mono); font-size: .68rem;
+    white-space: nowrap; padding: 5px 8px; border-radius: 6px; opacity: 0; pointer-events: none;
+    transition: opacity .2s var(--ease), transform .2s var(--ease);
+  }
+  .tz:hover .alt, .tz:focus .alt { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* inline flags */
+  .flag {
+    display: inline-block; font-family: var(--font-mono); font-size: .68rem; letter-spacing: .08em;
+    text-transform: uppercase; padding: 2px 8px; border-radius: 6px; margin: 6px 6px 0 0;
+  }
+  .flag.warn { color: var(--gold); border: 1px dashed var(--gold); }
+  .flag.check { color: var(--accent-2); border: 1px dashed var(--accent-2); }
+
+  /* crew tag row */
+  .crew-line { font-family: var(--font-mono); font-size: .74rem; color: var(--muted); margin-top: 6px; }
+  .crew-line b { color: var(--text); }
+
+  /* =================== FOSTER TRACK =================== */
+  .foster {
+    position: relative; border: 1px solid var(--gold); border-radius: var(--radius);
+    background: linear-gradient(140deg, color-mix(in srgb, var(--gold) 8%, transparent), var(--surface));
+    padding: 22px; overflow: hidden;
+  }
+  .foster .lock-row { display: flex; align-items: center; gap: 10px; }
+  .foster .lock { font-size: 1.3rem; }
+  .foster h3 { font-family: var(--font-display); text-transform: uppercase; margin: 0; font-size: 1.6rem; }
+  .veil {
+    margin-top: 14px; border: 1px dashed var(--gold); border-radius: 12px; padding: 18px;
+    position: relative; cursor: pointer; user-select: none;
+  }
+  .veil .veil-face {
+    display: flex; align-items: center; justify-content: center; gap: 10px; text-align: center;
+    font-family: var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--gold);
+    min-height: 74px; transition: opacity .35s var(--ease);
+  }
+  .veil .veil-content { display: none; }
+  .veil.open .veil-face { display: none; }
+  .veil.open .veil-content { display: block; }
+  .veil .veil-content p { margin: 0 0 10px; }
+  .foster .shh-banner {
+    margin-top: 16px; font-family: var(--font-mono); font-size: .74rem; color: var(--gold);
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  /* =================== SOCCER AFTERGLOW =================== */
+  .soccer { position: relative; border-radius: var(--radius); overflow: hidden;
+    border: 1px solid var(--border); padding: 26px 24px; background: var(--surface); }
+  .rwb-wash {
+    position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: .55;
+    background: linear-gradient(110deg,
+      color-mix(in srgb, #B31942 22%, transparent),
+      transparent 30%,
+      transparent 55%,
+      color-mix(in srgb, #0A3161 26%, transparent));
+    background-size: 220% 100%; animation: rwbdrift 16s ease-in-out infinite alternate;
+  }
+  @keyframes rwbdrift { from { background-position: 0% 0; } to { background-position: 100% 0; } }
+  .soccer > * { position: relative; z-index: 1; }
+  .soccer .matches { display: grid; gap: 8px; margin-top: 14px; }
+  .match-row { display: grid; grid-template-columns: 130px 1fr; gap: 12px; font-family: var(--font-mono);
+    font-size: .78rem; padding: 7px 0; border-top: 1px dashed var(--border); }
+  .match-row .d { color: var(--gold); }
+
+  /* =================== CREW =================== */
+  .crew-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .crew-col { border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); padding: 18px 20px; }
+  .crew-col h4 { font-family: var(--font-mono); font-size: .74rem; letter-spacing: .16em; text-transform: uppercase;
+    margin: 0 0 12px; color: var(--faint); display: flex; align-items: center; gap: 8px; }
+  .crew-col h4 .pip { width: 9px; height: 9px; border-radius: 50%; }
+  .pip.on { background: var(--gold); }
+  .pip.open { border: 2px solid var(--faint); }
+  .person { padding: 9px 0; border-top: 1px dashed var(--border); }
+  .person:first-of-type { border-top: 0; }
+  .person .nm { font-weight: 600; }
+  .person .rl { color: var(--muted); font-size: .9rem; }
+
+  /* =================== LOGISTICS PANEL =================== */
+  .logi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .logi-card { border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); padding: 18px 20px; }
+  .logi-card h4 { font-family: var(--font-mono); font-size: .74rem; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--faint); margin: 0 0 12px; }
+  .logi-card .big { font-family: var(--font-mono); font-size: .92rem; line-height: 1.6; }
+
+  /* checklist */
+  .checklist { border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface);
+    padding: 18px 20px; margin-top: 18px; }
+  .checklist h4 { font-family: var(--font-mono); font-size: .74rem; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--gold); margin: 0 0 6px; }
+  .checklist .sub { color: var(--muted); font-size: .86rem; margin: 0 0 14px; }
+  .check-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-top: 1px dashed var(--border); }
+  .check-item input { margin-top: 3px; width: 18px; height: 18px; accent-color: var(--gold); flex: 0 0 auto; cursor: pointer; }
+  .check-item label { cursor: pointer; }
+  .check-item.done label { color: var(--faint); text-decoration: line-through; }
+  .check-progress { font-family: var(--font-mono); font-size: .72rem; color: var(--muted); margin-top: 12px; }
+
+  /* neighborhoods */
+  .hoods { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .hood { font-family: var(--font-mono); font-size: .72rem; padding: 6px 11px; border-radius: 8px;
+    border: 1px solid var(--border); background: var(--surface); color: var(--muted); }
+  .hood b { color: var(--text); }
+
+  /* footer */
+  footer { position: relative; z-index: 1; border-top: 1px solid var(--border); margin-top: 30px; padding: 30px 0 60px; }
+  footer .f-inner { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap;
+    font-family: var(--font-mono); font-size: .74rem; color: var(--muted); }
+
+  /* =================== RESPONSIVE =================== */
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 26px; }
+    .record-stage { order: -1; }
+    .crew-grid, .logi-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 620px) {
+    .track { grid-template-columns: 44px 1fr; }
+    .track .tmeta { grid-column: 2; flex-direction: row; align-items: center; justify-content: flex-start; flex-wrap: wrap; }
+    .log-row { grid-template-columns: 1fr; gap: 2px; }
+    .log-row .k { margin-top: 4px; }
+    .brand { font-size: .82rem; }
+  }
+</style>
+
+<div class="ambient" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<!-- ===================== TOP BAR ===================== -->
+<header class="bar">
+  <div class="bar-inner">
+    <div class="brand">GORDON'S <b>SUMMER SETLIST</b></div>
+    <div class="bar-spacer"></div>
+    <div class="flip-toggle" role="group" aria-label="Flip the record between coasts">
+      <button id="btnA" aria-pressed="true">Side A · NY</button>
+      <button id="btnB" aria-pressed="false">Side B · Seattle</button>
+    </div>
+    <button class="theme-btn" id="themeBtn" aria-label="Toggle light and dark theme" title="Toggle theme">◑</button>
+  </div>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="side-flags">
+        <span class="side-flag a">Side A · New York · the drop</span>
+        <span class="side-flag b">Side B · Seattle · the afterglow</span>
+      </div>
+      <div class="kicker">Two sides, one record</div>
+      <h1 class="hero-title">
+        <span class="l1">Gordon's</span>
+        <span class="l2">Summer Setlist</span>
+      </h1>
+      <div class="hero-meta">
+        <span class="chip mono"><b>July 16 to 29, 2026</b></span>
+        <span class="chip mono">Fourteen days</span>
+        <span class="chip mono">Two cities</span>
+        <span class="chip mono">One continuous waveform</span>
+      </div>
+      <p class="hero-sub">One record, needle down for two weeks. Side A drops in New York: three straight nights, Tiesto into Zeds Dead into the World Cup Final, with Foster and Brennan in the crowd. Side B glows out in Seattle: the wedding he gets to officiate, a cabin off Highway 2, and D&amp;D played at the source.</p>
+
+      <div class="countdown" id="countdown">
+        <div class="lab"><span class="dot-live"></span> Needle drop · wheels up July 16</div>
+        <div class="cd-row" id="cdRow">
+          <div class="cd-unit"><span class="cd-num" id="cdD">00</span><small>Days</small></div>
+          <span class="cd-sep">:</span>
+          <div class="cd-unit"><span class="cd-num" id="cdH">00</span><small>Hours</small></div>
+          <span class="cd-sep">:</span>
+          <div class="cd-unit"><span class="cd-num" id="cdM">00</span><small>Min</small></div>
+          <span class="cd-sep">:</span>
+          <div class="cd-unit"><span class="cd-num" id="cdS">00</span><small>Sec</small></div>
+        </div>
+        <div class="cd-caption" id="cdCaption">Set start time: 07 / 16 / 2026. Track one cues up.</div>
+      </div>
+    </div>
+
+    <div class="record-stage">
+      <div class="record" aria-hidden="true">
+        <div class="vinyl"></div>
+        <div class="label-disc">
+          <div>
+            <div class="lbl-side" id="discSide">A</div>
+            <div class="lbl-city" id="discCity">New York</div>
+          </div>
+        </div>
+        <div class="spindle"></div>
+        <div class="needle"><div class="arm"></div><div class="head"></div></div>
+      </div>
+      <div class="record-caption">A gold needle, poised over track one.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== WAVEFORM / SETLIST ===================== -->
+<section class="block" id="setlist">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">The full setlist</span>
+      <h2>Scrub the whole trip</h2>
+    </div>
+    <p class="sec-desc">One waveform, both legs. Side A crests July 18 and 19, the three consecutive nights. Then it eases into Side B's sustained afterglow. Drag the gold needle to move through the days, or tap a track to jump.</p>
+
+    <div class="wf-shell">
+      <div class="wf-scale"><span>7/16 · JFK wheels up</span><span>7/23 · flip to Seattle</span><span>7/29 · needle up</span></div>
+      <div class="wf-canvas-holder" id="wfHolder">
+        <canvas class="waveform" id="wave" width="1120" height="118"></canvas>
+        <div class="wf-flip-mark" id="wfFlip"><span>FLIP ▸</span></div>
+        <div class="wf-needle-line" id="wfNeedle" style="left:0"></div>
+      </div>
+    </div>
+
+    <div class="legend">
+      <span><i class="sw g"></i> Confirmed (solid gold)</span>
+      <span><i class="sw d"></i> Tentative / needs locking (dashed)</span>
+      <span><i class="sw k"></i> Locked surprise (keep it quiet)</span>
+    </div>
+
+    <div class="tracklist" id="tracklist"><!-- injected --></div>
+  </div>
+</section>
+
+<!-- ===================== SIDE A: NEW YORK ===================== -->
+<section class="block leg-section" id="sideA">
+  <div class="wrap">
+    <div class="leg-banner">
+      <span class="kicker">Side A</span>
+      <h3>New York (the drop)</h3>
+      <p>Neon marquee, three consecutive nights, the climax of the record. Fanatics Fest opens the week, Foster hosts, and the waveform peaks with Tiesto, Zeds Dead, and the World Cup Final.</p>
+    </div>
+
+    <!-- Track 01 -->
+    <article class="day-card" id="t01">
+      <div class="dc-top"><span class="dc-num">01</span><span class="dc-date">THU · JUL 16</span><span class="badge confirmed">Confirmed</span></div>
+      <h3 class="dc-title">Fanatics Fest Opens · Hamilton</h3>
+      <div class="dc-body">
+        <p>The week cues up at the Javits Center, and the first night out is Broadway. Foster has the Hamilton tickets, and Foster's word is the schedule: Thursday.</p>
+        <div class="log-row"><span class="k">Where</span><span class="v">Javits Center, Hudson Yards</span></div>
+        <div class="log-row"><span class="k">Fanatics runs</span><span class="v">7/16 to 7/19</span></div>
+        <div class="log-row"><span class="k">Tonight</span><span class="v">Hamilton on Broadway (Foster's tickets), ~2h45m</span></div>
+        <div class="log-row"><span class="k">Call</span><span class="v">Pete &amp; Gordon, <span class="tz">1:00pm PT<span class="alt">1:00pm PT · 4:00pm ET</span></span></span></div>
+        <div class="log-row"><span class="k">Traveling in</span><span class="v">John Cawley flying from Holland for Fanatics with Foster &amp; Gordon</span></div>
+      </div>
+    </article>
+
+    <!-- Track 02 -->
+    <article class="day-card" id="t02">
+      <div class="dc-top"><span class="dc-num">02</span><span class="dc-date">FRI · JUL 17</span><span class="badge confirmed">Confirmed</span></div>
+      <h3 class="dc-title">Breakaway Festival · Tiesto</h3>
+      <div class="dc-body">
+        <p>Two work syncs, then the first festival of the weekend. Tiesto headlines Breakaway in Brooklyn. (Foster's words: Tiesto Friday.)</p>
+        <div class="log-row"><span class="k">Sync</span><span class="v">James (Microsoft), <span class="tz">11:00am ET<span class="alt">11:00am ET · 8:00am PT</span></span></span></div>
+        <div class="log-row"><span class="k">GGP call</span><span class="v">Sinjin, Alex &amp; Gordon action call, <span class="tz">3:00pm ET<span class="alt">3:00pm ET · 12:00pm PT</span></span></span></div>
+        <div class="log-row"><span class="k">Show</span><span class="v">Breakaway Festival NYC · Tiesto headlining</span></div>
+        <div class="log-row"><span class="k">Venue</span><span class="v">Under the K Bridge Park, Brooklyn · <span class="tz">6:00pm ET<span class="alt">6:00pm ET · 3:00pm PT</span></span> · 21+</span></div>
+        <div class="log-row"><span class="k">Crew</span><span class="v">Gordon, Foster, Brennan</span></div>
+      </div>
+    </article>
+
+    <!-- Track 03 -->
+    <article class="day-card" id="t03">
+      <div class="dc-top"><span class="dc-num">03</span><span class="dc-date">SAT · JUL 18</span><span class="badge confirmed">Confirmed</span></div>
+      <h3 class="dc-title">Foster's Birthday · Zeds Dead</h3>
+      <div class="dc-body">
+        <p><strong>Foster turns 55.</strong> Forty years of friendship, marked on the biggest day of Fanatics Fest, then Zeds Dead in Queens.</p>
+        <div class="log-row"><span class="k">Show</span><span class="v">Zeds Dead · Forest Hills Stadium, Queens</span></div>
+        <div class="log-row"><span class="k">Doors / show</span><span class="v"><span class="tz">5:00pm / 6:00pm ET<span class="alt">Doors 5pm ET · 2pm PT · Show 6pm ET · 3pm PT</span></span> · all ages</span></div>
+        <div class="log-row"><span class="k">Travel</span><span class="v">45 to 60 min from Manhattan</span></div>
+        <div class="log-row"><span class="k">Also</span><span class="v">Fanatics Fest's biggest day</span></div>
+      </div>
+    </article>
+
+    <!-- Track 04 -->
+    <article class="day-card" id="t04">
+      <div class="dc-top"><span class="dc-num">04</span><span class="dc-date">SUN · JUL 19</span><span class="badge confirmed">Confirmed</span></div>
+      <h3 class="dc-title">World Cup Final at the Red Lion</h3>
+      <div class="dc-body">
+        <p>The final of the record's three-night crest. Kickoff at MetLife, watched with the chosen-family contingent at a West Village pub.</p>
+        <div class="log-row"><span class="k">Kickoff</span><span class="v"><span class="tz">3:00pm ET<span class="alt">3:00pm ET · 12:00pm PT</span></span> · at MetLife Stadium</span></div>
+        <div class="log-row"><span class="k">Watch at</span><span class="v">The Red Lion, 151 Bleecker St, West Village</span></div>
+        <div class="log-row"><span class="k">Seats</span><span class="v">Walk-ins only. Arrive ~10:00am for seats</span></div>
+        <div class="log-row"><span class="k">Crew</span><span class="v">Gordon, Foster, Brennan, plus the NYC chosen-family contingent</span></div>
+      </div>
+    </article>
+
+    <!-- Track 05 -->
+    <article class="day-card" id="t05">
+      <div class="dc-top"><span class="dc-num">05</span><span class="dc-date">MON · JUL 20</span><span class="badge confirmed">Confirmed</span></div>
+      <h3 class="dc-title">Scholars Breakfast · G4C Opening Night</h3>
+      <div class="dc-body">
+        <p>Host badge in the morning, party pass after dark. The NYC Scholars breakfast (Mabel has you locked in as a host on Partiful), then the Games for Change Opening Night Party.</p>
+        <div class="log-row"><span class="k">Breakfast</span><span class="v">NYC Scholars, morning · date confirmed 7/20 by Mabel</span></div>
+        <div class="log-row"><span class="k">Venue</span><span class="v">being finalized (Friend of a Farmer, Gramercy, opens 9am Mon)</span></div>
+        <div class="log-row"><span class="k">Then</span><span class="v">G4C Opening Night Party · <span class="tz">7:00 to 9:30pm ET<span class="alt">7:00 to 9:30pm ET · 4:00 to 6:30pm PT</span></span></span></div>
+        <div class="log-row"><span class="k">Where</span><span class="v">Lucky Strike Chelsea Piers, 60 Chelsea Piers · 2 passes</span></div>
+        <span class="flag check">Only the breakfast venue is still open. Both are locked to Monday 7/20.</span>
+      </div>
+    </article>
+
+    <!-- Track 06 -->
+    <article class="day-card" id="t06">
+      <div class="dc-top"><span class="dc-num">06</span><span class="dc-date">TUE to WED · JUL 21 to 22</span><span class="badge confirmed">Confirmed</span></div>
+      <h3 class="dc-title">Games for Change Festival</h3>
+      <div class="dc-body">
+        <p>Reimagining Play at The Glasshouse. Gordon, Eric, and Theresa Loong lead their session on Day 2.</p>
+        <div class="log-row"><span class="k">Where</span><span class="v">The Glasshouse, 660 12th Ave, Fl 6 · doors 8:30am</span></div>
+        <div class="log-row"><span class="k">Tue 7/21</span><span class="v">Festival <span class="tz">9:30am to 6:00pm ET</span> · Awards <span class="tz">6:30 to 8:00pm ET</span></span></div>
+        <div class="log-row"><span class="k">Wed 7/22</span><span class="v">VIP Breakfast 7:30 to 9am, Hudson Local · Festival 9:30am to 5:00pm</span></div>
+        <div class="log-row"><span class="k">Their session</span><span class="v">The "Ignite Impact" workshop · <span class="tz">Wed 7/22, 4:00 to 4:45pm ET</span></span></div>
+        <div class="log-row"><span class="k">Passes</span><span class="v">Festival x5 (promo Z037KT) · Opening Night x2 · VIP Breakfast x1</span></div>
+      </div>
+    </article>
+
+    <!-- Track 07 -->
+    <article class="day-card tentative" id="t07">
+      <div class="dc-top"><span class="dc-num">07</span><span class="dc-date">WED · JUL 22 · EVENING</span><span class="badge tentative">Confirm curtain</span></div>
+      <h3 class="dc-title">The Whoopi Monologues</h3>
+      <div class="dc-body">
+        <p>Lincoln Center, with dinner first. Tickets from Sinjin and Claire Bain.</p>
+        <div class="log-row"><span class="k">Where</span><span class="v">Lincoln Center · Mitzi E. Newhouse Theater</span></div>
+        <div class="log-row"><span class="k">Tickets</span><span class="v">from Sinjin &amp; Claire Bain</span></div>
+        <div class="log-row"><span class="k">Dinner</span><span class="v">beforehand, by Claire</span></div>
+        <div class="log-row"><span class="k">Ensemble</span><span class="v">Kerry Washington, Kara Young, Dominique Fishback · dir. Whitney White</span></div>
+        <span class="flag check">To confirm · Curtain time. LCT shows typically 7 to 8pm.</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ===================== FOSTER TRACK ===================== -->
+<section class="block" id="fosters-night">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">Track 03 · the emotional center</span>
+      <h2>Foster's Night</h2>
+    </div>
+    <div class="foster">
+      <div class="lock-row">
+        <span class="lock" aria-hidden="true">🔒</span>
+        <h3>Keep it quiet</h3>
+        <span class="badge locked" style="margin-left:auto">Locked · Shhh</span>
+      </div>
+      <p style="color:var(--muted); margin:12px 0 0; max-width:60ch;">Forty years of friendship, marked on Foster's 55th. This one is about Foster, not about Gordon, and it stays a surprise.</p>
+
+      <div class="veil" id="veil" role="button" tabindex="0" aria-expanded="false">
+        <div class="veil-face"><span aria-hidden="true">🤫</span> Tap to lift the veil · keep it off anything Foster-facing</div>
+        <div class="veil-content">
+          <p><strong>Greenlit surprise:</strong> meet Zeds Dead backstage at Forest Hills Stadium.</p>
+          <p>Coordinated via Harrison (Zeds Dead crew), with Brennan as co-conspirator.</p>
+          <p><strong>Timing:</strong> ping Harrison about a week out, around 7/11.</p>
+          <p class="mono" style="color:var(--gold); font-size:.74rem;">Tap again to lower the veil before you walk away.</p>
+        </div>
+      </div>
+
+      <div class="shh-banner"><span aria-hidden="true">⚠️</span> Do not tip this to anything Foster might see.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SIDE B: SEATTLE ===================== -->
+<section class="block leg-section" id="sideB">
+  <div class="wrap">
+    <div class="leg-banner" style="--leg-tint: rgba(31,92,74,.16); --accent: var(--evergreen);">
+      <span class="kicker" style="color:#6FD3AE">Side B</span>
+      <h3>Seattle (the afterglow)</h3>
+      <p>Evergreen and Pacific fog, the officiant's calm. This leg is legacy and chosen family, not a match to attend. It resolves with a wedding, a cabin day, and D&amp;D at the source.</p>
+    </div>
+
+    <!-- Track 08 -->
+    <article class="day-card sideB" id="t08">
+      <div class="dc-top"><span class="dc-num">08</span><span class="dc-date">THU · JUL 23</span><span class="badge confirmed">Confirmed</span></div>
+      <h3 class="dc-title">Fly to Seattle with Joe</h3>
+      <div class="dc-body">
+        <p>Flip the record. After the NYC leg and a swing home, Gordon and Joe fly up together for the wedding weekend.</p>
+        <div class="log-row"><span class="k">Flight</span><span class="v">Alaska AS 720 · Burbank to Seattle · conf WQFFFL</span></div>
+        <div class="log-row"><span class="k">Depart / arrive</span><span class="v"><span class="tz">10:10am PT → 12:52pm PT</span> · with Joe Heally</span></div>
+        <span class="flag check">Open · sort a place to stay Thursday 7/23 with Joe (SEA night before Leavenworth). And confirm the NYC-to-Burbank connection after G4C.</span>
+      </div>
+    </article>
+
+    <!-- Track 09 -->
+    <article class="day-card sideB" id="t09">
+      <div class="dc-top"><span class="dc-num">09</span><span class="dc-date">SAT · JUL 25</span><span class="badge confirmed">The anchor</span></div>
+      <h3 class="dc-title">Officiate Dane &amp; Megan's Wedding</h3>
+      <div class="dc-body">
+        <p>Gordon officiates Dane Lennon and Megan's wedding in Leavenworth. This is the anchor of the whole trip. He is skipping Shambhala 2026 (same weekend) to be here, a deliberate trade, because Dane is one of the two friends (with Drake) who first evangelized Shambhala to him.</p>
+        <div class="log-row"><span class="k">Where</span><span class="v">Leavenworth, WA</span></div>
+        <div class="log-row"><span class="k">Role</span><span class="v">Gordon officiating</span></div>
+        <div class="log-row"><span class="k">Staying with</span><span class="v">Joe Heally (husband), near the wedding · lodging still to sort with Joe</span></div>
+        <div class="log-row"><span class="k">Note</span><span class="v">Joe flies home (SEA to BUR, Alaska AS 529) Sun 7/26, before the D&amp;D days</span></div>
+      </div>
+    </article>
+
+    <!-- Track 10 -->
+    <article class="day-card sideB" id="t10">
+      <div class="dc-top"><span class="dc-num">10</span><span class="dc-date">SUN · JUL 26</span><span class="badge confirmed">Confirmed</span></div>
+      <h3 class="dc-title">Cabin Day</h3>
+      <div class="dc-body">
+        <p>Pure decompression, an hour outside Seattle, with PNW chosen family. Coming back from Leavenworth on Highway 2, the cabin is right on the way.</p>
+        <div class="log-row"><span class="k">Where</span><span class="v">112 S Tulloch, Snohomish WA · ~1 hour out, off Hwy 2</span></div>
+        <div class="log-row"><span class="k">Vibe</span><span class="v">Bring something to share · stay the day or sleep over · cousin's place next door may be open</span></div>
+        <div class="log-row"><span class="k">Host</span><span class="v">Ryan Madsen · it's his cabin. Freddy Molitch (DJ King of Pants) may join if he can miss tea dance</span></div>
+      </div>
+    </article>
+
+    <!-- Track 11 -->
+    <article class="day-card sideB" id="t11">
+      <div class="dc-top"><span class="dc-num">11</span><span class="dc-date">MON to WED · JUL 27 to 29</span><span class="badge confirmed">Confirmed</span></div>
+      <h3 class="dc-title">D20 Deathmatch at Wizards of the Coast</h3>
+      <div class="dc-body">
+        <p>Three days of in-person D&amp;D, played at the source. A private game with the crew, not a public stream. Gordon plays <strong>Darby, Aasimar Paladin Level 11</strong>, the light-bearer whose name he also gave his AI.</p>
+        <div class="log-row"><span class="k">Where</span><span class="v">WOTC-booked hotel, Seattle · Mon 7/27 to Wed 7/29</span></div>
+        <div class="log-row"><span class="k">The party</span><span class="v">"The Four Loko (now six)": Bec Godsey (DM), Eric Francksen, Mark Purvis, Megan Marx, John Hight, Brian Trunk, Mudcat</span></div>
+        <div class="log-row"><span class="k">Arranged via</span><span class="v">Megan Marx (EA to John Hight, WOTC)</span></div>
+        <div class="log-row"><span class="k">Return</span><span class="v">Seattle to Burbank (Gordon's own leg, after the games)</span></div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ===================== SOCCER AFTERGLOW ===================== -->
+<section class="block" id="soccer">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">The honest soccer story</span>
+      <h2>The Long-Distance American Outlaw</h2>
+    </div>
+    <div class="soccer">
+      <div class="rwb-wash" aria-hidden="true"></div>
+      <p style="color:var(--muted); max-width:64ch; margin:0;">Seattle's World Cup run is already finished when he lands. Gordon's part was devotion from afar, not a ticket of his own. Lumen Field hosted six 2026 World Cup matches, June 15 to July 6.</p>
+      <div class="matches">
+        <div class="match-row"><span class="d">Jun 19</span><span>USA v. Australia · Gordon watched from Los Angeles, not traveling for it</span></div>
+        <div class="match-row"><span class="d">Jul 6</span><span>USA v. Belgium (Round of 16) · the city's last match</span></div>
+        <div class="match-row"><span class="d">Jul 8</span><span>By his own message, Seattle was still ahead of him</span></div>
+        <div class="match-row"><span class="d">Jul 23</span><span>He lands. The hosting run is done. The city still styled red, white, and blue</span></div>
+      </div>
+      <p style="color:var(--text); max-width:64ch; margin:16px 0 0;">He was the devoted long-distance participant through friends on the ground: Mike Morrow, who was at Lumen; Quinn, his fellow American Outlaw; Alex Garcia's constellation. His visit carries the afterglow of Seattle's World Cup summer, not a seat in the stands.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CREW ===================== -->
+<section class="block" id="crew">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">Who he's seeing</span>
+      <h2>The Crew</h2>
+    </div>
+    <p class="sec-desc">Both cities, confirmed presence versus still open, so nothing important slips.</p>
+    <div class="crew-grid">
+      <div class="crew-col">
+        <h4><span class="pip on"></span> Confirmed presence</h4>
+        <div class="person"><div class="nm">Foster Birch</div><div class="rl">40-year best friend, the trip's home base. Arrives Wed 7/15 ("go-go-go from Thursday"). Birthday Sat 7/18. Orange and blue to Fanatics.</div></div>
+        <div class="person"><div class="nm">Brennan</div><div class="rl">Gordon's son. Brooklyn-based, present nearly the whole NYC window, co-conspirator on Foster's surprise.</div></div>
+        <div class="person"><div class="nm">Eric Francksen · both legs</div><div class="rl">The dot that connects the whole trip. Co-leads the G4C "Ignite Impact" workshop in NYC (7/21-22) with Theresa Loong, AND is in the D20 Deathmatch party at WOTC in Seattle (7/27-29). He is on both coasts.</div></div>
+        <div class="person"><div class="nm">Theresa Loong ("Tree")</div><div class="rl">Co-presents the G4C workshop with Gordon and Eric. Deck upload Mon 7/13. Also behind the "Game On" Brenda Romero documentary.</div></div>
+        <div class="person"><div class="nm">Sinjin &amp; Claire Bain</div><div class="rl">Friday 3pm GGP action call, G4C, the Whoopi tickets, and Claire arranging the dinner beforehand.</div></div>
+        <div class="person"><div class="nm">Mabel Chung</div><div class="rl">Owns the Mon 7/20 Scholars breakfast. Venue being worked near the UES (Maison Pickle / Mark's Off Madison). Watching the Final in the West Village.</div></div>
+        <div class="person"><div class="nm">Joe Heally</div><div class="rl">Gordon's husband. Flies BUR to SEA with Gordon 7/23 for the wedding, returns home 7/26 before the D&amp;D days.</div></div>
+        <div class="person"><div class="nm">Dane &amp; Megan Lennon</div><div class="rl">The wedding, Sat 7/25 Leavenworth. Dane finalizing the seating chart. Megan's rec-sports village team is "Panic at the Costco" (kickball).</div></div>
+        <div class="person"><div class="nm">Ryan Madsen</div><div class="rl">Cabin Day host (it's his cabin, Snohomish). Games industry, COO of Magboot Games / Seattle Indies. Freddy Molitch (DJ King of Pants) may join.</div></div>
+        <div class="person"><div class="nm">The D20 Deathmatch party</div><div class="rl">"The Four Loko (now six)" at WOTC: Bec Godsey (DM), Eric Francksen, Mark Purvis, Megan Marx, John Hight, Brian Trunk, Mudcat (Drew Godsey). A private game with the crew, not a public stream. Gordon plays Darby, Aasimar Paladin Lv 11.</div></div>
+        <div class="person"><div class="nm">Pete Hines · John Cawley</div><div class="rl">Pete: Thu 7/16 call re Fanatics. John Cawley: flying in from Holland for Fanatics with Foster and Gordon.</div></div>
+      </div>
+      <div class="crew-col">
+        <h4><span class="pip open"></span> Still open · chase inside their real windows</h4>
+        <div class="person"><div class="nm">Alex Rogers · NYC</div><div class="rl">Owns the Scholars guest list (Mabel is waiting on it). BUT: "I don't have a flight and I work Sunday." Gordon is actively solving how to get him there for Sun 7/19 and the brunch. Top unresolved item.</div></div>
+        <div class="person"><div class="nm">Matthew Sorgie ("So Be It")</div><div class="rl">Wants to meet up in NYC. No plan set yet.</div></div>
+        <div class="person"><div class="nm">Tim Train</div><div class="rl">"Monday Night Music in NYC" (Mon 7/20), Gordon introduced him to Eric. Loose.</div></div>
+        <div class="person"><div class="nm">Ceci Kurzman</div><div class="rl">NYC only July 17 to 19. Wants to meet Brennan. No locked plan.</div></div>
+        <div class="person"><div class="nm">Rachel Hoagland</div><div class="rl">MLS. Reconnect in motion, thread quiet.</div></div>
+        <div class="person"><div class="nm">Mike Morrow · Alex Garcia</div><div class="rl">Seattle. Morrow dinner invite out, not yet accepted. Garcia blocked only on contact info.</div></div>
+        <div class="person"><div class="nm">Rob Bailey</div><div class="rl">NYC connection to pick up, also linked to Foster.</div></div>
+        <div class="person"><div class="nm">Ian Blount · Abdul Khan</div><div class="rl">Blount: possible NYC bagel meetup, dates may not overlap. Khan: Foster's friend, in town.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== LOGISTICS ===================== -->
+<section class="block" id="logistics">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">Logistics and still-to-lock</span>
+      <h2>Everything Load-Bearing</h2>
+    </div>
+    <p class="sec-desc">Flights, lodging, and the honest open-items checklist, so guesses never read as settled.</p>
+
+    <div class="logi-grid">
+      <div class="logi-card">
+        <h4>Flights</h4>
+        <div class="big">
+          <div><strong>Seattle inbound:</strong> Alaska AS 720 · conf WQFFFL</div>
+          <div>Burbank → SEA · Thu 7/23 · with Joe Heally</div>
+          <div><span class="tz">10:10am PT → 12:52pm PT<span class="alt">Dep 10:10am PT · 1:10pm ET · Arr 12:52pm PT · 3:52pm ET</span></span></div>
+          <div style="margin-top:8px"><strong>End of trip:</strong> Seattle → Burbank</div>
+        </div>
+      </div>
+      <div class="logi-card">
+        <h4>Lodging</h4>
+        <div class="big">
+          <div><strong>NYC:</strong> 765 Park Avenue, Apt 10A · Upper East Side (Lenox Hill)</div>
+          <div class="mono" style="color:var(--muted)">confirmed · a 1927 Rosario Candela co-op at 72nd &amp; Park, white-glove prewar, 14 stories</div>
+          <div style="margin-top:10px"><strong>Seattle:</strong> with Joe near the wedding, then the WOTC-booked hotel for D&amp;D.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hoods">
+      <span class="hood"><b>UES</b> · lodging</span>
+      <span class="hood"><b>Brooklyn</b> · Breakaway</span>
+      <span class="hood"><b>Queens</b> · Forest Hills</span>
+      <span class="hood"><b>West Village</b> · Red Lion</span>
+      <span class="hood"><b>Hudson Yards</b> · Javits, The Glasshouse</span>
+      <span class="hood"><b>Lincoln Center</b> · Whoopi</span>
+    </div>
+
+    <div class="checklist" id="checklist">
+      <h4>Still to lock</h4>
+      <p class="sub">Real checkboxes. Ticks persist on this device as items get confirmed.</p>
+      <div id="checkItems"><!-- injected --></div>
+      <div class="check-progress" id="checkProgress">0 of 0 locked</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap f-inner">
+    <div>Two sides, one record · July 16 to 29, 2026</div>
+    <div>Built for Gordon. Confirmed vs tentative shown honestly. Flip the record up top.</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var root = document.documentElement;
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- THEME ---------- */
+  var themeBtn = document.getElementById("themeBtn");
+  function applyTheme(t){ if(t){ root.setAttribute("data-theme", t); } }
+  try { var savedT = localStorage.getItem("gs-theme"); if(savedT) applyTheme(savedT); } catch(e){}
+  themeBtn.addEventListener("click", function(){
+    var cur = root.getAttribute("data-theme");
+    if(!cur){ cur = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark"; }
+    var next = cur === "dark" ? "light" : "dark";
+    applyTheme(next);
+    try { localStorage.setItem("gs-theme", next); } catch(e){}
+  });
+
+  /* ---------- SIDE FLIP ---------- */
+  var btnA = document.getElementById("btnA"), btnB = document.getElementById("btnB");
+  var discSide = document.getElementById("discSide"), discCity = document.getElementById("discCity");
+  function setSide(s){
+    root.setAttribute("data-side", s);
+    btnA.setAttribute("aria-pressed", s === "A" ? "true" : "false");
+    btnB.setAttribute("aria-pressed", s === "B" ? "true" : "false");
+    discSide.textContent = s;
+    discCity.textContent = s === "A" ? "New York" : "Seattle";
+  }
+  btnA.addEventListener("click", function(){ setSide("A"); document.getElementById("sideA").scrollIntoView({behavior: reduce?"auto":"smooth"}); });
+  btnB.addEventListener("click", function(){ setSide("B"); document.getElementById("sideB").scrollIntoView({behavior: reduce?"auto":"smooth"}); });
+  setSide("A");
+
+  /* ---------- COUNTDOWN to wheels-up 7/16/2026 ---------- */
+  // Wheels up July 16, 2026. Use morning departure; ET zone (approx via fixed offset representation).
+  var target = new Date("2026-07-16T09:00:00-04:00").getTime();
+  var elD=document.getElementById("cdD"),elH=document.getElementById("cdH"),elM=document.getElementById("cdM"),elS=document.getElementById("cdS");
+  var cap=document.getElementById("cdCaption");
+  function pad(n){ return (n<10?"0":"")+n; }
+  function tick(){
+    var now = Date.now();
+    var diff = target - now;
+    if(diff <= 0){
+      elD.textContent="00"; elH.textContent="00"; elM.textContent="00"; elS.textContent="00";
+      cap.textContent = "The needle has dropped. Side A is playing.";
+      return;
+    }
+    var s = Math.floor(diff/1000);
+    var d = Math.floor(s/86400); s-=d*86400;
+    var h = Math.floor(s/3600); s-=h*3600;
+    var m = Math.floor(s/60); s-=m*60;
+    elD.textContent=pad(d); elH.textContent=pad(h); elM.textContent=pad(m); elS.textContent=pad(s);
+  }
+  tick(); setInterval(tick, 1000);
+
+  /* ---------- TRACK DATA ---------- */
+  var tracks = [
+    {n:"01", side:"A", id:"t01", date:"Thu 7/16", name:"Fanatics Fest opens · Hamilton", sub:"Javits Center · Hamilton on Broadway", rt:"day 01", status:"confirmed"},
+    {n:"02", side:"A", id:"t02", date:"Fri 7/17", name:"Breakaway · Tiesto", sub:"Under the K Bridge, Brooklyn · 6pm ET · 21+", rt:"day 02", status:"confirmed"},
+    {n:"03", side:"A", id:"t03", date:"Sat 7/18", name:"Foster's Birthday · Zeds Dead", sub:"Forest Hills Stadium, Queens · turns 55", rt:"day 03", status:"confirmed"},
+    {n:"04", side:"A", id:"t04", date:"Sun 7/19", name:"World Cup Final at the Red Lion", sub:"MetLife kickoff 3pm ET · watch West Village", rt:"day 04", status:"confirmed"},
+    {n:"05", side:"A", id:"t05", date:"Mon 7/20", name:"Scholars Breakfast · G4C Opening Night", sub:"Morning breakfast · Lucky Strike party 7pm", rt:"day 05", status:"confirmed"},
+    {n:"06", side:"A", id:"t06", date:"Tue to Wed 7/21 to 22", name:"Games for Change", sub:"The Glasshouse · session Wed 4pm", rt:"days 06 to 07", status:"confirmed"},
+    {n:"07", side:"A", id:"t07", date:"Wed 7/22", name:"The Whoopi Monologues", sub:"Lincoln Center · Mitzi E. Newhouse", rt:"day 07 · eve", status:"tentative"},
+    {flip:true},
+    {n:"08", side:"B", id:"t08", date:"Thu 7/23", name:"Fly to Seattle", sub:"Alaska AS 720 · Burbank → SEA · 10:10am → 12:52pm PT", rt:"day 08", status:"confirmed"},
+    {n:"09", side:"B", id:"t09", date:"Sat 7/25", name:"Officiate Dane & Megan's wedding", sub:"Leavenworth, WA · the anchor", rt:"day 10", status:"confirmed"},
+    {n:"10", side:"B", id:"t10", date:"Sun 7/26", name:"Cabin Day", sub:"112 S Tulloch, Snohomish · Ryan & Freddy", rt:"day 11", status:"confirmed"},
+    {n:"11", side:"B", id:"t11", date:"Mon to Wed 7/27 to 29", name:"D&D at WOTC", sub:"D20 Deathmatch · via Megan Marx", rt:"days 12 to 14", status:"confirmed"}
+  ];
+
+  var tl = document.getElementById("tracklist");
+  tracks.forEach(function(t){
+    if(t.flip){
+      var fd = document.createElement("div");
+      fd.className = "flip-divider";
+      fd.innerHTML = '<button id="flipInline">▸ Flip to Side B</button>';
+      tl.appendChild(fd);
+      return;
+    }
+    var btn = document.createElement("button");
+    btn.className = "track " + (t.side==="B"?"sideB ":"") + (t.status==="tentative"?"tentative":"");
+    btn.setAttribute("data-id", t.id);
+    var badge = t.status==="confirmed"
+      ? '<span class="badge confirmed">Confirmed</span>'
+      : '<span class="badge tentative">Tentative</span>';
+    btn.innerHTML =
+      '<span class="tnum">'+t.n+'</span>'+
+      '<span class="tmain"><span class="tname">'+t.name+'</span><span class="tsub">'+t.date+' · '+t.sub+'</span></span>'+
+      '<span class="tmeta"><span class="runtime">'+t.rt+'</span>'+badge+'</span>';
+    btn.addEventListener("click", function(){
+      setSide(t.side);
+      var el = document.getElementById(t.id);
+      if(el){
+        el.scrollIntoView({behavior: reduce?"auto":"smooth", block:"center"});
+        el.classList.add("flash");
+        setTimeout(function(){ el.classList.remove("flash"); }, 1400);
+      }
+      setActiveTrack(t.id);
+    });
+    tl.appendChild(btn);
+  });
+  var flipInline = document.getElementById("flipInline");
+  if(flipInline){ flipInline.addEventListener("click", function(){ setSide("B"); document.getElementById("sideB").scrollIntoView({behavior: reduce?"auto":"smooth"}); }); }
+
+  function setActiveTrack(id){
+    var all = tl.querySelectorAll(".track");
+    all.forEach(function(b){ b.classList.toggle("active", b.getAttribute("data-id")===id); });
+  }
+
+  /* ---------- WAVEFORM (canvas) + NEEDLE SCRUB ---------- */
+  var canvas = document.getElementById("wave");
+  var holder = document.getElementById("wfHolder");
+  var needleLine = document.getElementById("wfNeedle");
+  var flipMark = document.getElementById("wfFlip");
+  var ctx = canvas.getContext("2d");
+
+  // day fractions across 7/16 (0) to 7/29 (1) => 13 day span
+  // Track positions and their crest weighting. Peaks 7/18-19.
+  var dayCount = 13; // 16..29
+  function dayFrac(day){ return (day-16)/dayCount; }
+  // amplitude envelope keyed by day
+  var envPts = [
+    {d:16, a:0.42}, {d:17, a:0.72}, {d:18, a:0.98}, {d:19, a:0.92},
+    {d:20, a:0.55}, {d:21, a:0.6}, {d:22, a:0.66}, {d:23, a:0.5},
+    {d:24, a:0.4}, {d:25, a:0.62}, {d:26, a:0.46}, {d:27, a:0.5}, {d:28, a:0.5}, {d:29, a:0.44}
+  ];
+  function envAt(frac){
+    var day = 16 + frac*dayCount;
+    for(var i=0;i<envPts.length-1;i++){
+      if(day>=envPts[i].d && day<=envPts[i+1].d){
+        var t=(day-envPts[i].d)/(envPts[i+1].d-envPts[i].d);
+        return envPts[i].a + (envPts[i+1].a-envPts[i].a)*t;
+      }
+    }
+    return 0.44;
+  }
+
+  var flipFrac = dayFrac(23); // side B begins ~7/23
+
+  function cssVar(name){ return getComputedStyle(root).getPropertyValue(name).trim(); }
+
+  function drawWave(){
+    var w = canvas.width, h = canvas.height, mid = h/2;
+    ctx.clearRect(0,0,w,h);
+    var magenta = "#FF3D8B", cyan = "#29E0D8", green = "#1F5C4A", coral="#FF6B5A";
+    var bars = 150;
+    var bw = w/bars;
+    for(var i=0;i<bars;i++){
+      var frac = i/(bars-1);
+      var env = envAt(frac);
+      // pseudo-random detail, deterministic
+      var jitter = 0.55 + 0.45*Math.abs(Math.sin(i*1.7)+Math.cos(i*0.6));
+      var amp = env * jitter * (mid-8);
+      var isB = frac >= flipFrac;
+      var col;
+      if(isB){ col = (i%2===0)? green : coral; }
+      else { col = (i%2===0)? magenta : cyan; }
+      ctx.fillStyle = col;
+      ctx.globalAlpha = isB ? 0.82 : 0.92;
+      var x = i*bw + bw*0.18;
+      var bwi = bw*0.64;
+      ctx.fillRect(x, mid-amp, bwi, amp*2);
+    }
+    ctx.globalAlpha = 1;
+    // position flip marker
+    flipMark.style.left = (flipFrac*100)+"%";
+  }
+  drawWave();
+  window.addEventListener("resize", function(){ /* canvas fixed intrinsic size, css scales */ });
+
+  // scrubbing
+  function fracToDayId(frac){
+    // map fraction to nearest track by day
+    var map = [
+      {f:dayFrac(16), id:"t01", side:"A"},
+      {f:dayFrac(17), id:"t02", side:"A"},
+      {f:dayFrac(18), id:"t03", side:"A"},
+      {f:dayFrac(19), id:"t04", side:"A"},
+      {f:dayFrac(20), id:"t05", side:"A"},
+      {f:dayFrac(21.5), id:"t06", side:"A"},
+      {f:dayFrac(22), id:"t07", side:"A"},
+      {f:dayFrac(23), id:"t08", side:"B"},
+      {f:dayFrac(25), id:"t09", side:"B"},
+      {f:dayFrac(26), id:"t10", side:"B"},
+      {f:dayFrac(28), id:"t11", side:"B"}
+    ];
+    var best=map[0], bd=1e9;
+    map.forEach(function(m){ var dd=Math.abs(m.f-frac); if(dd<bd){bd=dd; best=m;} });
+    return best;
+  }
+  var scrubbing=false, lastId=null;
+  function scrub(clientX){
+    var rect = holder.getBoundingClientRect();
+    var frac = (clientX-rect.left)/rect.width;
+    frac = Math.max(0, Math.min(1, frac));
+    needleLine.style.left = (frac*100)+"%";
+    // side follows needle
+    setSide(frac>=flipFrac ? "B":"A");
+    var t = fracToDayId(frac);
+    if(t.id!==lastId){ setActiveTrack(t.id); lastId=t.id; }
+  }
+  function scrubEnd(clientX){
+    var rect = holder.getBoundingClientRect();
+    var frac = (clientX-rect.left)/rect.width;
+    frac = Math.max(0, Math.min(1, frac));
+    var t = fracToDayId(frac);
+    var el = document.getElementById(t.id);
+    if(el){ el.scrollIntoView({behavior: reduce?"auto":"smooth", block:"center"}); el.classList.add("flash"); setTimeout(function(){el.classList.remove("flash");},1400); }
+  }
+  holder.addEventListener("pointerdown", function(e){ scrubbing=true; holder.setPointerCapture(e.pointerId); scrub(e.clientX); });
+  holder.addEventListener("pointermove", function(e){ if(scrubbing) scrub(e.clientX); });
+  holder.addEventListener("pointerup", function(e){ if(scrubbing){ scrubbing=false; scrubEnd(e.clientX); } });
+  holder.addEventListener("pointercancel", function(){ scrubbing=false; });
+
+  /* ---------- FOSTER VEIL ---------- */
+  var veil = document.getElementById("veil");
+  function toggleVeil(){ var open = veil.classList.toggle("open"); veil.setAttribute("aria-expanded", open?"true":"false"); }
+  veil.addEventListener("click", toggleVeil);
+  veil.addEventListener("keydown", function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); toggleVeil(); } });
+
+  /* ---------- CHECKLIST + localStorage ---------- */
+  // Ordered by real-world deadline. Each item keeps its original localStorage key
+  // (k) so ticks saved before the reorder still land on the right item.
+  var items = [
+    {k:"c0", t:"Ping Harrison now for Foster's backstage surprise (keep quiet)"},
+    {k:"c9", t:"Nail Ceci Kurzman meetup inside her window (7/17 to 19)"},
+    {k:"c1", t:"Solve Alex Rogers' NYC: he has no flight and works Sunday, but owns the Scholars guest list"},
+    {k:"c4", t:"Confirm the Scholars breakfast venue with Mabel (date 7/20 locked)"},
+    {k:"c5", t:"RSVP the G4C passes: Festival (promo Z037KT), Opening Night, VIP Breakfast"},
+    {k:"c8", t:"Confirm Whoopi curtain time (LCT typically 7 to 8pm)"},
+    {k:"c3", t:"Confirm the NYC-to-Burbank connection that feeds the 7/23 BUR-SEA flight"},
+    {k:"c2", t:"Sort Thursday 7/23 Seattle lodging with Joe (night before Leavenworth)"},
+    {k:"c6", t:"Set a plan with Matthew Sorgie (So Be It) in NYC"},
+    {k:"c7", t:"Pick up the Rob Bailey connection in NYC (via Foster)"},
+    {k:"c10", t:"Confirm Mike Morrow dinner in Seattle; get Alex Garcia's contact info"},
+    {k:"c11", t:"Confirm Cabin Day with Ryan and whether Freddy can make it"}
+  ];
+  var box = document.getElementById("checkItems");
+  var prog = document.getElementById("checkProgress");
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem("gs-checklist")||"{}"); } catch(e){ saved={}; }
+  function updateProgress(){
+    var done = box.querySelectorAll("input:checked").length;
+    prog.textContent = done + " of " + items.length + " locked";
+  }
+  items.forEach(function(item, i){
+    var key = item.k;
+    var row = document.createElement("div");
+    row.className = "check-item" + (saved[key]?" done":"");
+    var cb = document.createElement("input");
+    cb.type="checkbox"; cb.id="chk"+i; cb.checked = !!saved[key];
+    var lb = document.createElement("label"); lb.setAttribute("for","chk"+i); lb.textContent = item.t;
+    cb.addEventListener("change", function(){
+      row.classList.toggle("done", cb.checked);
+      saved[key] = cb.checked;
+      try { localStorage.setItem("gs-checklist", JSON.stringify(saved)); } catch(e){}
+      updateProgress();
+    });
+    row.appendChild(cb); row.appendChild(lb); box.appendChild(row);
+  });
+  updateProgress();
+
+  /* ---------- redraw waveform on theme/side change (colors are fixed but keep crisp) ---------- */
+})();
+</script>
